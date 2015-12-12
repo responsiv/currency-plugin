@@ -1,0 +1,15 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Currency
+
+# Model Form Field configuration
+form: $/responsiv/currency/models/currency/fields.yaml
+
+# Model Class name
+modelClass: Responsiv\Currency\Models\Currency
+
+# Default redirect location
+defaultRedirect: responsiv/currency/currencies

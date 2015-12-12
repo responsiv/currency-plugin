@@ -1,0 +1,17 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    currency_code:
+        label: Code
+        searchable: yes
+
+    is_default:
+        label: Default
+        type: switch
+
+    is_enabled:
+        label: Enabled
+        type: switch
+        invisible: true
