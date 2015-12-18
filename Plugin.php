@@ -78,7 +78,7 @@ class Plugin extends PluginBase
     {
         return [
             'filters' => [
-                'currency' => ['Responsiv\Currency\Helpers\Currency', 'format'],
+                'currency' => ['Responsiv\Currency\Facades\Currency', 'format'],
             ]
         ];
     }
@@ -89,12 +89,13 @@ class Plugin extends PluginBase
      * ['className1' => 'alias'],
      * ['className2' => 'anotherAlias']
      */
-    public function registerPaymentGateways()
+    public function registerCurrencyConverters()
     {
         return [
-            'Responsiv\Currency\ConverterTypes\EuropeanCentralBank' => 'ecb',
-            'Responsiv\Currency\ConverterTypes\XeServices'          => 'xe',
-            'Responsiv\Currency\ConverterTypes\Yahoo'               => 'yahoo',
+            'Responsiv\Currency\ExchangeTypes\EuropeanCentralBank' => 'ecb',
+            'Responsiv\Currency\ExchangeTypes\Yahoo'               => 'yahoo',
+            // 'Responsiv\Currency\ExchangeTypes\XeServices'          => 'xe',
+            // 'Responsiv\Currency\ExchangeTypes\Coinmill'            => 'coinmill',
         ];
     }
 

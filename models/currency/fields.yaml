@@ -3,6 +3,20 @@
 # ===================================
 
 fields:
+    is_enabled:
+        label: Enabled
+        type: checkbox
+        comment: Make currency available.
+        span: auto
+        default: true
+
+    is_primary:
+        label: Default
+        type: checkbox
+        comment: Use this as the default currency.
+        span: auto
+        default: true
+
     currency_code:
       label: Currency code
       comment: International currency code, e.g. USD

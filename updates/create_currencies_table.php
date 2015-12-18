@@ -18,7 +18,7 @@ class CreateCurrenciesTable extends Migration
             $table->string('thousand_separator', 1)->nullable();
             $table->boolean('place_symbol_before')->default(true);
             $table->boolean('is_enabled')->default(false);
-            $table->boolean('is_default')->default(false);
+            $table->boolean('is_primary')->default(false);
             $table->timestamps();
         });
     }

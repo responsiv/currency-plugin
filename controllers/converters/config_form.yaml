@@ -1,0 +1,21 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Converter
+
+# Model Form Field configuration
+form: $/responsiv/currency/models/exchangeconverter/fields.yaml
+
+# Model Class name
+modelClass: Responsiv\Currency\Models\ExchangeConverter
+
+# Default redirect location
+defaultRedirect: responsiv/currency/converters
+
+# Update page
+update:
+    title: Edit Converter
+    redirect: responsiv/currency/converters
+    redirectClose: responsiv/currency/converters

@@ -1,5 +1,6 @@
 1.0.1:
   - First version of Currency
-  - create_rates_table.php
-  - create_converters_table.php
+  - create_exchange_converters_table.php
+  - create_exchange_rates_table.php
   - create_currencies_table.php
+  - seed_all_tables.php

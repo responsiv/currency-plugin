@@ -1,0 +1,16 @@
+# ===================================
+#  Exchange Field Definitions
+# ===================================
+
+fields:
+    api_username:
+        label: API Username
+        comment: Specify your XE API username.
+        span: auto
+        tab: Configuration
+
+    api_password:
+        label: API Password
+        comment: Specify your XE API password.
+        span: auto
+        tab: Configuration

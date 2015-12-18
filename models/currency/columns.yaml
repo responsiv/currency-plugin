@@ -6,12 +6,20 @@ columns:
     currency_code:
         label: Code
         searchable: yes
+        width: 150px
 
-    is_default:
+    example:
+        sortable: false
+        type: partial
+        path: example_column
+
+    is_primary:
         label: Default
         type: switch
+        width: 150px
 
     is_enabled:
         label: Enabled
         type: switch
         invisible: true
+        width: 150px
