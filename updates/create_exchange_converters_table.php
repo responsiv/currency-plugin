@@ -8,7 +8,7 @@ class CreateConvertersTable extends Migration
 
     public function up()
     {
-        Schema::create('responsiv_currency_converters', function($table)
+        Schema::create('responsiv_currency_exchange_converters', function($table)
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
@@ -21,7 +21,7 @@ class CreateConvertersTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('responsiv_currency_converters');
+        Schema::dropIfExists('responsiv_currency_exchange_converters');
     }
 
 }

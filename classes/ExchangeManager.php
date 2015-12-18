@@ -3,18 +3,22 @@
 use File;
 use Response;
 use System\Classes\PluginManager;
+use October\Rain\Support\Collection;
 use Responsiv\Currency\Models\Converter as ConverterModel;
+use October\Rain\Support\Singleton;
 
 /**
- * Manages converter types
+ * Manages converter exchanges
+ *
+ * To create an instance of this singleton:
+ *
+ *   ExchangeManager::instance();
  *
  * @package Responsiv.Currency
  * @author Responsiv Internet
  */
-class ConverterManager
+class ExchangeManager extends Singleton
 {
-    use \October\Rain\Support\Traits\Singleton;
-
     /**
      * @var array Cache of registration callbacks.
      */
@@ -29,6 +33,14 @@ class ConverterManager
      * @var System\Classes\PluginManager
      */
     protected $pluginManager;
+
+    /**
+     * {@inheritDoc}
+     */
+    protected static function getSingletonAccessor()
+    {
+        return 'responsiv.currency.exchangemanager';
+    }
 
     /**
      * Initialize this singleton.
@@ -76,7 +88,7 @@ class ConverterManager
      * registerConverters() function. The manager instance is passed to the
      * callback function as an argument. Usage:
      * <pre>
-     *   ConverterManager::registerCallback(function($manager){
+     *   ExchangeManager::registerCallback(function($manager){
      *       $manager->registerConverters([...]);
      *   });
      * </pre>
@@ -112,16 +124,16 @@ class ConverterManager
 
     /**
      * Returns a list of the converter type classes.
-     * @param boolean $withObjects With extended information found in the class object.
+     * @param boolean $asObject As a collection with extended information found in the class object.
      * @return array
      */
-    public function listConverters($withObjects = false)
+    public function listConverters($asObject = true)
     {
         if ($this->converters === null) {
             $this->loadConverters();
         }
 
-        if (!$withObjects) {
+        if (!$asObject) {
             return $this->converters;
         }
 
@@ -146,7 +158,7 @@ class ConverterManager
             ];
         }
 
-        return $collection;
+        return new Collection($collection);
     }
 
     /**

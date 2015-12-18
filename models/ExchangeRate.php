@@ -6,13 +6,13 @@ use Carbon\Carbon;
 /**
  * Exchange Rate Model
  */
-class Rate extends Model
+class ExchangeRate extends Model
 {
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'responsiv_currency_rates';
+    public $table = 'responsiv_currency_exchange_rates';
 
     /**
      * @var array Fillable fields

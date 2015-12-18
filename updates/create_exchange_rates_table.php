@@ -8,7 +8,7 @@ class CreateRatesTable extends Migration
 
     public function up()
     {
-        Schema::create('responsiv_currency_rates', function($table)
+        Schema::create('responsiv_currency_exchange_rates', function($table)
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
@@ -22,7 +22,7 @@ class CreateRatesTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('responsiv_currency_rates');
+        Schema::dropIfExists('responsiv_currency_exchange_rates');
     }
 
 }

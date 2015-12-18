@@ -1,0 +1,14 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    class_name:
+        label: Converter
+        type: dropdown
+        attributes:
+            onChange: $(this).request('onRefresh')
+
+    refresh_interval:
+        label: Update interval
+        type: dropdown

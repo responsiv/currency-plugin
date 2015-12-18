@@ -9,7 +9,7 @@ use System\Classes\ModelBehavior;
  * Represents a currency converter service.
  * All other converters must be derived from this class
  */
-class ConverterBase extends ModelBehavior
+abstract class ExchangeBase extends ModelBehavior
 {
     use \System\Traits\ConfigMaker;
 
@@ -74,6 +74,14 @@ class ConverterBase extends ModelBehavior
     }
 
     /**
+     * Returns an exchange rate for two currencies.
+     * @param string $fromCurrency Currency code to convert from (eg: USD)
+     * @param string $toCurrency Currency code to convert to (eg: AUD)
+     * @return float
+     */
+    abstract public function getExchangeRate($fromCurrency, $toCurrency);
+
+    /**
      * Extra field configuration for the converter type.
      */
     public function defineFormFields()
@@ -102,30 +110,6 @@ class ConverterBase extends ModelBehavior
     public function getFieldConfig()
     {
         return $this->fieldConfig;
-    }
-
-    /**
-     * Returns the exchange rate for two currencies.
-     * @param string $fromCurrency Currency code to convert from (eg: USD)
-     * @param string $toCurrency Currency code to convert to (eg: AUD)
-     * @return int
-     */
-    public function getRate($fromCurrency, $toCurrency)
-    {
-
-    }
-
-    /**
-     * Convert a currency value from one currency to another.
-     * @param number $value Specifies a value to convert
-     * @param string $fromCurrency Currency code to convert from (eg: USD)
-     * @param string $toCurrency Currency code to convert to (eg: AUD)
-     * @param int $round Number of decimal digits to round the result to. Specify NULL to disable.
-     * @return int
-     */
-    public function convert($value, $fromCurrency, $toCurrency, $round = 2)
-    {
-
     }
 
     /**
