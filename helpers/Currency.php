@@ -25,12 +25,13 @@ class Currency
         $result = $number;
 
         extract(array_merge([
-            'toCurrency' => null,
-            'fromCurrency' => null,
+            'to' => null,
+            'from' => null,
             'format' => null, // long|short
         ], $options));
 
-        $toCurrency = strtoupper($toCurrency);
+        $toCurrency = strtoupper($to);
+        $fromCurrency = strtoupper($from);
         $decimals = $format == 'short' ? 0 : 2;
 
         if ($toCurrency) {
@@ -65,4 +66,5 @@ class Currency
     {
         return CurrencyModel::getPrimary()->currency_code;
     }
+
 }
