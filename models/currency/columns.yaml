@@ -4,7 +4,7 @@
 
 columns:
     currency_code:
-        label: Code
+        label: responsiv.currency::lang.currency.code
         searchable: yes
         width: 150px
 
@@ -14,12 +14,12 @@ columns:
         path: example_column
 
     is_primary:
-        label: Default
+        label: responsiv.currency::lang.currency.is_primary
         type: switch
         width: 150px
 
     is_enabled:
-        label: Enabled
+        label: responsiv.currency::lang.currency.is_enabled
         type: switch
         invisible: true
         width: 150px

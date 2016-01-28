@@ -4,6 +4,7 @@ use BackendMenu;
 use Backend\Classes\Controller;
 use System\Classes\SettingsManager;
 use Responsiv\Currency\Models\ExchangeConverter;
+use Exception;
 
 /**
  * Converters Back-end Controller
@@ -21,7 +22,7 @@ class Converters extends Controller
         parent::__construct();
 
         BackendMenu::setContext('October.System', 'system', 'settings');
-        SettingsManager::setContext('Responsiv.Currency', 'currencies');
+        SettingsManager::setContext('Responsiv.Currency', 'converters');
     }
 
     public function index()
