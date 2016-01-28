@@ -1,8 +1,6 @@
 <?php namespace Responsiv\Currency\Classes;
 
-use Str;
 use URL;
-use File;
 use System\Classes\ModelBehavior;
 
 /**
@@ -123,4 +121,3 @@ abstract class ExchangeBase extends ModelBehavior
     }
 
 }
-

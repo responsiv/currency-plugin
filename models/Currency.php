@@ -1,7 +1,9 @@
 <?php namespace Responsiv\Currency\Models;
 
+use Lang;
 use Model;
 use Cache;
+use ValidationException;
 
 /**
  * Currency Model
@@ -152,8 +154,8 @@ class Currency extends Model
 
     /**
      * Scope for checking if model is enabled
-     * @param  Builder $query
-     * @return Builder
+     * @param  \October\Rain\Database\Builder $query
+     * @return \October\Rain\Database\Builder
      */
     public function scopeIsEnabled($query)
     {
@@ -208,9 +210,9 @@ class Currency extends Model
      */
     public static function isValid($currency)
     {
-        $languages = array_keys(Currency::listEnabled());
+        $currencies = array_keys(Currency::listEnabled());
 
-        return in_array($currency, $languages);
+        return in_array($currency, $currencies);
     }
 
     /**

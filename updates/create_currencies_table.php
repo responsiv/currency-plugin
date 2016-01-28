@@ -12,6 +12,7 @@ class CreateCurrenciesTable extends Migration
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->string('name')->nullable();
             $table->string('currency_code', 10)->index()->nullable();
             $table->string('currency_symbol', 10)->nullable();
             $table->string('decimal_point', 1)->nullable();

@@ -1,10 +1,7 @@
 <?php namespace Responsiv\Currency\Classes;
 
-use File;
-use Response;
 use System\Classes\PluginManager;
 use October\Rain\Support\Collection;
-use Responsiv\Currency\Models\Converter as ConverterModel;
 use October\Rain\Support\Singleton;
 
 /**
@@ -30,7 +27,7 @@ class ExchangeManager extends Singleton
     private $converters;
 
     /**
-     * @var System\Classes\PluginManager
+     * @var \System\Classes\PluginManager
      */
     protected $pluginManager;
 
