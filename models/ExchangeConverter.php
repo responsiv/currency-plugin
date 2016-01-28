@@ -49,7 +49,7 @@ class ExchangeConverter extends Model
     /**
      * @var array Attributes that have been spliced in from config data and should be purged.
      */
-    protected $splicedAttributes;
+    protected $splicedAttributes = [];
 
     /**
      * Returns the first exchange converter. There can be only one.
