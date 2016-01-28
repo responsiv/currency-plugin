@@ -20,7 +20,20 @@ return [
         'is_primary_help' => 'Use this as the default currency.',
         'is_enabled' => 'Enabled',
         'is_enabled_help' => 'Make currency available.',
+        'currency_code' => 'Currency code',
+        'currency_code_help' => 'International currency code, e.g. USD',
+        'currency_symbol' => 'Symbol',
+        'currency_symbol_help' => 'Symbol to put beside amount, e.g. $',
+        'decimal_point' => 'Decimal Point',
+        'decimal_point_help' => 'Character to use as decimal point',
+        'thousand_separator' => 'Thousand Separator',
+        'thousand_separator_help' => 'Character to separate thousands',
+        'place_symbol_before' => 'Place symbol before number',
         'not_available_help' => 'There are no other currencies set up.',
         'hint_currencies' => 'Create new currencies here for translating front-end content. The default currency represents the content before it has been translated.',
     ],
+    'converter' => [
+        'class_name' => 'Converter',
+        'refresh_interval' => 'Update interval'
+    ]
 ];

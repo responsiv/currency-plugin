@@ -4,11 +4,11 @@
 
 fields:
     class_name:
-        label: Converter
+        label: responsiv.currency::lang.converter.class_name
         type: dropdown
         attributes:
             onChange: $(this).request('onRefresh')
 
     refresh_interval:
-        label: Update interval
+        label: responsiv.currency::lang.converter.refresh_interval
         type: dropdown
