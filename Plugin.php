@@ -2,6 +2,7 @@
 
 use Backend;
 use System\Classes\PluginBase;
+use Illuminate\Foundation\AliasLoader;
 
 /**
  * Currency Plugin Information File
@@ -22,6 +23,15 @@ class Plugin extends PluginBase
             'author'      => 'Responsiv Internet',
             'icon'        => 'icon-usd'
         ];
+    }
+
+    /**
+     * Register method, called when the plugin is first registered.
+     */
+    public function register()
+    {
+        $alias = AliasLoader::getInstance();
+        $alias->alias('Currency', 'Responsiv\Currency\Facades\Currency');
     }
 
     /**
