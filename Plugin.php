@@ -70,7 +70,7 @@ class Plugin extends PluginBase
                 'order'       => 500,
             ],
             'converters' => [
-                'label'       => 'Currency Converters',
+                'label'       => 'Currency converters',
                 'description' => 'Select and manage the currency converter to use.',
                 'icon'        => 'icon-calculator',
                 'url'         => Backend::url('responsiv/currency/converters'),
