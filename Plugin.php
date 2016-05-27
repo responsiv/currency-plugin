@@ -9,7 +9,6 @@ use Illuminate\Foundation\AliasLoader;
  */
 class Plugin extends PluginBase
 {
-
     /**
      * Returns information about this plugin.
      *
@@ -21,7 +20,8 @@ class Plugin extends PluginBase
             'name'        => 'Currency',
             'description' => 'Tools for currency display and conversion',
             'author'      => 'Responsiv Internet',
-            'icon'        => 'icon-usd'
+            'icon'        => 'icon-usd',
+            'homepage'    => 'https://github.com/responsiv/currency-plugin'
         ];
     }
 
@@ -52,9 +52,9 @@ class Plugin extends PluginBase
 
         return [
             'responsiv.currency.some_permission' => [
-                'tab' => 'Currency',
+                'tab'   => 'Currency',
                 'label' => 'Some permission'
-            ],
+            ]
         ];
     }
 
@@ -67,7 +67,7 @@ class Plugin extends PluginBase
                 'icon'        => 'icon-usd',
                 'url'         => Backend::url('responsiv/currency/currencies'),
                 'category'    => 'Currency',
-                'order'       => 500,
+                'order'       => 500
             ],
             'converters' => [
                 'label'       => 'Currency converters',
@@ -75,8 +75,8 @@ class Plugin extends PluginBase
                 'icon'        => 'icon-calculator',
                 'url'         => Backend::url('responsiv/currency/converters'),
                 'category'    => 'Currency',
-                'order'       => 510,
-            ],
+                'order'       => 510
+            ]
         ];
     }
 
@@ -88,7 +88,7 @@ class Plugin extends PluginBase
     {
         return [
             'filters' => [
-                'currency' => ['Responsiv\Currency\Facades\Currency', 'format'],
+                'currency' => ['Responsiv\Currency\Facades\Currency', 'format']
             ]
         ];
     }
@@ -108,5 +108,4 @@ class Plugin extends PluginBase
             // 'Responsiv\Currency\ExchangeTypes\Coinmill'            => 'coinmill',
         ];
     }
-
 }
