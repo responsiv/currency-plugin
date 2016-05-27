@@ -1,0 +1,55 @@
+<?= Form::open(['id' => 'disableForm']) ?>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="popup">&times;</button>
+        <h4 class="modal-title"><?= e(trans('responsiv.currency::lang.currency.enable_or_disable_title')) ?></h4>
+    </div>
+    <div class="modal-body">
+
+        <?php if ($this->fatalError): ?>
+            <p class="flash-message static error"><?= $fatalError ?></p>
+        <?php endif ?>
+
+        <p><?= e(trans('responsiv.currency::lang.currency.selected_amount', ['amount' => count($checked)])) ?></p>
+
+        <div class="form-preview">
+
+            <div class="form-group">
+                <!-- Checkbox -->
+                <div class="checkbox custom-checkbox">
+                    <input
+                        type="checkbox"
+                        name="enable"
+                        value="1"
+                        id="currencyDisable">
+                    <label for="currencyDisable">
+                        <?= e(trans('responsiv.currency::lang.currency.enabled_label')) ?>
+                    </label>
+                    <p class="help-block"><?= e(trans('responsiv.currency::lang.currency.enabled_help')) ?></p>
+                </div>
+            </div>
+
+        </div>
+
+        <?php foreach ($checked as $id): ?>
+            <input type="hidden" name="checked[]" value="<?= $id ?>" />
+        <?php endforeach ?>
+
+    </div>
+
+    <div class="modal-footer">
+        <button
+            type="submit"
+            class="btn btn-primary"
+            data-request="onDisableCurrencies"
+            data-request-confirm="<?= e(trans('backend::lang.form.action_confirm')) ?>"
+            data-stripe-load-indicator>
+            <?= e(trans('backend::lang.form.apply')) ?>
+        </button>
+        <button
+            type="button"
+            class="btn btn-default"
+            data-dismiss="popup">
+            <?= e(trans('backend::lang.form.cancel')) ?>
+        </button>
+    </div>
+<?= Form::close() ?>
