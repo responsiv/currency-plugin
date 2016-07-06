@@ -36,11 +36,11 @@ return [
         'thousand_separator' => 'Разделитель тысяч',
         'thousand_separator_help' => 'Символ для разделения тысяч',
         'place_symbol_before' => 'Поместить символ перед суммой',
-        'not_available_help' => 'There are no other currencies set up.',
-        'hint_currencies' => 'Create new currencies here for translating front-end content. The default currency represents the content before it has been translated.',
+        'not_available_help' => 'Нет других валют',
+        'hint_currencies' => 'Создайте еще одну валюту для того чтобы получить возможность конвертировать их между собой',
     ],
     'converter' => [
-        'class_name' => 'Ковертер',
+        'class_name' => 'Конвертер',
         'refresh_interval' => 'Интервал обновления курсов валют'
     ]
 ];
