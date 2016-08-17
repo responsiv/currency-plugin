@@ -1,0 +1,18 @@
+{
+    "name": "responsiv/currency",
+    "type": "october-plugin",
+    "description": "Currency plugin for OctoberCMS",
+    "homepage": "https://octobercms.com/plugin/responsiv-currency",
+    "keywords": ["october", "cms", "responsiv", "currency"],
+    "authors": [
+        {
+            "name": "Samuel Georges",
+            "email": "daftspunky@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "composer/installers": "~1.0"
+    },
+    "minimum-stability": "dev"
+}
