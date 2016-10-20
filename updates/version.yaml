@@ -4,3 +4,4 @@
   - create_exchange_rates_table.php
   - create_currencies_table.php
   - seed_all_tables.php
+1.0.2: Add currency form widget and list column type.
