@@ -3,6 +3,7 @@
 use Backend;
 use System\Classes\PluginBase;
 use Illuminate\Foundation\AliasLoader;
+use Responsiv\Currency\Facades\Currency as CurrencyFacade;
 
 /**
  * Currency Plugin Information File
@@ -88,7 +89,33 @@ class Plugin extends PluginBase
     {
         return [
             'filters' => [
-                'currency' => ['Responsiv\Currency\Facades\Currency', 'format']
+                'currency' => [CurrencyFacade::class, 'format']
+            ]
+        ];
+    }
+
+    /**
+     * Register new list column types
+     * @return array
+     */
+    public function registerListColumnTypes()
+    {
+        return [
+            'currency' => function($value) {
+                return CurrencyFacade::format($value, ['format' => 'short']);
+            }
+        ];
+    }
+
+    /**
+     * Registers any form widgets implemented in this plugin.
+     */
+    public function registerFormWidgets()
+    {
+        return [
+            'Responsiv\Currency\FormWidgets\Currency' => [
+                'label' => 'Currency',
+                'code'  => 'currency'
             ]
         ];
     }
