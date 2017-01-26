@@ -22,6 +22,7 @@ return [
         'enable_success' => 'Successfully enabled those currencies.',
         'disable_success' => 'Successfully disabled those currencies.',
         'name' => 'Name',
+        'name_help' => 'Human readable name',
         'code' => 'Code',
         'is_primary' => 'Default',
         'is_primary_help' => 'Use this as the default currency.',
