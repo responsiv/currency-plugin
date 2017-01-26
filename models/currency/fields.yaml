@@ -17,6 +17,12 @@ fields:
         span: auto
         default: true
 
+    name:
+        label: responsiv.currency::lang.currency.name
+        comment: responsiv.currency::lang.currency.name_help
+        span: full
+        tab: Currency
+        
     currency_code:
         label: responsiv.currency::lang.currency.currency_code
         comment: responsiv.currency::lang.currency.currency_code_help
