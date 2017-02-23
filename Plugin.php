@@ -49,12 +49,10 @@ class Plugin extends PluginBase
      */
     public function registerPermissions()
     {
-        return []; // Remove this line to activate
-
         return [
-            'responsiv.currency.some_permission' => [
+            'responsiv.currency.access_settings' => [
                 'tab'   => 'Currency',
-                'label' => 'Some permission'
+                'label' => 'Manage currency settings'
             ]
         ];
     }
@@ -68,7 +66,8 @@ class Plugin extends PluginBase
                 'icon'        => 'icon-usd',
                 'url'         => Backend::url('responsiv/currency/currencies'),
                 'category'    => 'Currency',
-                'order'       => 500
+                'order'       => 500,
+                'permissions' => ['responsiv.currency.access_settings']
             ],
             'converters' => [
                 'label'       => 'Currency converters',
@@ -76,7 +75,8 @@ class Plugin extends PluginBase
                 'icon'        => 'icon-calculator',
                 'url'         => Backend::url('responsiv/currency/converters'),
                 'category'    => 'Currency',
-                'order'       => 510
+                'order'       => 510,
+                'permissions' => ['responsiv.currency.access_settings']
             ]
         ];
     }
