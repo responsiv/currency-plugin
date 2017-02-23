@@ -8,6 +8,10 @@ columns:
         searchable: yes
         width: 150px
 
+    name:
+        label: responsiv.currency::lang.currency.name
+        searchable: yes
+        
     example:
         sortable: false
         type: partial
