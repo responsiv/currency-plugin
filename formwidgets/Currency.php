@@ -1,6 +1,7 @@
 <?php namespace Responsiv\Currency\FormWidgets;
 
 use Html;
+use Backend\Classes\FormField;
 use Backend\Classes\FormWidgetBase;
 use Responsiv\Currency\Models\Currency as CurrencyModel;
 use RainLab\Location\Models\Setting;
@@ -65,10 +66,23 @@ class Currency extends FormWidgetBase
     /**
      * {@inheritDoc}
      */
+    public function getSaveValue($value)
+    {
+        if ($this->formField->disabled || $this->formField->hidden) {
+            return FormField::NO_SAVE_DATA;
+        }
+
+        if (!strlen($value)) {
+            return null;
+        }
+
+        return $value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function loadAssets()
     {
-        // $apiKey = Setting::get('google_maps_key');
-        // $this->addJs('//maps.googleapis.com/maps/api/js?libraries=places&key='.$apiKey);
-        // $this->addJs('js/location-autocomplete.js', 'core');
     }
 }
