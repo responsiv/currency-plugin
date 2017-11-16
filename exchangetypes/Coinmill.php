@@ -32,5 +32,4 @@ class Coinmill extends ExchangeBase
     {
         return [];
     }
-
 }

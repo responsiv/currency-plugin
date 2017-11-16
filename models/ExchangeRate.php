@@ -8,7 +8,6 @@ use Carbon\Carbon;
  */
 class ExchangeRate extends Model
 {
-
     /**
      * @var string The database table used by the model.
      */
@@ -24,5 +23,4 @@ class ExchangeRate extends Model
         $date = Carbon::now()->subDays(90);
         $this->newQuery()->where('created_at', '<', $date)->delete();
     }
-
 }

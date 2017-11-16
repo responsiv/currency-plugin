@@ -19,9 +19,9 @@ This method takes an options argument, as an array that supports various values.
 * from: From a currency code
 * format: Display format. Options: long, short, null.
 
-For example, to convert an amount from USD to BTC:
+For example, to convert an amount from USD to AUD:
 
-    Currency::format(10, ['from' => 'USD', 'to' => 'BTC']);
+    Currency::format(10, ['from' => 'USD', 'to' => 'AUD']);
 
 To display a currency in long or short format
 

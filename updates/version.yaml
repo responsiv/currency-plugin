@@ -5,3 +5,4 @@
   - create_currencies_table.php
   - seed_all_tables.php
 1.0.2: Add currency form widget and list column type.
+1.0.3: Add new exchanges Fixer and CoinMarketCap. Yahoo exchange has been discontinued.

@@ -24,5 +24,4 @@ class XeServices extends ExchangeBase
     {
         return 1;
     }
-
 }

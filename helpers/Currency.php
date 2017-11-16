@@ -13,7 +13,6 @@ use Responsiv\Currency\Classes\Converter as CurrencyConverter;
  */
 class Currency
 {
-
     /**
      * Formats a number to currency.
      * @param int $number
@@ -28,11 +27,15 @@ class Currency
             'to' => null,
             'from' => null,
             'format' => null, // long|short
+            'decimals' => null
         ], $options));
 
         $toCurrency = strtoupper($to);
         $fromCurrency = strtoupper($from);
-        $decimals = $format == 'short' ? 0 : 2;
+
+        if ($decimals === null) {
+            $decimals = $format == 'short' ? 0 : 2;
+        }
 
         if ($toCurrency) {
             $result = $this->convert($result, $toCurrency, $fromCurrency);
@@ -59,12 +62,11 @@ class Currency
             $fromCurrency = $this->primaryCode();
         }
 
-        return CurrencyConverter::instance()->convert($value, $fromCurrency, $toCurrency);
+        return CurrencyConverter::instance()->convert($value, $fromCurrency, $toCurrency, null);
     }
 
     public function primaryCode()
     {
         return CurrencyModel::getPrimary()->currency_code;
     }
-
 }

@@ -224,5 +224,4 @@ class Currency extends Model
         Cache::forget('responsiv.currency.currencies');
         Cache::forget('responsiv.currency.primaryCurrency');
     }
-
 }
