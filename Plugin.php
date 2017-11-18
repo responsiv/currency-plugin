@@ -102,7 +102,7 @@ class Plugin extends PluginBase
     {
         return [
             'currency' => function($value) {
-                return CurrencyFacade::format($value, ['format' => 'short']);
+                return CurrencyFacade::format($value);
             }
         ];
     }
