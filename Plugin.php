@@ -101,8 +101,8 @@ class Plugin extends PluginBase
     public function registerListColumnTypes()
     {
         return [
-            'currency' => function($value) {
-                return CurrencyFacade::format($value, ['format' => 'short']);
+            'currency' => function($value, $column) {
+                return CurrencyFacade::format($value, ['format' => $column->format]);
             }
         ];
     }
