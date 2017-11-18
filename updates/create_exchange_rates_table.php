@@ -14,7 +14,7 @@ class CreateRatesTable extends Migration
             $table->increments('id');
             $table->string('from_currency', 3)->nullable();
             $table->string('to_currency', 3)->nullable();
-            $table->decimal('rate', 15, 4)->nullable();
+            $table->decimal('rate', 15, 8)->nullable();
             $table->index(['from_currency', 'to_currency'], 'from_currency_to_currency');
             $table->timestamps();
         });
