@@ -24,25 +24,28 @@ class Currency
         $result = $number;
 
         extract(array_merge([
-            'to' => null,
-            'from' => null,
-            'format' => null, // long|short
-            'decimals' => null
+            'in' => null,        // Currency code to display in (default fallback)
+            'to' => null,        // Convert to currency
+            'from' => null,      // Convert from currency (default fallback)
+            'format' => null,    // Display format (long|short)
+            'decimals' => null,  // Decimal override
         ], $options));
-
-        $toCurrency = strtoupper($to);
-        $fromCurrency = strtoupper($from);
 
         if ($decimals === null) {
             $decimals = $format == 'short' ? 0 : 2;
         }
 
+        $toCurrency = strtoupper($to);
+        $fromCurrency = strtoupper($from);
+
         if ($toCurrency) {
             $result = $this->convert($result, $toCurrency, $fromCurrency);
         }
 
-        $currencyObj = $toCurrency
-            ? CurrencyModel::findByCode($toCurrency)
+        $currencyCode = $toCurrency ?: $in;
+
+        $currencyObj = $currencyCode
+            ? CurrencyModel::findByCode($currencyCode)
             : CurrencyModel::getPrimary();
 
         $result = $currencyObj
