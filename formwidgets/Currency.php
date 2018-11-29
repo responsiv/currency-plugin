@@ -63,6 +63,12 @@ class Currency extends FormWidgetBase
         $this->vars['symbolBefore'] = $currencyObj ? $currencyObj->place_symbol_before : true;
     }
 
+    public function getLoadValue()
+    {
+        $currencyObj = CurrencyModel::getPrimary();
+        return number_format(parent::getLoadValue(), 2, $currencyObj->decimal_point, "");
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -76,7 +82,8 @@ class Currency extends FormWidgetBase
             return null;
         }
 
-        return $value;
+        $currencyObj = CurrencyModel::getPrimary();
+        return floatval(str_replace($currencyObj->decimal_point,'.',$value));
     }
 
     /**
