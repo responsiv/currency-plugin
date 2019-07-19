@@ -61,20 +61,20 @@ class Plugin extends PluginBase
     {
         return [
             'currencies' => [
-                'label'       => 'Currencies',
-                'description' => 'Create and configure available currencies.',
-                'icon'        => 'icon-usd',
+                'label'       => 'responsiv.currency::lang.currency.currencies',
+                'description' => 'responsiv.currency::lang.currency.description',
+                'icon'        => 'icon-eur',
                 'url'         => Backend::url('responsiv/currency/currencies'),
-                'category'    => 'Currency',
+                'category'    => 'responsiv.currency::lang.plugin.tab',
                 'order'       => 500,
                 'permissions' => ['responsiv.currency.access_settings']
             ],
             'converters' => [
-                'label'       => 'Currency converters',
-                'description' => 'Select and manage the currency converter to use.',
+                'label'       => 'responsiv.currency::lang.converter.title',
+                'description' => 'responsiv.currency::lang.converter.description',
                 'icon'        => 'icon-calculator',
                 'url'         => Backend::url('responsiv/currency/converters'),
-                'category'    => 'Currency',
+                'category'    => 'responsiv.currency::lang.plugin.tab',
                 'order'       => 510,
                 'permissions' => ['responsiv.currency.access_settings']
             ]
