@@ -46,7 +46,7 @@ return [
     ],
     'converter' => [
         'class_name' => 'Converter',
-        'refresh_interval' => 'Update interval'
+        'refresh_interval' => 'Update interval',
         'title' => 'Currency converters',
         'description' => 'Select and manage the currency converter to use.'
     ]
