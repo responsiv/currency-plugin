@@ -22,7 +22,7 @@
                     data-hotkey="ctrl+s, cmd+s"
                     data-load-indicator="Saving Converter..."
                     class="btn btn-primary">
-                    <u>S</u>ave
+                    <?= e(trans('backend::lang.form.save')) ?>
                 </button>
                 <button
                     type="button"
@@ -31,7 +31,7 @@
                     data-hotkey="ctrl+enter, cmd+enter"
                     data-load-indicator="Saving Converter..."
                     class="btn btn-default">
-                    Save and Close
+                    <?= e(trans('backend::lang.form.save_and_close')) ?>
                 </button>
                 <button
                     type="button"
@@ -41,7 +41,7 @@
                     data-request-confirm="Delete this converter?">
                 </button>
                 <span class="btn-text">
-                    or <a href="<?= Backend::url('responsiv/currency/converters') ?>">Cancel</a>
+                    <?= e(trans('backend::lang.form.or')) ?> <a href="<?= Backend::url('responsiv/currency/converters') ?>"><?= e(trans('backend::lang.form.cancel')) ?></a>
                 </span>
             </div>
         </div>
@@ -51,6 +51,6 @@
 <?php else: ?>
 
     <p class="flash-message static error"><?= e($this->fatalError) ?></p>
-    <p><a href="<?= Backend::url('responsiv/currency/converters') ?>" class="btn btn-default">Return to converters list</a></p>
+    <p><a href="<?= Backend::url('responsiv/currency/converters') ?>" class="btn btn-default"><?= e(trans('rainlab.location::lang.locations.back_to_list')) ?></a></p>
 
 <?php endif ?>

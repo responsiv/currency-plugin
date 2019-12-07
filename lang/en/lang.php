@@ -39,9 +39,15 @@ return [
         'place_symbol_before' => 'Place symbol before number',
         'not_available_help' => 'There are no other currencies set up.',
         'hint_currencies' => 'Create new currencies here for translating front-end content. The default currency represents the content before it has been translated.',
+        'new_currency' => 'New Currency',
+        'example' => 'Example',
+        'currencies' => 'Currencies',
+        'description' => 'Create and configure available currencies.'
     ],
     'converter' => [
         'class_name' => 'Converter',
         'refresh_interval' => 'Update interval'
+        'title' => 'Currency converters',
+        'description' => 'Select and manage the currency converter to use.'
     ]
 ];

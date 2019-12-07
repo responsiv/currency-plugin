@@ -16,6 +16,7 @@ columns:
         sortable: false
         type: partial
         path: example_column
+        label: responsiv.currency::lang.currency.example
 
     is_primary:
         label: responsiv.currency::lang.currency.is_primary
