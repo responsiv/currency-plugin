@@ -66,6 +66,7 @@ class Currency extends FormWidgetBase
     public function getLoadValue()
     {
         $currencyObj = CurrencyModel::getPrimary();
+
         return number_format(parent::getLoadValue(), 2, $currencyObj->decimal_point, "");
     }
 
@@ -83,7 +84,8 @@ class Currency extends FormWidgetBase
         }
 
         $currencyObj = CurrencyModel::getPrimary();
-        return floatval(str_replace($currencyObj->decimal_point,'.',$value));
+
+        return floatval(str_replace($currencyObj->decimal_point, '.', $value));
     }
 
     /**
