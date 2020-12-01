@@ -44,7 +44,7 @@ class SeedAllTables extends Seeder
         Currency::create([
             'name' => 'Australian Dollar',
             'currency_code' => 'AUD',
-            'currency_symbol' => '$',
+            'currency_symbol' => 'A$',
             'decimal_point' => '.',
             'thousand_separator' => ',',
             'place_symbol_before' => true,
