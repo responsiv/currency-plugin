@@ -1,5 +1,5 @@
 {
-    "name": "responsiv/currency",
+    "name": "responsiv/currency-plugin",
     "type": "october-plugin",
     "description": "Currency plugin for OctoberCMS",
     "homepage": "https://octobercms.com/plugin/responsiv-currency",

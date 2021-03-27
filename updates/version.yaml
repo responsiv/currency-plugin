@@ -8,3 +8,4 @@
 1.0.3: Add new exchanges Fixer and CoinMarketCap. Yahoo exchange has been discontinued.
 1.0.4: Improvements to currency formatting parameters.
 1.0.5: Added Italian translation.
+1.0.6: Fixes bug in Currency form widget casting null to 0.00
