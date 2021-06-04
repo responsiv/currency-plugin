@@ -1,9 +1,9 @@
 {
     "name": "responsiv/currency-plugin",
-    "type": "october-plugin",
+    "type": "winter-plugin",
     "description": "Currency plugin for OctoberCMS",
-    "homepage": "https://octobercms.com/plugin/responsiv-currency",
-    "keywords": ["october", "cms", "responsiv", "currency"],
+    "homepage": "https://github.com/azaharizaman/currency-plugin",
+    "keywords": ["winter", "cms", "responsiv", "currency"],
     "authors": [
         {
             "name": "Samuel Georges",
