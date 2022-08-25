@@ -5,7 +5,7 @@
         id="<?= $this->getId() ?>"
         class="input-group">
         <?php if ($symbolBefore): ?>
-            <span class="input-group-addon"><?= e($symbol) ?></span>
+            <span class="input-group-addon input-group-text"><?= e($symbol) ?></span>
         <?php endif ?>
         <input
             name="<?= $name ?>"
@@ -17,7 +17,7 @@
             <?= $field->getAttributes() ?>
             />
         <?php if (!$symbolBefore): ?>
-            <span class="input-group-addon"><?= e($symbol) ?></span>
+            <span class="input-group-addon input-group-text"><?= e($symbol) ?></span>
         <?php endif ?>
     </div>
 <?php endif ?>
