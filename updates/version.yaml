@@ -1,11 +1,12 @@
-1.0.1:
+v1.0.1:
   - First version of Currency
   - create_exchange_converters_table.php
   - create_exchange_rates_table.php
   - create_currencies_table.php
   - seed_all_tables.php
-1.0.2: Add currency form widget and list column type.
-1.0.3: Add new exchanges Fixer and CoinMarketCap. Yahoo exchange has been discontinued.
-1.0.4: Improvements to currency formatting parameters.
-1.0.5: Added Italian translation.
-1.0.6: Fixes bug in Currency form widget casting null to 0.00
+v1.0.2: Add currency form widget and list column type.
+v1.0.3: Add new exchanges Fixer and CoinMarketCap. Yahoo exchange has been discontinued.
+v1.0.4: Improvements to currency formatting parameters.
+v1.0.5: Added Italian translation.
+v1.0.6: Fixes bug in Currency form widget casting null to 0.00
+v1.0.7: Fixes compatibility with October CMS v3
