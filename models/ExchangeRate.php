@@ -21,6 +21,6 @@ class ExchangeRate extends Model
     public static function deleteOld()
     {
         $date = Carbon::now()->subDays(90);
-        $this->newQuery()->where('created_at', '<', $date)->delete();
+        static::query()->where('created_at', '<', $date)->delete();
     }
 }
