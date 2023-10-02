@@ -53,7 +53,7 @@ class Currency
             : number_format($result, $decimals);
 
         if ($format == 'long') {
-            $result .= ' ' . ($toCurrency ?: $this->primaryCode());
+            $result .= ' ' . ($currencyCode ?: $this->primaryCode());
         }
 
         return $result;
