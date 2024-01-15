@@ -223,5 +223,10 @@ class Currency extends Model
     {
         Cache::forget('responsiv.currency.currencies');
         Cache::forget('responsiv.currency.primaryCurrency');
+
+        static::$cacheByCode = [];
+        static::$cacheListEnabled = null;
+        static::$cacheListAvailable = null;
+        static::$primaryCurrency = null;
     }
 }
