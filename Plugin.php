@@ -20,7 +20,7 @@ class Plugin extends PluginBase
         return [
             'name'        => 'Currency',
             'description' => 'Tools for currency display and conversion',
-            'author'      => 'Responsiv Internet',
+            'author'      => 'Responsiv Software',
             'icon'        => 'icon-usd',
             'homepage'    => 'https://github.com/responsiv/currency-plugin'
         ];

@@ -12,7 +12,7 @@ use October\Rain\Support\Singleton;
  *   ExchangeManager::instance();
  *
  * @package Responsiv.Currency
- * @author Responsiv Internet
+ * @author Responsiv Software
  */
 class ExchangeManager extends Singleton
 {
