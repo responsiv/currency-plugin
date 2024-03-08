@@ -6,13 +6,13 @@ use October\Rain\Support\Collection;
 use October\Rain\Support\Singleton;
 
 /**
- * Manages converter exchanges
+ * ExchangeManager manages currency conversion
  *
  * To create an instance of this singleton:
  *
- *   ExchangeManager::instance();
+ *     ExchangeManager::instance();
  *
- * @package Responsiv.Currency
+ * @package responsiv/currency
  * @author Responsiv Software
  */
 class ExchangeManager

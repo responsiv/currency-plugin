@@ -1,8 +1,8 @@
 <?php namespace Responsiv\Currency\Classes\ExchangeManager;
 
 use Carbon\Carbon;
-use Responsiv\Shop\Models\CurrencyRate;
-use Responsiv\Shop\Models\CurrencyConverter;
+use Responsiv\Currency\Models\ExchangeRate;
+use Responsiv\Currency\Models\ExchangeConverter;
 use Responsiv\Currency\Models\Currency as CurrencyModel;
 use ApplicationException;
 use Exception;
@@ -36,7 +36,7 @@ trait HasCurrencyExchange
         }
 
         // Look up in the database cache
-        $converter = CurrencyConverter::getDefault();
+        $converter = ExchangeConverter::getDefault();
         if (!$converter->class_name) {
             throw new ApplicationException('Currency rate converter is not configured.');
         }
@@ -44,7 +44,7 @@ trait HasCurrencyExchange
         $interval = $converter->refresh_interval;
         $intervalDate = Carbon::now()->subHours($interval);
 
-        $record = CurrencyRate::where('from_currency', $fromCurrency)
+        $record = ExchangeRate::where('from_currency', $fromCurrency)
             ->where('to_currency',  $toCurrency)
             ->where('created_at', '>', $intervalDate)
         ;
@@ -55,9 +55,9 @@ trait HasCurrencyExchange
 
         // Evaluate rate using a currency rate converter
         try {
-            $rate = $converter->getCurrencyRate($fromCurrency, $toCurrency);
+            $rate = $converter->getExchangeRate($fromCurrency, $toCurrency);
 
-            $record = new CurrencyRate;
+            $record = new ExchangeRate;
             $record->from_currency = $fromCurrency;
             $record->to_currency = $toCurrency;
             $record->rate = $rate;
@@ -67,7 +67,7 @@ trait HasCurrencyExchange
         }
         catch (Exception $ex) {
             // Load the most recent rate from the cache
-            $record = CurrencyRate::where('from_currency', $fromCurrency)
+            $record = ExchangeRate::where('from_currency', $fromCurrency)
                 ->where('to_currency',  $toCurrency)
                 ->orderBy('created_at', 'desc')
             ;
