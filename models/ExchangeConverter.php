@@ -1,7 +1,7 @@
 <?php namespace Responsiv\Currency\Models;
 
 use Model;
-use Responsiv\Currency\Classes\CurrencyManager;
+use Responsiv\Currency\Classes\ExchangeManager;
 
 /**
  * ExchangeConverter Model
@@ -80,7 +80,7 @@ class ExchangeConverter extends Model
      */
     public function getClassNameOptions()
     {
-        $converters = CurrencyManager::instance()->listConverters();
+        $converters = ExchangeManager::instance()->listConverters();
 
         $converters->sortBy('name');
 
