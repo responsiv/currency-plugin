@@ -29,7 +29,7 @@ class Converters extends SettingsController
     /**
      * @var string settingsItemCode determines the settings code
      */
-    public $settingsItemCode = 'currency_converters';
+    public $settingsItemCode = 'converters';
 
     /**
      * index
