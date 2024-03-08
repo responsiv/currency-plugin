@@ -2,11 +2,10 @@
 
 use Backend;
 use System\Classes\PluginBase;
-use Illuminate\Foundation\AliasLoader;
 use Responsiv\Currency\Facades\Currency as CurrencyFacade;
 
 /**
- * Currency Plugin Information File
+ * Plugin Information File
  */
 class Plugin extends PluginBase
 {
@@ -18,21 +17,35 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name'        => 'Currency',
+            'name' => 'Currency',
             'description' => 'Tools for currency display and conversion',
-            'author'      => 'Responsiv Software',
-            'icon'        => 'icon-usd',
-            'homepage'    => 'https://github.com/responsiv/currency-plugin'
+            'author' => 'Responsiv Software',
+            'icon' => 'icon-usd',
+            'homepage' => 'https://github.com/responsiv/currency-plugin'
         ];
     }
 
     /**
-     * Register method, called when the plugin is first registered.
+     * register the service provider.
      */
     public function register()
     {
-        $alias = AliasLoader::getInstance();
-        $alias->alias('Currency', 'Responsiv\Currency\Facades\Currency');
+        $this->registerSingletons();
+    }
+
+    /**
+     * boot the module events.
+     */
+    public function boot()
+    {
+    }
+
+    /**
+     * registerSingletons
+     */
+    protected function registerSingletons()
+    {
+        $this->app->singleton('currencies', \Responsiv\Currency\Classes\CurrencyManager::class);
     }
 
     /**
@@ -61,21 +74,21 @@ class Plugin extends PluginBase
     {
         return [
             'currencies' => [
-                'label'       => 'responsiv.currency::lang.currency.currencies',
+                'label' => 'responsiv.currency::lang.currency.currencies',
                 'description' => 'responsiv.currency::lang.currency.description',
-                'icon'        => 'icon-eur',
-                'url'         => Backend::url('responsiv/currency/currencies'),
-                'category'    => 'responsiv.currency::lang.plugin.tab',
-                'order'       => 500,
+                'icon' => 'icon-eur',
+                'url' => Backend::url('responsiv/currency/currencies'),
+                'category' => 'responsiv.currency::lang.plugin.tab',
+                'order' => 500,
                 'permissions' => ['responsiv.currency.access_settings']
             ],
             'converters' => [
-                'label'       => 'responsiv.currency::lang.converter.title',
+                'label' => 'responsiv.currency::lang.converter.title',
                 'description' => 'responsiv.currency::lang.converter.description',
-                'icon'        => 'icon-calculator',
-                'url'         => Backend::url('responsiv/currency/converters'),
-                'category'    => 'responsiv.currency::lang.plugin.tab',
-                'order'       => 510,
+                'icon' => 'icon-calculator',
+                'url' => Backend::url('responsiv/currency/converters'),
+                'category' => 'responsiv.currency::lang.plugin.tab',
+                'order' => 510,
                 'permissions' => ['responsiv.currency.access_settings']
             ]
         ];
