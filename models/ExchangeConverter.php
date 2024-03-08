@@ -1,10 +1,21 @@
 <?php namespace Responsiv\Currency\Models;
 
 use Model;
-use Responsiv\Currency\Classes\ExchangeManager;
+use Responsiv\Currency\Classes\CurrencyManager;
 
 /**
- * Converter Model
+ * ExchangeConverter Model
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $class_name
+ * @property int $refresh_interval
+ * @property array $config_data
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property \Illuminate\Support\Carbon $created_at
+ *
+ * @package responsiv\currency
+ * @author Alexey Bobkov, Samuel Georges
  */
 class ExchangeConverter extends Model
 {
@@ -17,43 +28,39 @@ class ExchangeConverter extends Model
     public $table = 'responsiv_currency_exchange_converters';
 
     /**
-     * @var array Guarded fields
-     */
-    protected $guarded = ['config_data'];
-
-    /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'name'
+    ];
 
     /**
-     * @var array List of attribute names which are json encoded and decoded from the database.
+     * @var array jsonable attribute names that are json encoded and decoded from the database
      */
     protected $jsonable = ['config_data'];
 
     /**
-     * @var array List of attribute names which should not be saved to the database.
+     * @var array purgeable list of attribute names which should not be saved to the database
      */
     protected $purgeable = ['converter_name'];
 
     /**
-     * @var array The rules to be applied to the data.
+     * @var array rules to be applied to the data.
      */
     public $rules = [];
 
     /**
-     * @var bool Set to false to disable automatic implementation of the converter type behavior.
+     * @var bool autoExtend is set to false to disable automatic implementation of the converter type behavior.
      */
     public $autoExtend = true;
 
     /**
-     * @var array Attributes that have been spliced in from config data and should be purged.
+     * @var array splicedAttributes that have been spliced in from config data and should be purged.
      */
     protected $splicedAttributes = [];
 
     /**
-     * Returns the first exchange converter. There can be only one.
-     * @return self
+     * getDefault returns the first exchange converter. There can be only one.
      */
     public static function getDefault()
     {
@@ -68,13 +75,21 @@ class ExchangeConverter extends Model
         return $obj;
     }
 
+    /**
+     * getClassNameOptions
+     */
     public function getClassNameOptions()
     {
-        $converters = ExchangeManager::instance()->listConverters();
+        $converters = CurrencyManager::instance()->listConverters();
+
         $converters->sortBy('name');
+
         return $converters->lists('name', 'class');
     }
 
+    /**
+     * getRefreshIntervalOptions
+     */
     public function getRefreshIntervalOptions()
     {
         return [
@@ -87,11 +102,11 @@ class ExchangeConverter extends Model
     }
 
     /**
-     * Extends this class with the converter class
-     * @param  string $class Class name
-     * @return boolean
+     * applyDriverClass extends this class with the converter class
+     * @param  string $class
+     * @return bool
      */
-    public function applyConverterClass($class = null)
+    public function applyDriverClass($class = null)
     {
         if (!$class) {
             $class = $this->class_name;
@@ -110,23 +125,32 @@ class ExchangeConverter extends Model
         return true;
     }
 
+    /**
+     * afterFetch
+     */
     public function afterFetch()
     {
         if ($this->autoExtend) {
-            $this->applyConverterClass();
+            $this->applyDriverClass();
         }
 
         $this->splicedAttributes = (array) $this->config_data;
         $this->attributes = array_merge($this->splicedAttributes, $this->attributes);
     }
 
+    /**
+     * beforeValidate
+     */
     public function beforeValidate()
     {
-        if (!$this->applyConverterClass()) {
-            return;
+        if ($this->applyDriverClass()) {
+            $this->getDriverObject()->validateDriverHost($this);
         }
     }
 
+    /**
+     * beforeSave
+     */
     public function beforeSave()
     {
         if (!$this->class_name) {
@@ -151,9 +175,23 @@ class ExchangeConverter extends Model
     }
 
     /**
+     * getDriverObject returns the gateway class extension object.
+     * @param  string $class Class name
+     * @return \Responsiv\Currency\Classes\ExchangeBase
+     */
+    public function getDriverObject($class = null)
+    {
+        if (!$class) {
+            $class = $this->class_name;
+        }
+
+        return $this->asExtension($class);
+    }
+
+    /**
      * {@inheritDoc}
      */
-    public function getConverterClass()
+    public function getDriverClass()
     {
         return $this->class_name;
     }

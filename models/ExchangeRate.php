@@ -4,20 +4,33 @@ use Model;
 use Carbon\Carbon;
 
 /**
- * Exchange Rate Model
+ * ExchangeRate Model
+ *
+ * @property int $id
+ * @property string $from_currency
+ * @property string $to_currency
+ * @property float $rate
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property \Illuminate\Support\Carbon $created_at
+ *
+ * @package responsiv\currency
+ * @author Alexey Bobkov, Samuel Georges
  */
 class ExchangeRate extends Model
 {
     /**
-     * @var string The database table used by the model.
+     * @var string table associated with the model
      */
     public $table = 'responsiv_currency_exchange_rates';
 
     /**
-     * @var array Fillable fields
+     * @var array fillable fields
      */
     protected $fillable = [];
 
+    /**
+     * deleteOld
+     */
     public static function deleteOld()
     {
         $date = Carbon::now()->subDays(90);
