@@ -1,10 +1,9 @@
-<?php namespace Responsiv\Currency\FormWidgets;
+<?php namespace Responsiv\Shop\FormWidgets;
 
-use Html;
 use Backend\Classes\FormField;
 use Backend\Classes\FormWidgetBase;
+use Responsiv\Currency\Classes\CurrencyManager;
 use Responsiv\Currency\Models\Currency as CurrencyModel;
-use RainLab\Location\Models\Setting;
 
 /**
  * Currency input
@@ -63,12 +62,17 @@ class Currency extends FormWidgetBase
         $this->vars['symbolBefore'] = $currencyObj ? $currencyObj->place_symbol_before : true;
     }
 
+    /**
+     * getLoadValue
+     */
     public function getLoadValue()
     {
-        $currencyObj = CurrencyModel::getPrimary();
         $value = parent::getLoadValue();
+        if ($value === null) {
+            return null;
+        }
 
-        return !is_null($value) ? number_format($value, 2, $currencyObj->decimal_point, "") : null;
+        return CurrencyManager::instance()->fromBaseValue($value);
     }
 
     /**
@@ -84,9 +88,7 @@ class Currency extends FormWidgetBase
             return null;
         }
 
-        $currencyObj = CurrencyModel::getPrimary();
-
-        return floatval(str_replace($currencyObj->decimal_point, '.', $value));
+        return CurrencyManager::instance()->toBaseValue($value);
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php namespace Responsiv\Currency;
 
 use Backend;
+use Currency;
 use System\Classes\PluginBase;
-use Responsiv\Currency\Facades\Currency as CurrencyFacade;
 
 /**
  * Plugin Information File
@@ -102,7 +102,7 @@ class Plugin extends PluginBase
     {
         return [
             'filters' => [
-                'currency' => [CurrencyFacade::class, 'format']
+                'currency' => [Currency::class, 'format']
             ]
         ];
     }
@@ -115,7 +115,7 @@ class Plugin extends PluginBase
     {
         return [
             'currency' => function($value, $column) {
-                return CurrencyFacade::format($value, ['format' => $column->format]);
+                return Currency::format($value, ['format' => $column->format]);
             }
         ];
     }
@@ -126,10 +126,7 @@ class Plugin extends PluginBase
     public function registerFormWidgets()
     {
         return [
-            'Responsiv\Currency\FormWidgets\Currency' => [
-                'label' => 'Currency',
-                'code'  => 'currency'
-            ]
+            \Responsiv\Currency\FormWidgets\Currency::class => 'currency',
         ];
     }
 
