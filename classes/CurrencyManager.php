@@ -13,8 +13,6 @@ use System\Classes\PluginManager;
 class CurrencyManager
 {
     use \Responsiv\Currency\Classes\CurrencyManager\HasCurrencyFormat;
-    use \Responsiv\Currency\Classes\CurrencyManager\HasCurrencyExchange;
-    use \Responsiv\Currency\Classes\CurrencyManager\HasCurrencyConverters;
 
     /**
      * @var PluginManager pluginManager
@@ -35,6 +33,26 @@ class CurrencyManager
     public static function instance(): static
     {
         return App::make('currencies');
+    }
+
+    /**
+     * convert
+     */
+    public function convert($value, $toCurrency, $fromCurrency = null)
+    {
+        if (!$fromCurrency) {
+            $fromCurrency = $this->primaryCode();
+        }
+
+        return ExchangeManager::instance()->convert($value, $fromCurrency, $toCurrency, null);
+    }
+
+    /**
+     * primaryCode
+     */
+    public function primaryCode()
+    {
+        return CurrencyModel::getPrimary()->currency_code;
     }
 
     /**

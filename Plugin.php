@@ -46,6 +46,7 @@ class Plugin extends PluginBase
     protected function registerSingletons()
     {
         $this->app->singleton('currencies', \Responsiv\Currency\Classes\CurrencyManager::class);
+        $this->app->singleton('responsiv.currency.exchanges', \Responsiv\Currency\Classes\ExchangeManager::class);
     }
 
     /**

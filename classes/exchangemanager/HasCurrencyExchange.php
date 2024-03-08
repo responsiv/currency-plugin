@@ -1,4 +1,4 @@
-<?php namespace Responsiv\Currency\Classes\CurrencyManager;
+<?php namespace Responsiv\Currency\Classes\ExchangeManager;
 
 use Carbon\Carbon;
 use Responsiv\Shop\Models\CurrencyRate;

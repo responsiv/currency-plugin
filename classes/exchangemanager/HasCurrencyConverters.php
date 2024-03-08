@@ -1,4 +1,4 @@
-<?php namespace Responsiv\Currency\Classes\CurrencyManager;
+<?php namespace Responsiv\Currency\Classes\ExchangeManager;
 
 use October\Rain\Support\Collection;
 
