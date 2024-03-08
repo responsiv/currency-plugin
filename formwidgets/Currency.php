@@ -1,4 +1,4 @@
-<?php namespace Responsiv\Shop\FormWidgets;
+<?php namespace Responsiv\Currency\FormWidgets;
 
 use Backend\Classes\FormField;
 use Backend\Classes\FormWidgetBase;

@@ -131,20 +131,23 @@ class Plugin extends PluginBase
     }
 
     /**
-     * Registers any currency converters implemented in this plugin.
+     * registerCurrencyConverters registers any currency converters implemented in this plugin.
+     *
      * The converters must be returned in the following format:
-     * ['className1' => 'alias'],
-     * ['className2' => 'anotherAlias']
+     *
+     * [DriverName1::class => 'alias'],
+     * [DriverName2::class => 'anotherAlias']
      */
     public function registerCurrencyConverters()
     {
         return [
-            'Responsiv\Currency\ExchangeTypes\EuropeanCentralBank' => 'ecb',
-            'Responsiv\Currency\ExchangeTypes\CoinMarketCap'       => 'coinmarketcap',
-            'Responsiv\Currency\ExchangeTypes\Fixer'               => 'fixer',
-            // 'Responsiv\Currency\ExchangeTypes\Yahoo'               => 'yahoo', // Discontinued
-            // 'Responsiv\Currency\ExchangeTypes\XeServices'          => 'xe',
-            // 'Responsiv\Currency\ExchangeTypes\Coinmill'            => 'coinmill',
+            \Responsiv\Currency\ExchangeTypes\XeServices::class => 'xe',
+            // \Responsiv\Currency\ExchangeTypes\EuropeanCentralBank::class => 'ecb',
+            // \Responsiv\Currency\ExchangeTypes\CoinMarketCap::class => 'coinmarketcap',
+            // \Responsiv\Currency\ExchangeTypes\Fixer::class => 'fixer',
+            // \Responsiv\Currency\ExchangeTypes\Yahoo::class => 'yahoo', // Discontinued
+            // \Responsiv\Currency\ExchangeTypes\XeServices::class => 'xe',
+            // \Responsiv\Currency\ExchangeTypes\Coinmill::class => 'coinmill',
         ];
     }
 }

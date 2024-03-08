@@ -1,6 +1,6 @@
 <?php namespace Responsiv\Currency\Classes\CurrencyManager;
 
-use Responsiv\Shop\Models\Currency as CurrencyModel;
+use Responsiv\Currency\Models\Currency as CurrencyModel;
 use SystemException;
 
 /**
