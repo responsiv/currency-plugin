@@ -3,34 +3,39 @@
 use Lang;
 use Flash;
 use Backend;
-use BackendMenu;
-use Backend\Classes\Controller;
-use System\Classes\SettingsManager;
+use Backend\Classes\SettingsController;
 use Responsiv\Currency\Models\Currency as CurrencyModel;
 use Exception;
 
 /**
- * Currencies Back-end Controller
+ * Currencies Backend Controller
  */
-class Currencies extends Controller
+class Currencies extends SettingsController
 {
     public $implement = [
-        'Backend.Behaviors.FormController',
-        'Backend.Behaviors.ListController'
+        \Backend\Behaviors\FormController::class,
+        \Backend\Behaviors\ListController::class,
     ];
 
+    /**
+     * @var string formConfig file
+     */
     public $formConfig = 'config_form.yaml';
+
+    /**
+     * @var string listConfig file
+     */
     public $listConfig = 'config_list.yaml';
 
-    public function __construct()
-    {
-        parent::__construct();
+    /**
+     * @var array required permissions
+     */
+    public $requiredPermissions = [];
 
-        BackendMenu::setContext('October.System', 'system', 'settings');
-        SettingsManager::setContext('Responsiv.Currency', 'currencies');
-
-        $this->addJs('/plugins/responsiv/currency/assets/js/currency-list.js');
-    }
+    /**
+     * @var string settingsItemCode determines the settings code
+     */
+    public $settingsItemCode = 'currencies';
 
     /**
      * {@inheritDoc}
@@ -42,49 +47,31 @@ class Currencies extends Controller
         }
     }
 
-    public function onCreateForm()
+    /**
+     * index
+     */
+    public function index()
     {
-        $this->asExtension('FormController')->create();
+        CurrencyModel::syncPrimaryCurrency();
 
-        return $this->makePartial('create_form');
+        $this->asExtension('ListController')->index();
     }
 
-    public function onCreate()
-    {
-        CurrencyModel::clearCache();
-        $this->asExtension('FormController')->create_onSave();
-
-        return $this->listRefresh();
-    }
-
-    public function onUpdateForm()
-    {
-        $this->asExtension('FormController')->update(post('record_id'));
-        $this->vars['recordId'] = post('record_id');
-
-        return $this->makePartial('update_form');
-    }
-
-    public function onUpdate()
+    /**
+     * formAfterSave is called after the creation or updating form is saved
+     */
+    public function formAfterSave($model)
     {
         CurrencyModel::clearCache();
-        $this->asExtension('FormController')->update_onSave(post('record_id'));
-
-        return $this->listRefresh();
     }
 
-    public function onDelete()
-    {
-        CurrencyModel::clearCache();
-        $this->asExtension('FormController')->update_onDelete(post('record_id'));
-
-        return $this->listRefresh();
-    }
-
+    /**
+     * onLoadDisableForm
+     */
     public function onLoadDisableForm()
     {
         try {
-            $this->vars['checked'] = post('checked');
+            $this->vars['checked'] = (array) post('checked');
         }
         catch (Exception $ex) {
             $this->handleError($ex);
@@ -93,6 +80,9 @@ class Currencies extends Controller
         return $this->makePartial('disable_form');
     }
 
+    /**
+     * onDisableCurrencies
+     */
     public function onDisableCurrencies()
     {
         $enable = post('enable', false);

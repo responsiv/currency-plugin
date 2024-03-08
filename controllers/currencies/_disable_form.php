@@ -1,7 +1,7 @@
 <?= Form::open(['id' => 'disableForm']) ?>
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="popup">&times;</button>
         <h4 class="modal-title"><?= e(trans('responsiv.currency::lang.currency.enable_or_disable_title')) ?></h4>
+        <button type="button" class="btn-close" data-dismiss="popup"></button>
     </div>
     <div class="modal-body">
 
