@@ -1,0 +1,14 @@
+{
+  "Currencies": "Currencies",
+  "Create and configure available currencies.": "Create and configure available currencies.",
+  "Currency": "Currency",
+  "Currency Converters": "Currency Converters",
+  "Select and manage the currency converter to use.": "Select and manage the currency converter to use.",
+  "Successfully enabled those currencies.": "Successfully enabled those currencies.",
+  "Successfully disabled those currencies.": "Successfully disabled those currencies.",
+  "Enable or Disable Currencies": "Enable or Disable Currencies",
+  "Currencies selected: :amount": "Currencies selected: :amount",
+  "Enabled": "Enabled",
+  "Disabled currencies are not visible on the front-end.": "Disabled currencies are not visible on the front-end.",
+  "Tools for currency display and conversion.": "Tools for currency display and conversion."
+}

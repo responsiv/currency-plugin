@@ -100,10 +100,10 @@ class Currencies extends SettingsController
         }
 
         if ($enable) {
-            Flash::success(Lang::get('responsiv.currency::lang.currency.enable_success'));
+            Flash::success(__("Successfully enabled those currencies."));
         }
         else {
-            Flash::success(Lang::get('responsiv.currency::lang.currency.disable_success'));
+            Flash::success(__("Successfully disabled those currencies."));
         }
 
         return Backend::redirect('responsiv/currency/currencies');
