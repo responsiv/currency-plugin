@@ -12,7 +12,7 @@ modelClass: Responsiv\Currency\Models\Currency
 title: Manage Currencies
 
 # Link URL for each record
-recordOnClick: $.currencyList.clickRecord(:id)
+recordOnClick: popup
 
 # Message to display if the list is empty
 noRecordsMessage: backend::lang.list.no_records

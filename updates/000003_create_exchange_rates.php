@@ -3,14 +3,11 @@
 use Schema;
 use October\Rain\Database\Updates\Migration;
 
-class CreateRatesTable extends Migration
+return new class extends Migration
 {
-
     public function up()
     {
-        Schema::create('responsiv_currency_exchange_rates', function($table)
-        {
-            $table->engine = 'InnoDB';
+        Schema::create('responsiv_currency_exchange_rates', function($table) {
             $table->increments('id');
             $table->string('from_currency', 3)->nullable();
             $table->string('to_currency', 3)->nullable();
@@ -24,5 +21,4 @@ class CreateRatesTable extends Migration
     {
         Schema::dropIfExists('responsiv_currency_exchange_rates');
     }
-
-}
+};

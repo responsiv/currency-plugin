@@ -1,68 +1,100 @@
 <?php namespace Responsiv\Currency\Models;
 
-use Lang;
 use Model;
 use Cache;
 use ValidationException;
+use SystemException;
 
 /**
  * Currency Model
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $currency_code
+ * @property string $currency_symbol
+ * @property string $decimal_point
+ * @property int $decimal_scale
+ * @property string $thousand_separator
+ * @property bool $place_symbol_before
+ * @property bool $is_enabled
+ * @property bool $is_primary
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property \Illuminate\Support\Carbon $created_at
+ *
+ * @package responsiv\currency
+ * @author Alexey Bobkov, Samuel Georges
  */
 class Currency extends Model
 {
     use \October\Rain\Database\Traits\Validation;
 
     /**
-     * @var string The database table used by the model.
+     * @var string table associated with the model
      */
     public $table = 'responsiv_currency_currencies';
 
     /**
-     * @var array Guarded fields
-     */
-    protected $guarded = [];
-
-    /**
-     * @var array Fillable fields
+     * @var array fillable fields
      */
     protected $fillable = [];
 
     /**
-     * @var array Validation rules
+     * @var array rules for validation
      */
     public $rules = [
         'currency_code' => 'required',
     ];
 
-    public $timestamps = false;
-
     /**
-     * @var array Object cache of self, by code.
+     * @var array cacheByCode cache of self, by code.
      */
     protected static $cacheByCode = [];
 
     /**
-     * @var array A cache of enabled currencies.
+     * @var array cacheListEnabled is a cache of enabled currencies.
      */
     protected static $cacheListEnabled;
 
     /**
-     * @var array A cache of available currencies.
+     * @var array cacheListAvailable is a cache of available currencies.
      */
     protected static $cacheListAvailable;
 
     /**
-     * @var self Default currency cache.
+     * @var static primaryCurrency is default currency cache.
      */
-    private static $primaryCurrency;
+    protected static $primaryCurrency;
 
     /**
-     * Formats supplied currency to supplied settings.
-     * @param  mixed  $number   Currency amount
-     * @param  integer $decimals Decimal places to include
+     * syncPrimaryCurrency
+     */
+    public static function syncPrimaryCurrency()
+    {
+        if (static::count() > 0) {
+            return;
+        }
+
+        $currency = new static;
+        $currency->name = 'US Dollar';
+        $currency->currency_code = 'USD';
+        $currency->currency_symbol = '$';
+        $currency->decimal_point = '.';
+        $currency->decimal_scale = 2;
+        $currency->thousand_separator = ',';
+        $currency->place_symbol_before = true;
+        $currency->is_primary = true;
+        $currency->is_enabled = true;
+        $currency->save();
+    }
+
+    /**
+     * formatCurrency supplied currency to supplied settings.
+     * @param  mixed  $number
+     * @param  integer $decimals
+     * @param  bool $baseValue
      * @return string
      */
-    public function formatCurrency($number, $decimals = 2)
+    public function formatCurrency($number, $decimals = null, $baseValue = true)
     {
         if (!strlen($number)) {
             return null;
@@ -76,7 +108,16 @@ class Currency extends Model
             $negativeSymbol = '-';
         }
 
-        $number = number_format($number, $decimals, $this->decimal_point, $this->thousand_separator);
+        if ($baseValue) {
+            $number = $this->fromBaseValue((int) $number);
+        }
+
+        $number = number_format(
+            $number,
+            $this->decimal_scale,
+            $decimals === null ? $this->decimal_point : $decimals,
+            $this->thousand_separator
+        );
 
         if ($this->place_symbol_before) {
             return $negativeSymbol.$this->currency_symbol.$number;
@@ -86,6 +127,9 @@ class Currency extends Model
         }
     }
 
+    /**
+     * afterCreate
+     */
     public function afterCreate()
     {
         if ($this->is_primary) {
@@ -93,25 +137,27 @@ class Currency extends Model
         }
     }
 
+    /**
+     * beforeUpdate
+     */
     public function beforeUpdate()
     {
         if ($this->isDirty('is_primary')) {
             $this->makePrimary();
 
             if (!$this->is_primary) {
-                throw new ValidationException(['is_primary' => Lang::get('responsiv.currency::lang.currency.unset_default', ['currency'=>$this->name])]);
+                throw new ValidationException(['is_primary' => __("':currency' is already default and cannot be unset as default.", ['currency'=>$this->name])]);
             }
         }
     }
 
     /**
-     * Makes this model the default
-     * @return void
+     * makePrimary makes this model the default
      */
     public function makePrimary()
     {
         if (!$this->is_enabled) {
-            throw new ValidationException(['is_enabled' => Lang::get('responsiv.currency::lang.currency.disabled_default', ['currency'=>$this->name])]);
+            throw new ValidationException(['is_enabled' => __("':currency' is disabled and cannot be set as default.", ['currency'=>$this->name])]);
         }
 
         $this->newQuery()->where('id', $this->id)->update(['is_primary' => true]);
@@ -119,27 +165,38 @@ class Currency extends Model
     }
 
     /**
-     * Returns the default currency defined.
-     * @return self
+     * getPrimary returns the default currency defined.
      */
-    public static function getPrimary()
+    public static function getPrimary(): ?static
     {
         if (self::$primaryCurrency !== null) {
             return self::$primaryCurrency;
         }
 
-        return self::$primaryCurrency = self::where('is_primary', true)
+        $currency = self::where('is_primary', true)
             ->remember(1440, 'responsiv.currency.primaryCurrency')
             ->first()
         ;
+
+        if (!$currency) {
+            throw new SystemException('A primary currency was not found. Please set one up in the currency settings.');
+        }
+
+        return self::$primaryCurrency = $currency;
     }
 
     /**
-     * Locate a currency table by its code, cached.
-     * @param  string $code
-     * @return Model
+     * getPrimaryCode
      */
-    public static function findByCode($code = null)
+    public static function getPrimaryCode(): ?string
+    {
+        return static::getPrimary()->currency_code;
+    }
+
+    /**
+     * findByCode locates a currency table by its code, cached.
+     */
+    public static function findByCode(string $code = null): ?static
     {
         if (!$code) {
             return null;
@@ -149,15 +206,15 @@ class Currency extends Model
             return self::$cacheByCode[$code];
         }
 
-        return self::$cacheByCode[$code] = self::whereCurrencyCode($code)->first();
+        return self::$cacheByCode[$code] = self::where('currency_code', $code)->first();
     }
 
     /**
-     * Scope for checking if model is enabled
+     * scopeApplyEnabled for checking if model is enabled
      * @param  \October\Rain\Database\Builder $query
      * @return \October\Rain\Database\Builder
      */
-    public function scopeIsEnabled($query)
+    public function scopeApplyEnabled($query)
     {
         return $query
             ->whereNotNull('is_enabled')
@@ -166,19 +223,17 @@ class Currency extends Model
     }
 
     /**
-     * Returns true if there are at least 2 currencies available.
-     * @return boolean
+     * isAvailable returns true if there are at least 2 currencies available.
      */
-    public static function isAvailable()
+    public static function isAvailable(): bool
     {
         return count(self::listAvailable()) > 1;
     }
 
     /**
-     * Lists available currencies, used on the back-end.
-     * @return array
+     * listAvailable currencies, used on the back-end.
      */
-    public static function listAvailable()
+    public static function listAvailable(): array
     {
         if (self::$cacheListAvailable) {
             return self::$cacheListAvailable;
@@ -188,27 +243,25 @@ class Currency extends Model
     }
 
     /**
-     * Lists the enabled currencies, used on the front-end.
-     * @return array
+     * listEnabled currencies, used on the front-end.
      */
-    public static function listEnabled()
+    public static function listEnabled(): array
     {
         if (self::$cacheListEnabled) {
             return self::$cacheListEnabled;
         }
 
         $isEnabled = Cache::remember('responsiv.currency.currencies', 1440, function() {
-            return self::isEnabled()->lists('name', 'currency_code');
+            return self::applyEnabled()->lists('name', 'currency_code');
         });
 
         return self::$cacheListEnabled = $isEnabled;
     }
 
     /**
-     * Returns true if the supplied currency is valid.
-     * @return boolean
+     * isValid returns true if the supplied currency is valid.
      */
-    public static function isValid($currency)
+    public static function isValid($currency): bool
     {
         $currencies = array_keys(Currency::listEnabled());
 
@@ -216,8 +269,25 @@ class Currency extends Model
     }
 
     /**
-     * Clears all cache keys used by this model
-     * @return void
+     * toBaseValue converts a float to a base value stored in the database,
+     * a base value has no decimal point.
+     */
+    public function toBaseValue(float $value): int
+    {
+        return $value * pow(10, (int) $this->decimal_scale);
+    }
+
+    /**
+     * fromBaseValue converts from a base value to a float value from the database,
+     * the returning value introduces a decimal point.
+     */
+    public function fromBaseValue(int $value): float
+    {
+        return $value / pow(10, (int) $this->decimal_scale);
+    }
+
+    /**
+     * clearCache keys used by this model
      */
     public static function clearCache()
     {

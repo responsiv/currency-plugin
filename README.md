@@ -59,3 +59,7 @@ This plugin introduces a currency list column called `currency`. The value is fo
         total_amount:
             label: Loan amount
             type: currency
+
+### License
+
+This plugin is an official extension of the October CMS platform and is free to use if you have a platform license. See [EULA license](LICENSE.md) for more details.
