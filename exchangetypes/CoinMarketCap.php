@@ -15,7 +15,7 @@ class CoinMarketCap extends ExchangeBase
     public function converterDetails()
     {
         return [
-            'name'        => 'CoinMarketCap',
+            'name' => 'CoinMarketCap',
             'description' => 'Exchange rate service for cryptocurrencies'
         ];
     }
@@ -97,13 +97,5 @@ class CoinMarketCap extends ExchangeBase
             'LTC' => 'litecoin',
             'DASH' => 'dash',
         ];
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function defineFormFields()
-    {
-        return [];
     }
 }

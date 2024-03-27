@@ -68,14 +68,12 @@ class Converters extends SettingsController
      */
     public function formExtendFields($widget)
     {
-        $model = $widget->model;
+        $model = $widget->getModel();
         $className = post('ExchangeConverter[class_name]', $model->class_name);
         $model->applyDriverClass($className);
 
-        $config = $model->getFieldConfig();
-        if (isset($config->fields)) {
-            $widget->addFields($config->fields, 'primary');
-        }
+        $widget->inActiveTabSection('primary', function() use ($widget, $model) {
+            $model->defineDriverFormFields($widget);
+        });
     }
-
 }

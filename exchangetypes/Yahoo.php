@@ -5,6 +5,9 @@ use Responsiv\Currency\Classes\ExchangeBase;
 use SystemException;
 use Exception;
 
+/**
+ * Yahoo
+ */
 class Yahoo extends ExchangeBase
 {
     const API_URL = 'http://finance.yahoo.com/d/quotes.csv?f=l1d1t1&s=%s%s=X';
@@ -44,13 +47,5 @@ class Yahoo extends ExchangeBase
         }
 
         return $data[0];
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function defineFormFields()
-    {
-        return [];
     }
 }

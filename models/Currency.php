@@ -190,7 +190,7 @@ class Currency extends Model
      */
     public static function getPrimaryCode(): ?string
     {
-        return static::getPrimary()->currency_code;
+        return static::getPrimary()?->currency_code;
     }
 
     /**

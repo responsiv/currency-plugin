@@ -9,12 +9,7 @@ use System\Classes\DriverBehavior;
 abstract class ExchangeBase extends DriverBehavior
 {
     /**
-     * @var string rateModel
-     */
-    protected $rateModel = \Responsiv\Currency\Models\ExchangeRate::class;
-
-    /**
-     * converterDetails returns information about the converter type
+     * driverDetails returns information about the converter type
      * Must return array:
      *
      * [
@@ -24,7 +19,7 @@ abstract class ExchangeBase extends DriverBehavior
      *
      * @return array
      */
-    public function converterDetails()
+    public function driverDetails()
     {
         return [
             'name' => 'Unknown',
@@ -45,8 +40,6 @@ abstract class ExchangeBase extends DriverBehavior
      */
     protected function createRateModel()
     {
-        $class = '\\'.ltrim($this->rateModel, '\\');
-        $model = new $class();
-        return $model;
+        return new \Responsiv\Currency\Models\ExchangeRate;
     }
 }

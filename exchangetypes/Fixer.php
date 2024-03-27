@@ -15,7 +15,7 @@ class Fixer extends ExchangeBase
     public function converterDetails()
     {
         return [
-            'name'        => 'Fixer',
+            'name' => 'Fixer',
             'description' => 'Free currency exchange rate service provided by Fixer.io'
         ];
     }
@@ -51,13 +51,5 @@ class Fixer extends ExchangeBase
         }
 
         return $rate;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function defineFormFields()
-    {
-        return [];
     }
 }
