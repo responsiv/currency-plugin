@@ -1,0 +1,21 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    from_currency:
+        label: From Currency
+        searchable: true
+
+    to_currency:
+        label: To Currency
+        searchable: true
+
+    rate_value:
+        label: Rate
+        type: number
+
+    updated_at:
+        label: Last Updated
+        type: datetime
+        width: 20%
