@@ -26,6 +26,8 @@ return new class extends Migration
 
         if (!Schema::hasColumn('responsiv_currency_exchange_rates', 'rate_value')) {
             Schema::table('responsiv_currency_exchange_rates', function(Blueprint $table) {
+                $table->renameColumn('from_currency', 'from_currency_code');
+                $table->renameColumn('to_currency', 'to_currency_code');
                 $table->renameColumn('rate', 'rate_value');
             });
         }
