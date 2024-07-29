@@ -1,6 +1,6 @@
 <?php namespace Responsiv\Currency\Controllers;
 
-use Responsiv\Currency\Models\ExchangeConverter;
+use Responsiv\Currency\Classes\ExchangeManager;
 use Backend\Classes\SettingsController;
 use Exception;
 
@@ -36,4 +36,21 @@ class Converters extends SettingsController
      * @var string settingsItemCode determines the settings code
      */
     public $settingsItemCode = 'converters';
+
+    /**
+     * index_onLoadAddPopup
+     */
+    protected function index_onLoadAddPopup()
+    {
+        try {
+            $converters = ExchangeManager::instance()->listConverters();
+            $converters->sortBy('name');
+            $this->vars['converters'] = $converters;
+        }
+        catch (Exception $ex) {
+            $this->handleError($ex);
+        }
+
+        return $this->makePartial('add_converter_form');
+    }
 }

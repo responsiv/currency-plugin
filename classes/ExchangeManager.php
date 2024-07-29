@@ -2,8 +2,6 @@
 
 use App;
 use System\Classes\PluginManager;
-use October\Rain\Support\Collection;
-use October\Rain\Support\Singleton;
 
 /**
  * ExchangeManager manages currency conversion
