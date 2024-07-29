@@ -36,7 +36,8 @@ trait HasCurrencyExchange
         }
 
         // Look up in the database cache
-        $converter = ExchangeConverter::getDefault();
+        // @todo this should use the ExchangeRate model
+        $converter = ExchangeConverter::___getDefault();
         if (!$converter->class_name) {
             throw new ApplicationException('Currency rate converter is not configured.');
         }
