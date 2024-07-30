@@ -7,7 +7,7 @@ use Exception;
 
 class Fixer extends ExchangeBase
 {
-    const API_URL = 'https://api.fixer.io/latest?symbols=%s&base=%s';
+    const API_URL = 'https://data.fixer.io/api/latest?symbols=%s&base=%s';
 
     /**
      * {@inheritDoc}
