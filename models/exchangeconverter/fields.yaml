@@ -10,3 +10,9 @@ fields:
     refresh_interval:
         label: Update Interval
         type: dropdown
+
+    is_enabled:
+        label: Enabled
+        type: checkbox
+        default: true
+        comment: Disabled currency converters are not used to fetch rates.

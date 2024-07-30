@@ -21,6 +21,7 @@ return new class extends Migration
         if (!Schema::hasColumn('responsiv_currency_exchange_converters', 'name')) {
             Schema::table('responsiv_currency_exchange_converters', function(Blueprint $table) {
                 $table->string('name')->nullable();
+                $table->boolean('is_enabled')->default(false);
                 $table->integer('sort_order')->nullable();
             });
         }

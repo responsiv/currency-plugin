@@ -1,7 +1,6 @@
 <?php namespace Responsiv\Currency\Models;
 
 use October\Rain\Database\ExpandoModel;
-use Responsiv\Currency\Classes\ExchangeManager;
 
 /**
  * ExchangeConverter Model
@@ -11,6 +10,7 @@ use Responsiv\Currency\Classes\ExchangeManager;
  * @property string $class_name
  * @property int $refresh_interval
  * @property array $config_data
+ * @property bool $is_enabled
  * @property int $sort_order
  * @property \Illuminate\Support\Carbon $updated_at
  * @property \Illuminate\Support\Carbon $created_at
@@ -40,6 +40,8 @@ class ExchangeConverter extends ExpandoModel
     protected $expandoPassthru = [
         'name',
         'class_name',
+        'is_enabled',
+        'sort_order',
         'refresh_interval',
     ];
 

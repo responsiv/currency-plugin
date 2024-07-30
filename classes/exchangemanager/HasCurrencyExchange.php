@@ -51,7 +51,7 @@ trait HasCurrencyExchange
         ;
 
         if ($record = $record->first()) {
-            return self::$rateCache[$key] = $record->rate;
+            return self::$rateCache[$key] = $record->rate_value;
         }
 
         // Evaluate rate using a currency rate converter
@@ -61,7 +61,7 @@ trait HasCurrencyExchange
             $record = new ExchangeRate;
             $record->from_currency = $fromCurrency;
             $record->to_currency = $toCurrency;
-            $record->rate = $rate;
+            $record->rate_value = $rate;
             $record->save();
 
             return self::$rateCache[$key] = $rate;
@@ -77,7 +77,7 @@ trait HasCurrencyExchange
                 throw $ex;
             }
 
-            return self::$rateCache[$key] = $record->rate;
+            return self::$rateCache[$key] = $record->rate_value;
         }
     }
 

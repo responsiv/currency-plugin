@@ -14,3 +14,8 @@ columns:
         label: Priority
         type: number
         width: 10%
+
+    is_enabled:
+        label: Enabled
+        type: switch
+        width: 10%

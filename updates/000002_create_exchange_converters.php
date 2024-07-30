@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('class_name')->nullable();
             $table->integer('refresh_interval')->default(24);
             $table->mediumText('config_data')->nullable();
+            $table->boolean('is_enabled')->default(false);
             $table->integer('sort_order')->nullable();
             $table->timestamps();
         });
