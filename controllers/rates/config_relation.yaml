@@ -1,0 +1,11 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+rate_data:
+    label: Rate Data
+    list: $/responsiv/currency/models/exchangeratedata/columns.yaml
+    form: $/responsiv/currency/models/exchangeratedata/fields.yaml
+    emptyMessage: Rate has no exchange data
+    view:
+        toolbarButtons: create|delete

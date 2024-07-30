@@ -3,6 +3,14 @@
 # ===================================
 
 fields:
-    id:
-        label: ID
-        disabled: true
+    rate_value:
+        label: Rate Value
+        type: number
+        span: auto
+
+    valid_at:
+        label: Valid From
+        span: auto
+        type: datepicker
+        mode: date
+        default: now

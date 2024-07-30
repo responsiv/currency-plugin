@@ -65,12 +65,15 @@ class Plugin extends PluginBase
     {
         return [
             'responsiv.currency.access_settings' => [
-                'tab'   => 'Currency',
+                'tab' => 'Currency',
                 'label' => 'Manage currency settings'
             ]
         ];
     }
 
+    /**
+     * registerSettings
+     */
     public function registerSettings()
     {
         return [

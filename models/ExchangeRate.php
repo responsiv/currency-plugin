@@ -29,11 +29,39 @@ class ExchangeRate extends Model
     protected $fillable = [];
 
     /**
+     * @var array hasMany
+     */
+    public $hasMany = [
+        'rate_data' => [
+            ExchangeRateData::class,
+            'key' => 'rate_id',
+            'delete' => true
+        ],
+    ];
+
+    /**
      * deleteOld
+     * @deprecated
      */
     public static function deleteOld()
     {
         $date = Carbon::now()->subDays(90);
         static::query()->where('created_at', '<', $date)->delete();
+    }
+
+    /**
+     * getFromCurrencyCodeOptions
+     */
+    public function getFromCurrencyCodeOptions()
+    {
+        return Currency::listAvailable();
+    }
+
+    /**
+     * getToCurrencyCodeOptions
+     */
+    public function getToCurrencyCodeOptions()
+    {
+        return Currency::listAvailable();
     }
 }

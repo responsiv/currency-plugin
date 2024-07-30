@@ -10,6 +10,7 @@ class Rates extends SettingsController
     public $implement = [
         \Backend\Behaviors\FormController::class,
         \Backend\Behaviors\ListController::class,
+        \Backend\Behaviors\RelationController::class,
     ];
 
     /**
@@ -21,6 +22,11 @@ class Rates extends SettingsController
      * @var string listConfig file
      */
     public $listConfig = 'config_list.yaml';
+
+    /**
+     * @var array relationConfig for extensions.
+     */
+    public $relationConfig = 'config_relation.yaml';
 
     /**
      * @var array required permissions

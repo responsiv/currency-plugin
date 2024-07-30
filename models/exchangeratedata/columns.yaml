@@ -3,6 +3,9 @@
 # ===================================
 
 columns:
-    id:
-        label: ID
-        searchable: true
+    rate_value:
+        label: Rate Value
+
+    valid_at:
+        label: Valid From
+        type: date
