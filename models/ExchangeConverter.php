@@ -11,6 +11,7 @@ use Responsiv\Currency\Classes\ExchangeManager;
  * @property string $class_name
  * @property int $refresh_interval
  * @property array $config_data
+ * @property int $sort_order
  * @property \Illuminate\Support\Carbon $updated_at
  * @property \Illuminate\Support\Carbon $created_at
  *
@@ -19,6 +20,7 @@ use Responsiv\Currency\Classes\ExchangeManager;
  */
 class ExchangeConverter extends ExpandoModel
 {
+    use \October\Rain\Database\Traits\Sortable;
     use \October\Rain\Database\Traits\Purgeable;
     use \October\Rain\Database\Traits\Validation;
 

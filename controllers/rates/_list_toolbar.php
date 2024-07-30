@@ -9,12 +9,12 @@
 
     <div class="toolbar-divider"></div>
 
-    <?= Ui::button("Request Rates", 'responsiv/currency/rates/create')
-        ->icon('icon-download')
-        ->secondary() ?>
-
     <?= Ui::button("Manage Converters", 'responsiv/currency/converters')
         ->icon('icon-line-chart')
+        ->secondary() ?>
+
+    <?= Ui::button("Request Rates", 'responsiv/currency/rates/create')
+        ->icon('icon-download')
         ->secondary() ?>
 
     <div class="toolbar-divider"></div>

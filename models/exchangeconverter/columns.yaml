@@ -9,3 +9,8 @@ columns:
 
     converter_name:
         label: Converter Name
+
+    sort_order:
+        label: Priority
+        type: number
+        width: 10%
