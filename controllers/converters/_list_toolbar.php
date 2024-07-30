@@ -7,4 +7,11 @@
         class="btn btn-primary oc-icon-plus">
         <?= __("Add Currency Converter") ?>
     </a>
+
+    <?= Ui::ajaxButton("Delete", 'onDelete')
+        ->listCheckedTrigger()
+        ->listCheckedRequest()
+        ->icon('icon-delete')
+        ->secondary()
+        ->confirmMessage("Are you sure?") ?>
 </div>

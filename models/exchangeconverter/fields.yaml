@@ -3,7 +3,10 @@
 # ===================================
 
 fields:
+    name:
+        label: Name
+        commentAbove: Assign a name to this currency converter.
+
     refresh_interval:
         label: Update Interval
         type: dropdown
-

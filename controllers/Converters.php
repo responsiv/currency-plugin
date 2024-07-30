@@ -37,7 +37,7 @@ class Converters extends SettingsController
     /**
      * @var string settingsItemCode determines the settings code
      */
-    public $settingsItemCode = 'converters';
+    public $settingsItemCode = 'rates';
 
     /**
      * @var string driverAlias

@@ -3,16 +3,16 @@
 # ===================================
 
 # Model List Column configuration
-list: $/responsiv/currency/models/exchangerate/columns.yaml
+list: $/responsiv/currency/models/exchangeconverter/columns.yaml
 
 # Model Class name
-modelClass: Responsiv\Currency\Models\ExchangeRate
+modelClass: Responsiv\Currency\Models\ExchangeConverter
 
 # List Title
-title: Manage Rates
+title: Manage Currency Converters
 
 # Link URL for each record
-recordUrl: responsiv/currency/rates/update/:id
+recordUrl: responsiv/currency/converters/update/:id
 
 # Message to display if the list is empty
 noRecordsMessage: backend::lang.list.no_records

@@ -15,7 +15,7 @@
             <div data-control="toolbar">
                 <div class="scoreboard-item title-value">
                     <h4><?= __("Currency Converter") ?></h4>
-                    <p class="oc-icon-credit-card"><?= $formModel->converter_name ?></p>
+                    <p><i class="icon-line-chart"></i> <?= $formModel->converter_name ?></p>
                 </div>
             </div>
         </div>

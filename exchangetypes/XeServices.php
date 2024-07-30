@@ -23,6 +23,19 @@ class XeServices extends ExchangeBase
     /**
      * {@inheritDoc}
      */
+    public function initDriverHost($host)
+    {
+        $host->rules['api_username'] = 'required';
+        $host->rules['api_password'] = 'required';
+
+        if (!$host->exists) {
+            $host->name = 'XE Services';
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getExchangeRate($fromCurrency, $toCurrency)
     {
         return 1;

@@ -14,6 +14,6 @@
     <div class="toolbar-divider"></div>
 
     <?= Ui::button("Currency Converters", 'responsiv/currency/converters')
-        ->icon('icon-group')
+        ->icon('icon-line-chart')
         ->secondary() ?>
 </div>
