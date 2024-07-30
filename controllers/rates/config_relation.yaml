@@ -9,3 +9,6 @@ rate_data:
     emptyMessage: Rate has no exchange data
     view:
         toolbarButtons: create|delete
+        defaultSort:
+            column: valid_at
+            direction: desc

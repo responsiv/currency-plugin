@@ -1,5 +1,6 @@
 <?php namespace Responsiv\Currency\Models;
 
+use Date;
 use Model;
 
 /**
@@ -34,6 +35,7 @@ class ExchangeRate extends Model
         'rate_data' => [
             ExchangeRateData::class,
             'key' => 'rate_id',
+            'order' => 'valid_at desc',
             'delete' => true
         ],
     ];
@@ -65,13 +67,23 @@ class ExchangeRate extends Model
     }
 
     /**
-     * deleteOld
+     * deleteOld deletes records created 90 days or older
      */
-    public static function deleteOld()
+    public function deleteOld()
     {
-        // @todo this should look at data
-        // $date = Carbon::now()->subDays(90);
-        // static::query()->where('created_at', '<', $date)->delete();
+        $date = Date::now()->subDays(90);
+        $this->rate_data()->where('created_at', '<', $date)->delete();
+    }
+
+    /**
+     * updateRateValue sets the latest rate value on this exchange rate
+     */
+    public function updateRateValue()
+    {
+        if ($recentRate = $this->rate_data()->orderBy('valid_at', 'desc')->first()) {
+            $this->rate_value = $recentRate->rate_value;
+            $this->save();
+        }
     }
 
     /**
