@@ -36,6 +36,15 @@ abstract class ExchangeBase extends DriverBehavior
     abstract public function getExchangeRate($fromCurrency, $toCurrency);
 
     /**
+     * getPartialPath render setup help
+     * @return string
+     */
+    public function getPartialPath()
+    {
+        return $this->configPath;
+    }
+
+    /**
      * createRateModel creates an instance of the exchange rate model
      */
     protected function createRateModel()

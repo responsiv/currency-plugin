@@ -3,11 +3,6 @@
 # ===================================
 
 fields:
-    class_name:
-        label: Converter
-        type: dropdown
-        changeHandler: onRefresh
-
     refresh_interval:
         label: Update Interval
         type: dropdown

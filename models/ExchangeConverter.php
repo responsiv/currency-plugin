@@ -118,18 +118,6 @@ class ExchangeConverter extends ExpandoModel
     }
 
     /**
-     * getClassNameOptions
-     */
-    public function getClassNameOptions()
-    {
-        $converters = ExchangeManager::instance()->listConverters();
-
-        $converters->sortBy('name');
-
-        return $converters->lists('name', 'class');
-    }
-
-    /**
      * getRefreshIntervalOptions
      */
     public function getRefreshIntervalOptions()

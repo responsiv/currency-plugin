@@ -1,7 +1,9 @@
 <?php namespace Responsiv\Currency\Controllers;
 
+use File;
 use Responsiv\Currency\Classes\ExchangeManager;
 use Backend\Classes\SettingsController;
+use ApplicationException;
 use Exception;
 
 /**
@@ -38,6 +40,11 @@ class Converters extends SettingsController
     public $settingsItemCode = 'converters';
 
     /**
+     * @var string driverAlias
+     */
+    public $driverAlias;
+
+    /**
      * index_onLoadAddPopup
      */
     protected function index_onLoadAddPopup()
@@ -52,5 +59,75 @@ class Converters extends SettingsController
         }
 
         return $this->makePartial('add_converter_form');
+    }
+
+    /**
+     * create
+     */
+    public function create($driverAlias = null)
+    {
+        try {
+            if (!$driverAlias) {
+                throw new ApplicationException('Missing a gateway code');
+            }
+
+            $this->driverAlias = $driverAlias;
+            $this->asExtension('FormController')->create();
+        }
+        catch (Exception $ex) {
+            $this->handleError($ex);
+        }
+    }
+
+    /**
+     * formExtendModel
+     */
+    public function formExtendModel($model)
+    {
+        if (!$model->exists) {
+            $model->applyDriverClass($this->getDriverClass());
+        }
+
+        return $model;
+    }
+
+    /**
+     * formExtendFields
+     */
+    public function formExtendFields($widget)
+    {
+        $model = $widget->getModel();
+
+        $widget->inActiveTabSection('primary', function() use ($widget, $model) {
+            $model->defineDriverFormFields($widget);
+        });
+
+        // Add the set up help partial
+        $setupPartial = $model->getPartialPath().'/_setup_help.php';
+        if (File::exists($setupPartial)) {
+            $widget->addTabField('setup_help', [
+                'type' => 'partial',
+                'tab' => "Help",
+                'path' => $setupPartial
+            ]);
+        }
+    }
+
+    /**
+     * getDriverClass
+     */
+    protected function getDriverClass()
+    {
+        $alias = post('driver_alias', $this->driverAlias);
+
+        if ($this->gatewayClass !== null) {
+            return $this->gatewayClass;
+        }
+
+        if (!$gateway = ExchangeManager::instance()->findConverterByAlias($alias)) {
+            throw new ApplicationException("Unable to find driver: {$alias}");
+        }
+
+        return $this->gatewayClass = $gateway->class;
     }
 }
