@@ -1,7 +1,6 @@
 <?php namespace Responsiv\Currency\Models;
 
 use Model;
-use Carbon\Carbon;
 
 /**
  * ExchangeRate Model
@@ -40,16 +39,6 @@ class ExchangeRate extends Model
     ];
 
     /**
-     * deleteOld
-     * @deprecated
-     */
-    public static function deleteOld()
-    {
-        $date = Carbon::now()->subDays(90);
-        static::query()->where('created_at', '<', $date)->delete();
-    }
-
-    /**
      * getFromCurrencyCodeOptions
      */
     public function getFromCurrencyCodeOptions()
@@ -63,5 +52,62 @@ class ExchangeRate extends Model
     public function getToCurrencyCodeOptions()
     {
         return Currency::listAvailable();
+    }
+
+    /**
+     * beforeSave
+     */
+    public function beforeSave()
+    {
+        if (!$this->rate_value) {
+            $this->rate_value = 1;
+        }
+    }
+
+    /**
+     * deleteOld
+     */
+    public static function deleteOld()
+    {
+        // @todo this should look at data
+        // $date = Carbon::now()->subDays(90);
+        // static::query()->where('created_at', '<', $date)->delete();
+    }
+
+    /**
+     * getPairCodeAttribute
+     */
+    public function getPairCodeAttribute()
+    {
+        return "{$this->from_currency_code}:{$this->to_currency_code}";
+    }
+
+    /**
+     * generatePairs
+     */
+    public static function generatePairs()
+    {
+        $fromCurrency = Currency::getPrimary();
+        if (!$fromCurrency) {
+            return;
+        }
+
+        $currencies = Currency::all();
+        $existing = static::where('from_currency_code', $fromCurrency->currency_code)->pluck('to_currency_code')->all();
+
+        foreach ($currencies as $toCurrency) {
+            if ($fromCurrency->currency_code == $toCurrency->currency_code) {
+                continue;
+            }
+
+            if (in_array($toCurrency->currency_code, $existing)) {
+                continue;
+            }
+
+            $missing = new static;
+            $missing->from_currency_code = $fromCurrency->currency_code;
+            $missing->to_currency_code = $toCurrency->currency_code;
+            $missing->save();
+        }
     }
 }

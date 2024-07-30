@@ -3,7 +3,9 @@
         ->icon('icon-plus')
         ->primary() ?>
 
-    <?= Ui::button("Generate Pairs", 'responsiv/currency/rates/create')
+    <?= Ui::ajaxButton("Generate Pairs", 'onGeneratePairs')
+        ->loadingMessage("Loading...")
+        ->confirmMessage("This will create missing currency pairs for the primary currency to all other currencies. Continue?")
         ->icon('icon-refresh')
         ->secondary() ?>
 
@@ -13,13 +15,15 @@
         ->icon('icon-line-chart')
         ->secondary() ?>
 
-    <?= Ui::button("Request Rates", 'responsiv/currency/rates/create')
+    <!-- <?= Ui::ajaxButton("Request Rates", 'onRequestRates')
+        ->loadingMessage("Loading...")
+        ->confirmMessage("This request the latest exchange rates from the currency converters. Continue?")
         ->icon('icon-download')
-        ->secondary() ?>
+        ->secondary() ?> -->
 
     <div class="toolbar-divider"></div>
 
-    <?= Ui::ajaxButton("Delete", 'onDeleteSelected')
+    <?= Ui::ajaxButton("Delete", 'onDelete')
         ->listCheckedTrigger()
         ->listCheckedRequest()
         ->icon('icon-delete')

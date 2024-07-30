@@ -9,7 +9,7 @@ use DOMXPath;
 
 class EuropeanCentralBank extends ExchangeBase
 {
-    const API_URL = 'http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml';
+    const API_URL = 'https://www.ecb.int/stats/eurofxref/eurofxref-daily.xml';
 
     /**
      * {@inheritDoc}

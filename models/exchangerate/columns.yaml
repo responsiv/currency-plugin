@@ -3,19 +3,27 @@
 # ===================================
 
 columns:
-    from_currency:
-        label: From Currency
-        searchable: true
+    updated_at:
+        label: Last Updated
+        type: date
+        width: 20%
 
-    to_currency:
-        label: To Currency
-        searchable: true
+    pair_code:
+        label: Pair Code
+        searchable: false
+        sortable: false
 
     rate_value:
         label: Rate
         type: number
 
-    updated_at:
-        label: Last Updated
-        type: datetime
-        width: 20%
+    from_currency_code:
+        label: From Currency
+        searchable: true
+        type: selectable
+
+    to_currency_code:
+        label: To Currency
+        searchable: true
+        type: selectable
+

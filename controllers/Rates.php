@@ -1,6 +1,7 @@
 <?php namespace Responsiv\Currency\Controllers;
 
 use Backend\Classes\SettingsController;
+use Responsiv\Currency\Models\ExchangeRate;
 
 /**
  * Rates Backend Controller
@@ -37,4 +38,22 @@ class Rates extends SettingsController
      * @var string settingsItemCode determines the settings code
      */
     public $settingsItemCode = 'rates';
+
+    /**
+     * onGeneratePairs
+     */
+    public function onGeneratePairs()
+    {
+        ExchangeRate::generatePairs();
+
+        return $this->listRefresh();
+    }
+
+    /**
+     * onRequestRates
+     */
+    public function onRequestRates()
+    {
+        return $this->listRefresh();
+    }
 }
