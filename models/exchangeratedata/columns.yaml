@@ -8,4 +8,4 @@ columns:
 
     valid_at:
         label: Valid From
-        type: date
+        type: datetime

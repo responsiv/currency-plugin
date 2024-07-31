@@ -22,7 +22,7 @@ return new class extends Migration
             Schema::table('responsiv_currency_exchange_converters', function(Blueprint $table) {
                 $table->string('name')->nullable();
                 $table->boolean('is_enabled')->default(false);
-                $table->integer('sort_order')->nullable();
+                $table->boolean('is_default')->default(false);
             });
         }
 

@@ -12,5 +12,5 @@ fields:
         label: Valid From
         span: auto
         type: datepicker
-        mode: date
+        mode: datetime
         default: now

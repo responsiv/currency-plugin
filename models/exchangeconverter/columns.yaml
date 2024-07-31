@@ -10,8 +10,8 @@ columns:
     converter_name:
         label: Converter Name
 
-    sort_order:
-        label: Priority
+    is_default:
+        label: Default
         type: number
         width: 10%
 

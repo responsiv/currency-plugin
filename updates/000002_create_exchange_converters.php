@@ -14,7 +14,7 @@ return new class extends Migration
             $table->integer('refresh_interval')->default(24);
             $table->mediumText('config_data')->nullable();
             $table->boolean('is_enabled')->default(false);
-            $table->integer('sort_order')->nullable();
+            $table->boolean('is_default')->default(false);
             $table->timestamps();
         });
     }

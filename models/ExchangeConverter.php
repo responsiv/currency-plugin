@@ -11,7 +11,7 @@ use October\Rain\Database\ExpandoModel;
  * @property int $refresh_interval
  * @property array $config_data
  * @property bool $is_enabled
- * @property int $sort_order
+ * @property bool $is_default
  * @property \Illuminate\Support\Carbon $updated_at
  * @property \Illuminate\Support\Carbon $created_at
  *
@@ -20,9 +20,9 @@ use October\Rain\Database\ExpandoModel;
  */
 class ExchangeConverter extends ExpandoModel
 {
-    use \October\Rain\Database\Traits\Sortable;
     use \October\Rain\Database\Traits\Purgeable;
     use \October\Rain\Database\Traits\Validation;
+    use \October\Rain\Database\Traits\Defaultable;
 
     /**
      * @var string The database table used by the model.
@@ -41,7 +41,7 @@ class ExchangeConverter extends ExpandoModel
         'name',
         'class_name',
         'is_enabled',
-        'sort_order',
+        'is_default',
         'refresh_interval',
     ];
 
