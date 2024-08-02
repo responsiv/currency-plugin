@@ -1,0 +1,14 @@
+{
+  "Currencies": "Mata uang",
+  "Create and configure available currencies.": "Buat dan konfigurasikan mata uang yang tersedia.",
+  "Currency": "Mata uang",
+  "Currency Converters": "Pengonversi Mata Uang",
+  "Select and manage the currency converter to use.": "Pilih dan kelola konverter mata uang yang akan digunakan.",
+  "Successfully enabled those currencies.": "Berhasil mengaktifkan mata uang tersebut.",
+  "Successfully disabled those currencies.": "Berhasil menonaktifkan mata uang tersebut.",
+  "Enable or Disable Currencies": "Mengaktifkan atau Menonaktifkan Mata Uang",
+  "Currencies selected: :amount": "Mata uang yang dipilih: :jumlah",
+  "Enabled": "Diaktifkan",
+  "Disabled currencies are not visible on the front-end.": "Mata uang yang dinonaktifkan tidak terlihat di front-end.",
+  "Tools for currency display and conversion.": "Alat untuk tampilan dan konversi mata uang."
+}

@@ -1,0 +1,14 @@
+{
+  "Currencies": "Valuta's",
+  "Create and configure available currencies.": "Creëer en configureer beschikbare valuta's.",
+  "Currency": "Munteenheid",
+  "Currency Converters": "Valutaconverters",
+  "Select and manage the currency converter to use.": "Selecteer en beheer de te gebruiken valutaconverter.",
+  "Successfully enabled those currencies.": "Deze valuta's zijn ingeschakeld.",
+  "Successfully disabled those currencies.": "Deze valuta's zijn succesvol uitgeschakeld.",
+  "Enable or Disable Currencies": "Valuta's in- of uitschakelen",
+  "Currencies selected: :amount": "Geselecteerde valuta: :bedrag",
+  "Enabled": "Ingeschakeld",
+  "Disabled currencies are not visible on the front-end.": "Uitgeschakelde valuta's zijn niet zichtbaar op de front-end.",
+  "Tools for currency display and conversion.": "Hulpmiddelen voor valutaweergave en -conversie."
+}

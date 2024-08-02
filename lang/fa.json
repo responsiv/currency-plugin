@@ -1,0 +1,14 @@
+{
+  "Currencies": "ارزها",
+  "Create and configure available currencies.": "ارزهای موجود را ایجاد و پیکربندی کنید.",
+  "Currency": "واحد پول",
+  "Currency Converters": "مبدل های ارز",
+  "Select and manage the currency converter to use.": "مبدل ارز را برای استفاده انتخاب و مدیریت کنید.",
+  "Successfully enabled those currencies.": "آن ارزها با موفقیت فعال شد.",
+  "Successfully disabled those currencies.": "آن ارزها با موفقیت غیرفعال شد.",
+  "Enable or Disable Currencies": "فعال یا غیرفعال کردن ارزها",
+  "Currencies selected: :amount": "ارزهای انتخاب شده: :amount",
+  "Enabled": "فعال شد",
+  "Disabled currencies are not visible on the front-end.": "ارزهای غیرفعال شده در قسمت جلویی قابل مشاهده نیستند.",
+  "Tools for currency display and conversion.": "ابزارهایی برای نمایش و تبدیل ارز."
+}

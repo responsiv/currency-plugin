@@ -1,0 +1,14 @@
+{
+  "Currencies": "Monedas",
+  "Create and configure available currencies.": "Crea y configura monedas disponibles.",
+  "Currency": "Divisa",
+  "Currency Converters": "Conversores de moneda",
+  "Select and manage the currency converter to use.": "Seleccione y administre el conversor de moneda a utilizar.",
+  "Successfully enabled those currencies.": "Se habilitaron exitosamente esas monedas.",
+  "Successfully disabled those currencies.": "Se deshabilitaron exitosamente esas monedas.",
+  "Enable or Disable Currencies": "Activar o desactivar monedas",
+  "Currencies selected: :amount": "Monedas seleccionadas: :monto",
+  "Enabled": "Activado",
+  "Disabled currencies are not visible on the front-end.": "Las monedas deshabilitadas no son visibles en la interfaz.",
+  "Tools for currency display and conversion.": "Herramientas para visualización y conversión de moneda."
+}

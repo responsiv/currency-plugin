@@ -1,0 +1,14 @@
+{
+  "Currencies": "العملات",
+  "Create and configure available currencies.": "إنشاء وتكوين العملات المتاحة.",
+  "Currency": "عملة",
+  "Currency Converters": "محولات العملات",
+  "Select and manage the currency converter to use.": "حدد وإدارة محول العملات لاستخدامه.",
+  "Successfully enabled those currencies.": "تم تمكين تلك العملات بنجاح.",
+  "Successfully disabled those currencies.": "تم تعطيل تلك العملات بنجاح.",
+  "Enable or Disable Currencies": "تمكين أو تعطيل العملات",
+  "Currencies selected: :amount": "العملات المختارة: :amount",
+  "Enabled": "ممكّن",
+  "Disabled currencies are not visible on the front-end.": "العملات المعطلة غير مرئية في الواجهة الأمامية.",
+  "Tools for currency display and conversion.": "أدوات لعرض العملة وتحويلها."
+}

@@ -1,0 +1,14 @@
+{
+  "Currencies": "Měny",
+  "Create and configure available currencies.": "Vytvářejte a konfigurujte dostupné měny.",
+  "Currency": "Měna",
+  "Currency Converters": "Převodníky měn",
+  "Select and manage the currency converter to use.": "Vyberte a spravujte převodník měn, který chcete použít.",
+  "Successfully enabled those currencies.": "Tyto měny byly úspěšně aktivovány.",
+  "Successfully disabled those currencies.": "Tyto měny byly úspěšně deaktivovány.",
+  "Enable or Disable Currencies": "Povolit nebo zakázat měny",
+  "Currencies selected: :amount": "Vybrané měny: :částka",
+  "Enabled": "Povoleno",
+  "Disabled currencies are not visible on the front-end.": "Deaktivované měny nejsou na front-endu viditelné.",
+  "Tools for currency display and conversion.": "Nástroje pro zobrazení a převod měn."
+}

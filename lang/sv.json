@@ -1,0 +1,14 @@
+{
+  "Currencies": "Valutor",
+  "Create and configure available currencies.": "Skapa och konfigurera tillgängliga valutor.",
+  "Currency": "Valuta",
+  "Currency Converters": "Valutaomvandlare",
+  "Select and manage the currency converter to use.": "Välj och hantera den valutaomvandlare som ska användas.",
+  "Successfully enabled those currencies.": "De valutorna har aktiverats.",
+  "Successfully disabled those currencies.": "De valutorna har inaktiverats.",
+  "Enable or Disable Currencies": "Aktivera eller inaktivera valutor",
+  "Currencies selected: :amount": "Valuta valda: :belopp",
+  "Enabled": "Aktiverad",
+  "Disabled currencies are not visible on the front-end.": "Inaktiverade valutor är inte synliga i front-end.",
+  "Tools for currency display and conversion.": "Verktyg för valutavisning och konvertering."
+}

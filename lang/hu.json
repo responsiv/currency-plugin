@@ -1,0 +1,14 @@
+{
+  "Currencies": "Pénznemek",
+  "Create and configure available currencies.": "Hozzon létre és konfiguráljon elérhető pénznemeket.",
+  "Currency": "Valuta",
+  "Currency Converters": "Valutaváltók",
+  "Select and manage the currency converter to use.": "Válassza ki és kezelje a használni kívánt valutaváltót.",
+  "Successfully enabled those currencies.": "Sikeresen engedélyezte ezeket a pénznemeket.",
+  "Successfully disabled those currencies.": "Sikeresen letiltotta ezeket a pénznemeket.",
+  "Enable or Disable Currencies": "Pénznemek engedélyezése vagy letiltása",
+  "Currencies selected: :amount": "Kiválasztott pénznemek: :összeg",
+  "Enabled": "Engedélyezve",
+  "Disabled currencies are not visible on the front-end.": "A letiltott pénznemek nem láthatók a kezelőfelületen.",
+  "Tools for currency display and conversion.": "Eszközök a pénznemek megjelenítéséhez és átváltásához."
+}

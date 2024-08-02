@@ -1,0 +1,14 @@
+{
+  "Currencies": "Devises",
+  "Create and configure available currencies.": "Créez et configurez les devises disponibles.",
+  "Currency": "Devise",
+  "Currency Converters": "Convertisseurs de devises",
+  "Select and manage the currency converter to use.": "Sélectionnez et gérez le convertisseur de devises à utiliser.",
+  "Successfully enabled those currencies.": "Activation réussie de ces devises.",
+  "Successfully disabled those currencies.": "J'ai réussi à désactiver ces devises.",
+  "Enable or Disable Currencies": "Activer ou désactiver les devises",
+  "Currencies selected: :amount": "Devises sélectionnées : montant",
+  "Enabled": "Activé",
+  "Disabled currencies are not visible on the front-end.": "Les devises désactivées ne sont pas visibles sur le front-end.",
+  "Tools for currency display and conversion.": "Outils d'affichage et de conversion des devises."
+}

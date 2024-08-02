@@ -1,0 +1,14 @@
+{
+  "Currencies": "Valute",
+  "Create and configure available currencies.": "Ustvarite in konfigurirajte razpoložljive valute.",
+  "Currency": "Valuta",
+  "Currency Converters": "Pretvorniki valut",
+  "Select and manage the currency converter to use.": "Izberite in upravljajte pretvornik valut, ki ga želite uporabiti.",
+  "Successfully enabled those currencies.": "Te valute so bile uspešno omogočene.",
+  "Successfully disabled those currencies.": "Te valute smo uspešno onemogočili.",
+  "Enable or Disable Currencies": "Omogoči ali onemogoči valute",
+  "Currencies selected: :amount": "Izbrane valute: : znesek",
+  "Enabled": "Omogočeno",
+  "Disabled currencies are not visible on the front-end.": "Onemogočene valute niso vidne na sprednji strani.",
+  "Tools for currency display and conversion.": "Orodja za prikaz in pretvorbo valut."
+}

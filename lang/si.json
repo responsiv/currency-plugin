@@ -1,0 +1,14 @@
+{
+  "Currencies": "මුදල් වර්ග",
+  "Create and configure available currencies.": "පවතින මුදල් වර්ග සාදන්න සහ වින්‍යාස කරන්න.",
+  "Currency": "මුදල්",
+  "Currency Converters": "මුදල් පරිවර්තක",
+  "Select and manage the currency converter to use.": "භාවිතා කිරීමට මුදල් පරිවර්තකය තෝරා කළමනාකරණය කරන්න.",
+  "Successfully enabled those currencies.": "එම මුදල් වර්ග සාර්ථකව සක්‍රීය කර ඇත.",
+  "Successfully disabled those currencies.": "එම මුදල් වර්ග සාර්ථකව අක්‍රීය කරන ලදී.",
+  "Enable or Disable Currencies": "මුදල් සක්රිය හෝ අක්රිය කරන්න",
+  "Currencies selected: :amount": "තෝරාගත් මුදල්: : මුදල",
+  "Enabled": "සබල කර ඇත",
+  "Disabled currencies are not visible on the front-end.": "ආබාධිත මුදල් වර්ග ඉදිරිපස කෙළවරේ නොපෙනේ.",
+  "Tools for currency display and conversion.": "මුදල් සංදර්ශකය සහ පරිවර්තනය සඳහා මෙවලම්."
+}

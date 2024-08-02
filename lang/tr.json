@@ -1,0 +1,14 @@
+{
+  "Currencies": "Para birimleri",
+  "Create and configure available currencies.": "Kullanılabilir para birimlerini oluşturun ve yapılandırın.",
+  "Currency": "Para birimi",
+  "Currency Converters": "Döviz Dönüştürücüler",
+  "Select and manage the currency converter to use.": "Kullanılacak para birimi dönüştürücüyü seçin ve yönetin.",
+  "Successfully enabled those currencies.": "Bu para birimleri başarıyla etkinleştirildi.",
+  "Successfully disabled those currencies.": "Bu para birimleri başarıyla devre dışı bırakıldı.",
+  "Enable or Disable Currencies": "Para Birimlerini Etkinleştirme veya Devre Dışı Bırakma",
+  "Currencies selected: :amount": "Seçilen para birimleri: :tutar",
+  "Enabled": "Etkinleştirilmiş",
+  "Disabled currencies are not visible on the front-end.": "Devre dışı bırakılan para birimleri ön uçta görünmez.",
+  "Tools for currency display and conversion.": "Para birimi görüntüleme ve dönüştürme araçları."
+}
