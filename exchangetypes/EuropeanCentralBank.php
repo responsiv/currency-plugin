@@ -9,7 +9,7 @@ use DOMXPath;
 
 class EuropeanCentralBank extends ExchangeBase
 {
-    const API_URL = 'http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml';
+    const API_URL = 'https://www.ecb.int/stats/eurofxref/eurofxref-daily.xml';
 
     /**
      * {@inheritDoc}
@@ -17,7 +17,7 @@ class EuropeanCentralBank extends ExchangeBase
     public function converterDetails()
     {
         return [
-            'name'        => 'European Central Bank',
+            'name' => 'European Central Bank',
             'description' => 'Free currency exchange rate feed provided by European Central Bank (www.ecb.int).'
         ];
     }
@@ -79,13 +79,4 @@ class EuropeanCentralBank extends ExchangeBase
 
         return $toRate / $fromRate;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function defineFormFields()
-    {
-        return [];
-    }
-
 }

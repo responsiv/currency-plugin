@@ -1,63 +1,133 @@
 <?php namespace Responsiv\Currency\Controllers;
 
-use BackendMenu;
-use Backend\Classes\Controller;
-use System\Classes\SettingsManager;
-use Responsiv\Currency\Models\ExchangeConverter;
+use File;
+use Responsiv\Currency\Classes\ExchangeManager;
+use Backend\Classes\SettingsController;
+use ApplicationException;
 use Exception;
 
 /**
- * Converters Back-end Controller
+ * Converters Backend Controller
  */
-class Converters extends Controller
+class Converters extends SettingsController
 {
+    /**
+     * @var array implement behaviors in this controller.
+     */
     public $implement = [
-        'Backend.Behaviors.FormController',
+        \Backend\Behaviors\FormController::class,
+        \Backend\Behaviors\ListController::class,
     ];
 
+    /**
+     * @var string formConfig file
+     */
     public $formConfig = 'config_form.yaml';
 
-    public function __construct()
-    {
-        parent::__construct();
+    /**
+     * @var string listConfig file
+     */
+    public $listConfig = 'config_list.yaml';
 
-        BackendMenu::setContext('October.System', 'system', 'settings');
-        SettingsManager::setContext('Responsiv.Currency', 'converters');
-    }
+    /**
+     * @var array required permissions
+     */
+    public $requiredPermissions = ['responsiv.currency.rates'];
 
-    public function index()
+    /**
+     * @var string settingsItemCode determines the settings code
+     */
+    public $settingsItemCode = 'rates';
+
+    /**
+     * @var string driverAlias
+     */
+    public $driverAlias;
+
+    /**
+     * index_onLoadAddPopup
+     */
+    protected function index_onLoadAddPopup()
     {
         try {
-            $record = ExchangeConverter::getDefault();
-            $this->update($record->id);
+            $converters = ExchangeManager::instance()->listConverters();
+            $converters->sortBy('name');
+            $this->vars['converters'] = $converters;
         }
         catch (Exception $ex) {
-            $this->controller->handleError($ex);
+            $this->handleError($ex);
+        }
+
+        return $this->makePartial('add_converter_form');
+    }
+
+    /**
+     * create
+     */
+    public function create($driverAlias = null)
+    {
+        try {
+            if (!$driverAlias) {
+                throw new ApplicationException('Missing a gateway code');
+            }
+
+            $this->driverAlias = $driverAlias;
+            $this->asExtension('FormController')->create();
+        }
+        catch (Exception $ex) {
+            $this->handleError($ex);
         }
     }
 
-    protected function index_onSave()
-    {
-        $record = ExchangeConverter::getDefault();
-        return $this->update_onSave($record->id);
-    }
-
+    /**
+     * formExtendModel
+     */
     public function formExtendModel($model)
     {
-        $model->autoExtend = false;
+        if (!$model->exists) {
+            $model->applyDriverClass($this->getDriverClass());
+        }
+
         return $model;
     }
 
+    /**
+     * formExtendFields
+     */
     public function formExtendFields($widget)
     {
-        $model = $widget->model;
-        $className = post('ExchangeConverter[class_name]', $model->class_name);
-        $model->applyConverterClass($className);
+        $model = $widget->getModel();
 
-        $config = $model->getFieldConfig();
-        if (isset($config->fields)) {
-            $widget->addFields($config->fields, 'primary');
+        $widget->inActiveTabSection('primary', function() use ($widget, $model) {
+            $model->defineDriverFormFields($widget);
+        });
+
+        // Add the set up help partial
+        $setupPartial = $model->getPartialPath().'/_setup_help.php';
+        if (File::exists($setupPartial)) {
+            $widget->addTabField('setup_help', [
+                'type' => 'partial',
+                'tab' => "Help",
+                'path' => $setupPartial
+            ]);
         }
     }
 
+    /**
+     * getDriverClass
+     */
+    protected function getDriverClass()
+    {
+        $alias = post('driver_alias', $this->driverAlias);
+
+        if ($this->gatewayClass !== null) {
+            return $this->gatewayClass;
+        }
+
+        if (!$gateway = ExchangeManager::instance()->findConverterByAlias($alias)) {
+            throw new ApplicationException("Unable to find driver: {$alias}");
+        }
+
+        return $this->gatewayClass = $gateway->class;
+    }
 }

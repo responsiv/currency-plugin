@@ -1,15 +1,28 @@
 <?php namespace Responsiv\Currency\Models;
 
-use Model;
-use Responsiv\Currency\Classes\ExchangeManager;
+use October\Rain\Database\ExpandoModel;
 
 /**
- * Converter Model
+ * ExchangeConverter Model
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $class_name
+ * @property int $refresh_interval
+ * @property array $config_data
+ * @property bool $is_enabled
+ * @property bool $is_default
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property \Illuminate\Support\Carbon $created_at
+ *
+ * @package responsiv\currency
+ * @author Alexey Bobkov, Samuel Georges
  */
-class ExchangeConverter extends Model
+class ExchangeConverter extends ExpandoModel
 {
     use \October\Rain\Database\Traits\Purgeable;
     use \October\Rain\Database\Traits\Validation;
+    use \October\Rain\Database\Traits\Defaultable;
 
     /**
      * @var string The database table used by the model.
@@ -17,81 +30,39 @@ class ExchangeConverter extends Model
     public $table = 'responsiv_currency_exchange_converters';
 
     /**
-     * @var array Guarded fields
+     * @var string expandoColumn name to store the data
      */
-    protected $guarded = ['config_data'];
+    protected $expandoColumn = 'config_data';
 
     /**
-     * @var array Fillable fields
+     * @var array expandoPassthru attributes that should not be serialized
      */
-    protected $fillable = [];
+    protected $expandoPassthru = [
+        'name',
+        'class_name',
+        'is_enabled',
+        'is_default',
+        'refresh_interval',
+    ];
 
     /**
-     * @var array List of attribute names which are json encoded and decoded from the database.
-     */
-    protected $jsonable = ['config_data'];
-
-    /**
-     * @var array List of attribute names which should not be saved to the database.
+     * @var array purgeable list of attribute names which should not be saved to the database
      */
     protected $purgeable = ['converter_name'];
 
     /**
-     * @var array The rules to be applied to the data.
+     * @var array rules for validation
      */
-    public $rules = [];
+    public $rules = [
+        'name' => 'required'
+    ];
 
     /**
-     * @var bool Set to false to disable automatic implementation of the converter type behavior.
+     * applyDriverClass extends this class with the converter class
+     * @param  string $class
+     * @return bool
      */
-    public $autoExtend = true;
-
-    /**
-     * @var array Attributes that have been spliced in from config data and should be purged.
-     */
-    protected $splicedAttributes = [];
-
-    /**
-     * Returns the first exchange converter. There can be only one.
-     * @return self
-     */
-    public static function getDefault()
-    {
-        if ($obj = self::first()) {
-            return $obj;
-        }
-
-        $obj = new self;
-        $obj->class_name = 'Responsiv\Currency\ExchangeTypes\EuropeanCentralBank';
-        $obj->refresh_interval = 24;
-        $obj->save();
-        return $obj;
-    }
-
-    public function getClassNameOptions()
-    {
-        $converters = ExchangeManager::instance()->listConverters();
-        $converters->sortBy('name');
-        return $converters->lists('name', 'class');
-    }
-
-    public function getRefreshIntervalOptions()
-    {
-        return [
-            '1'  => '1 hour',
-            '3'  => '3 hours',
-            '6'  => '6 hours',
-            '12' => '12 hours',
-            '24' => '24 hours'
-        ];
-    }
-
-    /**
-     * Extends this class with the converter class
-     * @param  string $class Class name
-     * @return boolean
-     */
-    public function applyConverterClass($class = null)
+    public function applyDriverClass($class = null)
     {
         if (!$class) {
             $class = $this->class_name;
@@ -110,51 +81,57 @@ class ExchangeConverter extends Model
         return true;
     }
 
-    public function afterFetch()
+    /**
+     * getDriverObject returns the gateway class extension object.
+     * @param  string $class Class name
+     * @return \Responsiv\Currency\Classes\ExchangeBase
+     */
+    public function getDriverObject($class = null)
     {
-        if ($this->autoExtend) {
-            $this->applyConverterClass();
+        if (!$class) {
+            $class = $this->class_name;
         }
 
-        $this->splicedAttributes = (array) $this->config_data;
-        $this->attributes = array_merge($this->splicedAttributes, $this->attributes);
-    }
-
-    public function beforeValidate()
-    {
-        if (!$this->applyConverterClass()) {
-            return;
-        }
-    }
-
-    public function beforeSave()
-    {
-        if (!$this->class_name) {
-            return;
-        }
-
-        $configData = [];
-        $fieldConfig = $this->getFieldConfig();
-        $fields = isset($fieldConfig->fields) ? $fieldConfig->fields : [];
-
-        foreach ($fields as $name => $config) {
-            if (!array_key_exists($name, $this->attributes)) {
-                continue;
-            }
-
-            $configData[$name] = $this->attributes[$name];
-            unset($this->attributes[$name]);
-        }
-
-        $this->config_data = $configData;
-        $this->attributes = array_except($this->attributes, array_keys($this->splicedAttributes));
+        return $this->asExtension($class);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getConverterClass()
+    public function getDriverClass()
     {
         return $this->class_name;
+    }
+
+    /**
+     * afterFetch
+     */
+    public function afterFetch()
+    {
+        $this->applyDriverClass();
+    }
+
+    /**
+     * beforeValidate
+     */
+    public function beforeValidate()
+    {
+        if ($this->applyDriverClass()) {
+            $this->getDriverObject()->validateDriverHost($this);
+        }
+    }
+
+    /**
+     * getRefreshIntervalOptions
+     */
+    public function getRefreshIntervalOptions()
+    {
+        return [
+            '1'  => '1 hour',
+            '3'  => '3 hours',
+            '6'  => '6 hours',
+            '12' => '12 hours',
+            '24' => '24 hours'
+        ];
     }
 }

@@ -12,7 +12,7 @@ class Coinmill extends ExchangeBase
     public function converterDetails()
     {
         return [
-            'name'        => 'Coinmill',
+            'name' => 'Coinmill',
             'description' => 'Free conversion services via the Coinmill gateway (coinmill.com).'
         ];
     }
@@ -23,13 +23,5 @@ class Coinmill extends ExchangeBase
     public function getExchangeRate($fromCurrency, $toCurrency)
     {
         return 1;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function defineFormFields()
-    {
-        return [];
     }
 }

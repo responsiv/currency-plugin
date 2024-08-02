@@ -1,0 +1,16 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    rate_value:
+        label: Rate Value
+        type: number
+        span: auto
+
+    valid_at:
+        label: Valid From
+        span: auto
+        type: datepicker
+        mode: datetime
+        default: now

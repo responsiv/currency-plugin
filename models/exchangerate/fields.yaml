@@ -3,6 +3,16 @@
 # ===================================
 
 fields:
-    id:
-        label: ID
-        disabled: true
+    from_currency_code:
+        label: From Currency
+        type: dropdown
+        span: auto
+
+    to_currency_code:
+        label: To Currency
+        type: dropdown
+        span: auto
+
+    rate_data:
+        label: Rate Data
+        type: relation

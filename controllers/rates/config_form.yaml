@@ -1,0 +1,35 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Rate
+
+# Model Form Field configuration
+form: $/responsiv/currency/models/exchangerate/fields.yaml
+
+# Model Class name
+modelClass: Responsiv\Currency\Models\ExchangeRate
+
+# Default redirect location
+defaultRedirect: responsiv/currency/rates
+
+# Form Design
+design:
+    displayMode: basic
+
+# Create page
+create:
+    title: backend::lang.form.create_title
+    redirect: responsiv/currency/rates/update/:id
+    redirectClose: responsiv/currency/rates
+
+# Update page
+update:
+    title: backend::lang.form.update_title
+    redirect: responsiv/currency/rates
+    redirectClose: responsiv/currency/rates
+
+# Preview page
+preview:
+    title: backend::lang.form.preview_title

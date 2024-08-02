@@ -3,12 +3,16 @@
 # ===================================
 
 fields:
-    class_name:
-        label: responsiv.currency::lang.converter.class_name
-        type: dropdown
-        attributes:
-            onChange: $(this).request('onRefresh')
+    name:
+        label: Name
+        commentAbove: Assign a name to this currency converter.
 
     refresh_interval:
-        label: responsiv.currency::lang.converter.refresh_interval
+        label: Update Interval
         type: dropdown
+
+    is_enabled:
+        label: Enabled
+        type: checkbox
+        default: true
+        comment: Disabled currency converters are not used to fetch rates.
