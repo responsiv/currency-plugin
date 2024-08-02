@@ -12,7 +12,7 @@ class CoinMarketCap extends ExchangeBase
     /**
      * {@inheritDoc}
      */
-    public function converterDetails()
+    public function driverDetails()
     {
         return [
             'name' => 'CoinMarketCap',

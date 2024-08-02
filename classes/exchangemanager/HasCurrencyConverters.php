@@ -73,7 +73,7 @@ trait HasCurrencyConverters
             }
 
             $converterObj = new $converter->class;
-            $converterDetails = $converterObj->converterDetails();
+            $converterDetails = $converterObj->driverDetails();
             $collection[$converter->alias] = (object)[
                 'owner' => $converter->owner,
                 'class' => $converter->class,

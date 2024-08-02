@@ -26,6 +26,11 @@ class ExchangeConverter extends ExpandoModel
     use \October\Rain\Database\Traits\Defaultable;
 
     /**
+     * @var string NO_RATE_DATA specified
+     */
+    const NO_RATE_DATA = -1;
+
+    /**
      * @var string The database table used by the model.
      */
     public $table = 'responsiv_currency_exchange_converters';
@@ -59,6 +64,13 @@ class ExchangeConverter extends ExpandoModel
     ];
 
     /**
+     * @var array belongsTo
+     */
+    public $belongsTo = [
+        'fallback_converter' => ExchangeConverter::class
+    ];
+
+    /**
      * applyDriverClass extends this class with the converter class
      * @param  string $class
      * @return bool
@@ -78,7 +90,7 @@ class ExchangeConverter extends ExpandoModel
         }
 
         $this->class_name = $class;
-        $this->converter_name = array_get($this->converterDetails(), 'name', 'Unknown');
+        $this->converter_name = array_get($this->driverDetails(), 'name', 'Unknown');
         return true;
     }
 

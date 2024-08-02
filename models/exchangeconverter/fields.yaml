@@ -9,7 +9,14 @@ fields:
 
     refresh_interval:
         label: Update Interval
-        type: dropdown
+        type: radio
+        inlineOptions: true
+
+    fallback_converter:
+        label: Fallback Converter
+        comment: Select a converter to use as a fallback if this one fails.
+        type: relation
+        emptyOption: "-- none --"
 
     is_enabled:
         label: Enabled

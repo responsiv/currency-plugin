@@ -15,6 +15,7 @@ return new class extends Migration
             $table->mediumText('config_data')->nullable();
             $table->boolean('is_enabled')->default(false);
             $table->boolean('is_default')->default(false);
+            $table->integer('fallback_converter_id')->unsigned()->nullable()->index();
             $table->timestamps();
         });
     }

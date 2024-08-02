@@ -146,10 +146,10 @@ class Plugin extends PluginBase
     {
         return [
             \Responsiv\Currency\ExchangeTypes\XeServices::class => 'xe',
+            \Responsiv\Currency\ExchangeTypes\FixedRate::class => 'fixed',
             // \Responsiv\Currency\ExchangeTypes\EuropeanCentralBank::class => 'ecb',
             // \Responsiv\Currency\ExchangeTypes\CoinMarketCap::class => 'coinmarketcap',
             // \Responsiv\Currency\ExchangeTypes\Fixer::class => 'fixer',
-            // \Responsiv\Currency\ExchangeTypes\Yahoo::class => 'yahoo', // Discontinued
             // \Responsiv\Currency\ExchangeTypes\XeServices::class => 'xe',
             // \Responsiv\Currency\ExchangeTypes\Coinmill::class => 'coinmill',
         ];

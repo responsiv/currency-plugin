@@ -115,6 +115,11 @@ class Converters extends SettingsController
         if ($model->is_default) {
             $widget->getField('is_default')?->disabled();
         }
+
+        if ($model->driverDetails()['isFixed'] ?? false) {
+            $widget->getField('fallback_converter')?->hidden();
+            $widget->getField('refresh_interval')?->hidden();
+        }
     }
 
     /**

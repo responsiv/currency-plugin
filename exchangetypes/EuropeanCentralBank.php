@@ -14,7 +14,7 @@ class EuropeanCentralBank extends ExchangeBase
     /**
      * {@inheritDoc}
      */
-    public function converterDetails()
+    public function driverDetails()
     {
         return [
             'name' => 'European Central Bank',

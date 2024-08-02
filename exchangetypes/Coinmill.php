@@ -9,7 +9,7 @@ class Coinmill extends ExchangeBase
     /**
      * {@inheritDoc}
      */
-    public function converterDetails()
+    public function driverDetails()
     {
         return [
             'name' => 'Coinmill',
