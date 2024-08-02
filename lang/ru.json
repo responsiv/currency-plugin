@@ -1,5 +1,9 @@
 {
+  "Currencies": "Валюты",
+  "Create and configure available currencies.": "Создайте и настройте доступные валюты.",
   "Currency": "Валюта",
+  "Currency Converters": "Конвертеры валют",
+  "Select and manage the currency converter to use.": "Выберите и управляйте конвертером валют, который хотите использовать.",
   "Successfully enabled those currencies.": "Валюта успешно включена",
   "Successfully disabled those currencies.": "Валюта успешно выключена.",
   "Enable or Disable Currencies": "Включение/отключение валюты",
