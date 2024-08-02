@@ -27,3 +27,14 @@ columns:
         searchable: true
         type: selectable
 
+    converter:
+        label: Currency Converter
+        relation: converter
+        select: name
+        default: "-- use default --"
+        invisible: true
+
+    created_at:
+        label: "Created at"
+        type: date
+        invisible: true

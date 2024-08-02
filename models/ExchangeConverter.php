@@ -1,6 +1,7 @@
 <?php namespace Responsiv\Currency\Models;
 
 use October\Rain\Database\ExpandoModel;
+use ValidationException;
 
 /**
  * ExchangeConverter Model
@@ -118,6 +119,10 @@ class ExchangeConverter extends ExpandoModel
     {
         if ($this->applyDriverClass()) {
             $this->getDriverObject()->validateDriverHost($this);
+        }
+
+        if (!$this->is_enabled && $this->is_default) {
+            throw new ValidationException(['is_enabled' => __("The default currency converter cannot be disabled.")]);
         }
     }
 

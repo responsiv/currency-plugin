@@ -13,6 +13,11 @@ fields:
         type: dropdown
         span: auto
 
+    converter:
+        label: Currency Converter
+        type: relation
+        emptyOption: "-- use default --"
+
     rate_data:
         label: Rate Data
         type: relation

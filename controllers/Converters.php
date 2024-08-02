@@ -111,6 +111,10 @@ class Converters extends SettingsController
                 'path' => $setupPartial
             ]);
         }
+
+        if ($model->is_default) {
+            $widget->getField('is_default')?->disabled();
+        }
     }
 
     /**

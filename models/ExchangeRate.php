@@ -41,6 +41,13 @@ class ExchangeRate extends Model
     ];
 
     /**
+     * @var array belongsTo
+     */
+    public $belongsTo = [
+        'converter' => ExchangeConverter::class
+    ];
+
+    /**
      * getFromCurrencyCodeOptions
      */
     public function getFromCurrencyCodeOptions()
