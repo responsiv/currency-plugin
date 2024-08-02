@@ -127,11 +127,12 @@ class ExchangeConverter extends ExpandoModel
     public function getRefreshIntervalOptions()
     {
         return [
-            '1'  => '1 hour',
-            '3'  => '3 hours',
-            '6'  => '6 hours',
+            '48' => '48 hours',
+            '24' => '24 hours',
             '12' => '12 hours',
-            '24' => '24 hours'
+            '6'  => '6 hours',
+            '3'  => '3 hours',
+            '1'  => '1 hour',
         ];
     }
 }

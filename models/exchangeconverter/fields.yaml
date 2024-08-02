@@ -16,3 +16,10 @@ fields:
         type: checkbox
         default: true
         comment: Disabled currency converters are not used to fetch rates.
+        span: auto
+
+    is_default:
+        label: Default
+        comment: Place a tick in this checkbox if you want to use this converter by default.
+        type: checkbox
+        span: auto

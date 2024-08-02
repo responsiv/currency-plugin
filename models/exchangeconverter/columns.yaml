@@ -10,12 +10,12 @@ columns:
     converter_name:
         label: Converter Name
 
-    is_default:
-        label: Default
-        type: number
-        width: 10%
-
     is_enabled:
         label: Enabled
+        type: switch
+        width: 10%
+
+    is_default:
+        label: Default
         type: switch
         width: 10%
