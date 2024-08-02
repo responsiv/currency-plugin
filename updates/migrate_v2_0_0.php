@@ -26,10 +26,28 @@ return new class extends Migration
             });
         }
 
-        if (!Schema::hasColumn('responsiv_currency_exchange_rates', 'rate_value')) {
+        if (!Schema::hasColumn('responsiv_currency_exchange_rates', 'converter_id')) {
+            Schema::table('responsiv_currency_exchange_rates', function(Blueprint $table) {
+                $table->integer('converter_id')->unsigned()->nullable()->index();
+            });
+        }
+
+        // Rename columns need their own query for SQLite
+
+        if (!Schema::hasColumn('responsiv_currency_exchange_rates', 'from_currency_code')) {
             Schema::table('responsiv_currency_exchange_rates', function(Blueprint $table) {
                 $table->renameColumn('from_currency', 'from_currency_code');
+            });
+        }
+
+        if (!Schema::hasColumn('responsiv_currency_exchange_rates', 'to_currency_code')) {
+            Schema::table('responsiv_currency_exchange_rates', function(Blueprint $table) {
                 $table->renameColumn('to_currency', 'to_currency_code');
+            });
+        }
+
+        if (!Schema::hasColumn('responsiv_currency_exchange_rates', 'rate_value')) {
+            Schema::table('responsiv_currency_exchange_rates', function(Blueprint $table) {
                 $table->renameColumn('rate', 'rate_value');
             });
         }
