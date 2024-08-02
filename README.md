@@ -3,18 +3,18 @@
 Tools for dealing with currency display and conversions. You can configure currencies and converters via the Settings page.
 
 - Settings → Currencies
-- Settings → Currency Converters
+- Settings → Currency Rates
 
 ### Formatting currency
 
-You may call the currency facade in PHP using `Currency::format` or in Twig using the `|currency` filter.
+You may call the currency facade in PHP using `Currency::format` or in Twig using the `|currency` filter. In dollar terms, the following value `100` renders as 1 dollar, since values are handled in cents.
 
 ```php
-<?= Currency::format(10) ?>
+<?= Currency::format(100) ?>
 ```
 
 ```twig
-{{ 10|currency }}
+{{ 100|currency }}
 ```
 
 This method takes an options argument, as an array that supports various values.
@@ -26,17 +26,17 @@ This method takes an options argument, as an array that supports various values.
 For example, to convert an amount from USD to AUD:
 
 ```php
-Currency::format(10, ['from' => 'USD', 'to' => 'AUD']);
+Currency::format(1000, ['from' => 'USD', 'to' => 'AUD']);
 ```
 
 To display a currency in long or short format
 
 ```php
 // $10.00 USD
-Currency::format(10, ['format' => 'long']);
+Currency::format(1000, ['format' => 'long']);
 
 // $10
-Currency::format(10, ['format' => 'short']);
+Currency::format(1000, ['format' => 'short']);
 ```
 
 ### Currency Form Widget
