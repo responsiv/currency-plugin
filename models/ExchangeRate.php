@@ -7,9 +7,9 @@ use Model;
  * ExchangeRate Model
  *
  * @property int $id
- * @property string $from_currency
- * @property string $to_currency
- * @property float $rate
+ * @property string $from_currency_code
+ * @property string $to_currency_code
+ * @property float $rate_value
  * @property \Illuminate\Support\Carbon $updated_at
  * @property \Illuminate\Support\Carbon $created_at
  *

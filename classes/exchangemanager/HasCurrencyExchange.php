@@ -29,10 +29,54 @@ trait HasCurrencyExchange
         $fromCurrency = trim(strtoupper($fromCurrency));
         $toCurrency = trim(strtoupper($toCurrency));
 
+        if ($fromCurrency === $toCurrency) {
+            return 1;
+        }
+
         // Look up in the cache
         $key = $fromCurrency.'_'.$toCurrency;
-        if (array_key_exists($key, self::$rateCache)) {
-            return self::$rateCache[$key];
+        if (array_key_exists($key, $this->rateCache)) {
+            return $this->rateCache[$key];
+        }
+
+        $record = ExchangeRate::where('from_currency_code', $fromCurrency)
+            ->where('to_currency_code',  $toCurrency)
+            ->first()
+        ;
+
+        if ($record) {
+            return $this->rateCache[$key] = $record->rate_value;
+        }
+
+        // Fallback to the inverse currency pair
+        $record = ExchangeRate::where('to_currency_code', $fromCurrency)
+            ->where('from_currency_code',  $toCurrency)
+            ->first()
+        ;
+
+        if ($record) {
+            return $this->rateCache[$key] = (1 / $record->rate_value);
+        }
+
+        throw new ApplicationException(__("There is no currency pair configured for :from/:to", [
+            'from' => $fromCurrency,
+            'to' => $toCurrency
+        ]));
+    }
+
+    /**
+     * loadRate loads the latest rate from a currency converter
+     * @todo this should pull the rate in and save it to the pair
+     */
+    public function loadRate(string $fromCurrency, string $toCurrency): float
+    {
+        $fromCurrency = trim(strtoupper($fromCurrency));
+        $toCurrency = trim(strtoupper($toCurrency));
+
+        // Look up in the cache
+        $key = $fromCurrency.'_'.$toCurrency;
+        if (array_key_exists($key, $this->rateCache)) {
+            return $this->rateCache[$key];
         }
 
         // Look up in the database cache
@@ -51,7 +95,7 @@ trait HasCurrencyExchange
         ;
 
         if ($record = $record->first()) {
-            return self::$rateCache[$key] = $record->rate_value;
+            return $this->rateCache[$key] = $record->rate_value;
         }
 
         // Evaluate rate using a currency rate converter
@@ -64,7 +108,7 @@ trait HasCurrencyExchange
             $record->rate_value = $rate;
             $record->save();
 
-            return self::$rateCache[$key] = $rate;
+            return $this->rateCache[$key] = $rate;
         }
         catch (Exception $ex) {
             // Load the most recent rate from the cache
@@ -77,7 +121,7 @@ trait HasCurrencyExchange
                 throw $ex;
             }
 
-            return self::$rateCache[$key] = $record->rate_value;
+            return $this->rateCache[$key] = $record->rate_value;
         }
     }
 

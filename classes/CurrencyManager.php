@@ -44,7 +44,7 @@ class CurrencyManager
             $fromCurrency = $this->primaryCode();
         }
 
-        return ExchangeManager::instance()->convert($value, $fromCurrency, $toCurrency, null);
+        return ExchangeManager::instance()->convert($value, $toCurrency, $fromCurrency, null);
     }
 
     /**
