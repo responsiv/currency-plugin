@@ -9,17 +9,19 @@
         ->icon('icon-refresh')
         ->secondary() ?>
 
+    <?php /*
     <div class="toolbar-divider"></div>
 
     <?= Ui::button("Manage Converters", 'responsiv/currency/converters')
         ->icon('icon-line-chart')
         ->secondary() ?>
 
-    <!-- <?= Ui::ajaxButton("Request Rates", 'onRequestRates')
+    <?= Ui::ajaxButton("Request Rates", 'onRequestRates')
         ->loadingMessage("Loading...")
         ->confirmMessage("This request the latest exchange rates from the currency converters. Continue?")
         ->icon('icon-download')
-        ->secondary() ?> -->
+        ->secondary() ?>
+    */ ?>
 
     <div class="toolbar-divider"></div>
 
