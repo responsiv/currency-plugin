@@ -145,8 +145,8 @@ class Plugin extends PluginBase
     public function registerCurrencyConverters()
     {
         return [
-            \Responsiv\Currency\ExchangeTypes\XeServices::class => 'xe',
             \Responsiv\Currency\ExchangeTypes\FixedRate::class => 'fixed',
+            // \Responsiv\Currency\ExchangeTypes\XeServices::class => 'xe',
             // \Responsiv\Currency\ExchangeTypes\EuropeanCentralBank::class => 'ecb',
             // \Responsiv\Currency\ExchangeTypes\CoinMarketCap::class => 'coinmarketcap',
             // \Responsiv\Currency\ExchangeTypes\Fixer::class => 'fixer',

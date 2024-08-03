@@ -114,8 +114,8 @@ class Currency extends Model
 
         $number = number_format(
             $number,
-            $this->decimal_scale,
-            $decimals === null ? $this->decimal_point : $decimals,
+            $decimals === null ? $this->decimal_scale : $decimals,
+            $this->decimal_point,
             $this->thousand_separator
         );
 
