@@ -99,6 +99,16 @@ class Plugin extends PluginBase
     }
 
     /**
+     * registerContentFields
+     */
+    public function registerContentFields()
+    {
+        return [
+            \Responsiv\Currency\ContentFields\Currency::class => 'currency'
+        ];
+    }
+
+    /**
      * Register new Twig variables
      * @return array
      */
