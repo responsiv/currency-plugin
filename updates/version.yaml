@@ -17,3 +17,6 @@ v2.0.0:
     - Major Upgrade to Currency Plugin
     - migrate_v2_0_0.php
 v2.0.1: Fixes bug in migration path
+v2.0.2:
+    - Adds currency selection to site definitions
+    - extend_site_definitions_table.php

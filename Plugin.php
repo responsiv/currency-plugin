@@ -1,5 +1,6 @@
 <?php namespace Responsiv\Currency;
 
+use Event;
 use Backend;
 use Currency;
 use System\Classes\PluginBase;
@@ -38,6 +39,7 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
+        Event::subscribe(\Responsiv\Currency\Classes\ExtendSystemModule::class);
     }
 
     /**

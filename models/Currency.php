@@ -51,14 +51,19 @@ class Currency extends Model
     protected static $cacheByCode = [];
 
     /**
-     * @var array cacheListEnabled is a cache of enabled currencies.
+     * @var array nameList cache for nameList() method
      */
-    protected static $cacheListEnabled;
+    protected static $nameList = null;
 
     /**
-     * @var array cacheListAvailable is a cache of available currencies.
+     * @var array enabledCodeList is a cache of enabled currencies.
      */
-    protected static $cacheListAvailable;
+    protected static $enabledCodeList;
+
+    /**
+     * @var array availableCodeList is a cache of available currencies.
+     */
+    protected static $availableCodeList;
 
     /**
      * @var static primaryCurrency is default currency cache.
@@ -178,10 +183,6 @@ class Currency extends Model
             ->first()
         ;
 
-        if (!$currency) {
-            throw new SystemException('A primary currency was not found. Please set one up in the currency settings.');
-        }
-
         return self::$primaryCurrency = $currency;
     }
 
@@ -231,15 +232,27 @@ class Currency extends Model
     }
 
     /**
+     * getNameList
+     */
+    public static function getNameList()
+    {
+        if (self::$nameList) {
+            return self::$nameList;
+        }
+
+        return self::$nameList = self::applyEnabled()->lists('name', 'id');
+    }
+
+    /**
      * listAvailable currencies, used on the back-end.
      */
     public static function listAvailable(): array
     {
-        if (self::$cacheListAvailable) {
-            return self::$cacheListAvailable;
+        if (self::$availableCodeList) {
+            return self::$availableCodeList;
         }
 
-        return self::$cacheListAvailable = self::lists('name', 'currency_code');
+        return self::$availableCodeList = self::lists('name', 'currency_code');
     }
 
     /**
@@ -247,15 +260,15 @@ class Currency extends Model
      */
     public static function listEnabled(): array
     {
-        if (self::$cacheListEnabled) {
-            return self::$cacheListEnabled;
+        if (self::$enabledCodeList) {
+            return self::$enabledCodeList;
         }
 
         $isEnabled = Cache::remember('responsiv.currency.currencies', 1440, function() {
             return self::applyEnabled()->lists('name', 'currency_code');
         });
 
-        return self::$cacheListEnabled = $isEnabled;
+        return self::$enabledCodeList = $isEnabled;
     }
 
     /**
@@ -295,8 +308,9 @@ class Currency extends Model
         Cache::forget('responsiv.currency.primaryCurrency');
 
         static::$cacheByCode = [];
-        static::$cacheListEnabled = null;
-        static::$cacheListAvailable = null;
+        static::$nameList = null;
+        static::$enabledCodeList = null;
+        static::$availableCodeList = null;
         static::$primaryCurrency = null;
     }
 }
