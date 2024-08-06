@@ -17,16 +17,17 @@
         <div class="form-preview">
             <div class="form-group">
                 <!-- Checkbox -->
-                <div class="checkbox custom-checkbox">
+                <div class="form-check">
                     <input
                         type="checkbox"
                         name="enable"
                         value="1"
+                        class="form-check-input"
                         id="currencyDisable">
-                    <label for="currencyDisable" class="storm-icon-pseudo">
+                    <label for="currencyDisable" class="form-check-label">
                         <?= __("Enabled") ?>
                     </label>
-                    <p class="help-block"><?= __("Disabled currencies are not visible on the front-end.") ?></p>
+                    <p class="help-block mb-0"><?= __("Disabled currencies are not visible on the front-end.") ?></p>
                 </div>
             </div>
         </div>
