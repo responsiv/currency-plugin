@@ -7,7 +7,10 @@
         id="<?= $this->getId() ?>"
         class="input-group">
         <?php if ($symbolBefore): ?>
-            <span class="input-group-addon input-group-text"><?= e($symbol) ?></span>
+            <span
+                class="input-group-addon input-group-text"
+                <?php if ($currencyCode): ?>data-tooltip-text="<?= e($currencyCode) ?>"<?php endif ?>
+            ><?= e($symbol) ?></span>
         <?php endif ?>
         <input
             name="<?= $name ?>"

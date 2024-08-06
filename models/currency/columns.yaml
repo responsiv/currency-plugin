@@ -3,6 +3,10 @@
 # ===================================
 
 columns:
+    id:
+        label: ID
+        invisible: true
+
     currency_code:
         label: Code
         searchable: true
