@@ -11,7 +11,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('from_currency_code')->nullable();
             $table->string('to_currency_code')->nullable();
-            $table->decimal('rate_value', 15, 8)->nullable();
+            $table->decimal('rate_value', 40, 20)->nullable();
             $table->index(['from_currency_code', 'to_currency_code'], 'from_currency_to_currency');
             $table->integer('converter_id')->unsigned()->nullable()->index();
             $table->timestamps();
