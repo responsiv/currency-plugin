@@ -69,6 +69,7 @@ trait HasCurrencyExchange
      */
     public function requestAllRates()
     {
+        $count = 0;
         $rates = ExchangeRate::with('converter')->get();
         $defaultConverter = ExchangeConverter::getDefault();
 
@@ -88,9 +89,12 @@ trait HasCurrencyExchange
             $data->valid_at = $data->freshTimestamp();
             $data->rate = $rate;
             $data->save();
+            $count++;
 
             $rate->updateRateValue();
         }
+
+        return $count;
     }
 
     /**

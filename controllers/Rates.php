@@ -46,9 +46,14 @@ class Rates extends SettingsController
      */
     public function onGeneratePairs()
     {
-        ExchangeRate::generatePairs();
+        $count = ExchangeRate::generatePairs();
 
-        Flash::success(__("Rate pairs have been generated from the default currency"));
+        if ($count) {
+            Flash::success(__("Generated :count rate pair(s) from the default currency.", ['count' => $count]));
+        }
+        else {
+            Flash::warning(__("There are no pairs to generate."));
+        }
 
         return $this->listRefresh();
     }
@@ -58,9 +63,14 @@ class Rates extends SettingsController
      */
     public function onRequestRates()
     {
-        ExchangeManager::instance()->requestAllRates();
+        $count = ExchangeManager::instance()->requestAllRates();
 
-        Flash::success(__("Requested rate pairs from currency exchangers"));
+        if ($count) {
+            Flash::success(__("Found :count exchange rate(s) from currency converters.", ['count' => $count]));
+        }
+        else {
+            Flash::warning(__("There are exchange rates to found."));
+        }
 
         return $this->listRefresh();
     }

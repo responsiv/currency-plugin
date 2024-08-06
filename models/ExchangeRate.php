@@ -106,6 +106,7 @@ class ExchangeRate extends Model
      */
     public static function generatePairs()
     {
+        $count = 0;
         $fromCurrency = Currency::getPrimary();
         if (!$fromCurrency) {
             return;
@@ -127,6 +128,9 @@ class ExchangeRate extends Model
             $missing->from_currency_code = $fromCurrency->currency_code;
             $missing->to_currency_code = $toCurrency->currency_code;
             $missing->save();
+            $count++;
         }
+
+        return $count;
     }
 }
