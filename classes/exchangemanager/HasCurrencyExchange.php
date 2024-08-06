@@ -74,7 +74,7 @@ trait HasCurrencyExchange
 
         foreach ($rates as $rate) {
             $converter = $rate->converter ?: $defaultConverter;
-            if (!$converter) {
+            if (!$converter || !$converter->is_enabled) {
                 continue;
             }
 

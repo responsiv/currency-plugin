@@ -4,7 +4,7 @@ v1.0.2:
     - 000001_create_currencies.php
     - 000002_create_exchange_converters.php
     - 000003_create_exchange_rates.php
-    - 000004_create_exchange_pairs.php
+    - 000004_create_exchange_rate_data.php
 v1.0.3:
     - Seed all database tables
     - seed_tables.php
@@ -16,3 +16,4 @@ v1.0.8: Fixes cache clearing, clearing static attributes on the model
 v2.0.0:
     - Major Upgrade to Currency Plugin
     - migrate_v2_0_0.php
+v2.0.1: Fixes bug in migration path

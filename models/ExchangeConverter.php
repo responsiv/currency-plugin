@@ -49,7 +49,7 @@ class ExchangeConverter extends ExpandoModel
         'is_enabled',
         'is_default',
         'refresh_interval',
-        'fallback_converter_id',
+        'fallback_converter_id'
     ];
 
     /**

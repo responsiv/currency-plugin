@@ -8,7 +8,7 @@ return new class extends Migration
     public function up()
     {
         $updater = App::make('db.updater');
-        if (!Schema::hasTable('responsiv_currency_pairs')) {
+        if (!Schema::hasTable('responsiv_currency_exchange_rate_data')) {
             $updater->setUp(__DIR__.'/000004_create_exchange_rate_data.php');
         }
 
