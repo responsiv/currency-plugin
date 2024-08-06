@@ -1,7 +1,9 @@
 <?php namespace Responsiv\Currency\Controllers;
 
+use Flash;
 use Backend\Classes\SettingsController;
 use Responsiv\Currency\Models\ExchangeRate;
+use Responsiv\Currency\Classes\ExchangeManager;
 
 /**
  * Rates Backend Controller
@@ -46,6 +48,8 @@ class Rates extends SettingsController
     {
         ExchangeRate::generatePairs();
 
+        Flash::success(__("Rate pairs have been generated from the default currency"));
+
         return $this->listRefresh();
     }
 
@@ -54,6 +58,10 @@ class Rates extends SettingsController
      */
     public function onRequestRates()
     {
+        ExchangeManager::instance()->requestAllRates();
+
+        Flash::success(__("Requested rate pairs from currency exchangers"));
+
         return $this->listRefresh();
     }
 }

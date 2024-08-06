@@ -8,3 +8,9 @@ fields:
         comment: Specify the unique key assigned to your Fixer account.
         span: auto
         tab: Configuration
+
+    use_secure_endpoint:
+        label: Use Secure Endpoint
+        comment: Some subscriptions do not support HTTPS so uncheck this to disable encryption.
+        type: checkbox
+        tab: Configuration

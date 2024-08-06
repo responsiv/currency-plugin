@@ -8,11 +8,11 @@ use SystemException;
 use Exception;
 
 /**
- * Fixer exchange service
+ * FastForex exchange service
  */
-class Fixer extends ExchangeBase
+class FastForex extends ExchangeBase
 {
-    const API_URL = '//data.fixer.io/api/latest?access_key=%s&base=%s';
+    const API_URL = 'https://api.fastforex.io/fetch-all?api_key=%s&from=%s';
 
     /**
      * {@inheritDoc}
@@ -20,8 +20,8 @@ class Fixer extends ExchangeBase
     public function driverDetails()
     {
         return [
-            'name' => 'Fixer',
-            'description' => 'Currency exchange rate service provided by Fixer.io (Paid Accounts Only)'
+            'name' => 'fastFOREX',
+            'description' => 'Free currency exchange rate service provided by fastFOREX.io'
         ];
     }
 
@@ -30,10 +30,10 @@ class Fixer extends ExchangeBase
      */
     public function initDriverHost($host)
     {
-        $host->rules['access_key'] = 'required';
+        $host->rules['api_key'] = 'required';
 
         if (!$host->exists) {
-            $host->name = 'Fixer';
+            $host->name = 'fastFOREX';
         }
     }
 
@@ -47,16 +47,20 @@ class Fixer extends ExchangeBase
 
         $response = $this->requestRatesFromService($baseCode);
         if (!$response) {
-            throw new SystemException('Error loading the Fixer currency exchange feed.');
+            throw new SystemException('Error loading the FastForex currency exchange feed.');
         }
 
-        $rates = $response['rates'] ?? [];
+        if ($response['base'] !== $baseCode) {
+            throw new SystemException('The FastForex currency exchange rate service returned the from base currency.');
+        }
+
+        $rates = $response['results'] ?? [];
         if (!$rates) {
-            throw new SystemException('The Fixer currency exchange rate service returned invalid data.');
+            throw new SystemException('The FastForex currency exchange rate service returned invalid data.');
         }
 
         if (!$rate = array_get($rates, $toRate)) {
-            throw new SystemException('The Fixer currency exchange rate service is missing the destination currency.');
+            throw new SystemException('The FastForex currency exchange rate service is missing the destination currency.');
         }
 
         return $rate;
@@ -67,14 +71,7 @@ class Fixer extends ExchangeBase
      */
     protected function getServiceEndpointUrl()
     {
-        $host = $this->getHostObject();
-        $url = self::API_URL;
-
-        if ($host->use_secure_endpoint) {
-            return "https:{$url}";
-        }
-
-        return "http:{$url}";
+        return self::API_URL;
     }
 
     /**
@@ -91,7 +88,7 @@ class Fixer extends ExchangeBase
             $response = Cache::remember($cacheKey, $expires, function() use ($host, $baseCode) {
                 return Http::get(sprintf(
                     $this->getServiceEndpointUrl(),
-                    $host->access_key,
+                    $host->api_key,
                     $baseCode
                 ))->json();
             });

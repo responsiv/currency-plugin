@@ -4,6 +4,13 @@ use Model;
 
 /**
  * ExchangeRateData Model
+ *
+ * @property int $id
+ * @property int $rate_id
+ * @property float $rate_value
+ * @property \Illuminate\Support\Carbon $valid_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property \Illuminate\Support\Carbon $created_at
  */
 class ExchangeRateData extends Model
 {

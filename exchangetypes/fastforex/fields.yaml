@@ -1,0 +1,10 @@
+# ===================================
+#  Exchange Field Definitions
+# ===================================
+
+fields:
+    api_key:
+        label: API Key
+        comment: Specify the unique key assigned to your fastFOREX account.
+        span: auto
+        tab: Configuration

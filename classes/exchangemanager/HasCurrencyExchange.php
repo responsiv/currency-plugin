@@ -2,8 +2,8 @@
 
 use Carbon\Carbon;
 use Responsiv\Currency\Models\ExchangeRate;
+use Responsiv\Currency\Models\ExchangeRateData;
 use Responsiv\Currency\Models\ExchangeConverter;
-use Responsiv\Currency\Models\Currency as CurrencyModel;
 use ApplicationException;
 use Exception;
 
@@ -65,80 +65,57 @@ trait HasCurrencyExchange
     }
 
     /**
-     * loadRate loads the latest rate from a currency converter
-     * @todo this should pull the rate in and save it to the pair
+     * requestAllRates
      */
-    public function loadRate(string $fromCurrency, string $toCurrency): float
+    public function requestAllRates()
     {
-        $fromCurrency = trim(strtoupper($fromCurrency));
-        $toCurrency = trim(strtoupper($toCurrency));
+        $rates = ExchangeRate::with('converter')->get();
+        $defaultConverter = ExchangeConverter::getDefault();
 
-        // Look up in the cache
-        $key = $fromCurrency.'_'.$toCurrency;
-        if (array_key_exists($key, $this->rateCache)) {
-            return $this->rateCache[$key];
-        }
-
-        // Look up in the database cache
-        // @todo this should use the ExchangeRate model
-        $converter = ExchangeConverter::___getDefault();
-        if (!$converter->class_name) {
-            throw new ApplicationException('Currency rate converter is not configured.');
-        }
-
-        $interval = $converter->refresh_interval;
-        $intervalDate = Carbon::now()->subHours($interval);
-
-        $record = ExchangeRate::where('from_currency', $fromCurrency)
-            ->where('to_currency',  $toCurrency)
-            ->where('created_at', '>', $intervalDate)
-        ;
-
-        if ($record = $record->first()) {
-            return $this->rateCache[$key] = $record->rate_value;
-        }
-
-        // Evaluate rate using a currency rate converter
-        try {
-            $rate = $converter->getExchangeRate($fromCurrency, $toCurrency);
-
-            $record = new ExchangeRate;
-            $record->from_currency = $fromCurrency;
-            $record->to_currency = $toCurrency;
-            $record->rate_value = $rate;
-            $record->save();
-
-            return $this->rateCache[$key] = $rate;
-        }
-        catch (Exception $ex) {
-            // Load the most recent rate from the cache
-            $record = ExchangeRate::where('from_currency', $fromCurrency)
-                ->where('to_currency',  $toCurrency)
-                ->orderBy('created_at', 'desc')
-            ;
-
-            if (!$record = $record->first()) {
-                throw $ex;
+        foreach ($rates as $rate) {
+            $converter = $rate->converter ?: $defaultConverter;
+            if (!$converter) {
+                continue;
             }
 
-            return $this->rateCache[$key] = $record->rate_value;
+            $rateValue = $this->requestRate($rate, $converter);
+            if ($rateValue === ExchangeConverter::NO_RATE_DATA) {
+                continue;
+            }
+
+            $data = new ExchangeRateData;
+            $data->rate_value = $rateValue;
+            $data->valid_at = $data->freshTimestamp();
+            $data->rate = $rate;
+            $data->save();
+
+            $rate->updateRateValue();
         }
     }
 
     /**
-     * convert a currency value from one currency to another. Round number of decimal digits
-     * to round the result to. Specify NULL to disable.
+     * requestRate loads the latest rate from a currency converter
      */
-    public function convert(float $value, string $toCurrency, string $fromCurrency = null, int $round = null): string
+    public function requestRate($rate, $converter)
     {
-        if (!$fromCurrency) {
-            $fromCurrency = CurrencyModel::getPrimaryCode();
+        $fromCurrency = trim(strtoupper($rate->from_currency_code));
+        $toCurrency = trim(strtoupper($rate->to_currency_code));
+
+        $rate = ExchangeConverter::NO_RATE_DATA;
+
+        try {
+            $rate = $converter->getExchangeRate($fromCurrency, $toCurrency);
+        }
+        catch (Exception $ex) {
+            if ($fallback = $converter->fallback_converter) {
+                try {
+                    $rate = $fallback->getExchangeRate($fromCurrency, $toCurrency);
+                }
+                catch (Exception $ex) {
+                }
+            }
         }
 
-        $result = $value * $this->getRate($fromCurrency, $toCurrency);
-
-        return $round !== null
-            ? round($result, $round)
-            : $result;
+        return $rate;
     }
 }
