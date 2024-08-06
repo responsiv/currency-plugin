@@ -1,13 +1,18 @@
 <?php namespace Responsiv\Currency\ExchangeTypes;
 
+use Date;
 use Http;
+use Cache;
 use Responsiv\Currency\Classes\ExchangeBase;
 use SystemException;
 use Exception;
 
+/**
+ * Fixer exchange service
+ */
 class Fixer extends ExchangeBase
 {
-    const API_URL = 'https://data.fixer.io/api/latest?symbols=%s&base=%s';
+    const API_URL = 'https://data.fixer.io/api/latest?access_key=%s&base=%s';
 
     /**
      * {@inheritDoc}
@@ -23,33 +28,62 @@ class Fixer extends ExchangeBase
     /**
      * {@inheritDoc}
      */
+    public function initDriverHost($host)
+    {
+        $host->rules['access_key'] = 'required';
+
+        if (!$host->exists) {
+            $host->name = 'Fixer';
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getExchangeRate($fromCurrency, $toCurrency)
     {
-        $fromCurrency = trim(strtoupper($fromCurrency));
-        $toCurrency = trim(strtoupper($toCurrency));
+        $baseCode = trim(strtoupper($fromCurrency));
+        $toRate = trim(strtoupper($toCurrency));
 
-        $response = null;
-        try {
-            $response = Http::get(sprintf(self::API_URL, $toCurrency, $fromCurrency));
-            $body = (string) $response;
-        }
-        catch (Exception $ex) { }
-
-        if (!strlen($body)) {
+        $response = $this->requestRatesFromFixer($baseCode);
+        if (!$response) {
             throw new SystemException('Error loading the Fixer currency exchange feed.');
         }
 
-        $result = json_decode($body, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
+        $rates = $response->json('rates');
+        if (!strlen($rates)) {
             throw new SystemException('The Fixer currency exchange rate service returned invalid data.');
         }
 
-        $rates = array_get($result, 'rates', []);
-
-        if (!$rate = array_get($rates, $toCurrency)) {
+        if (!$rate = array_get($rates, $toRate)) {
             throw new SystemException('The Fixer currency exchange rate service is missing the destination currency.');
         }
 
         return $rate;
+    }
+
+    /**
+     * requestRatesFromFixer
+     */
+    protected function requestRatesFromFixer($baseCode)
+    {
+        $host = $this->getHostObject();
+
+        $cacheKey = "responsiv.currency.exchange.{$host->id}-{$baseCode}";
+        $expires = Date::now()->addHours($host->refresh_interval ?? 24);
+
+        $response = null;
+        try {
+            $response = Cache::remember($cacheKey, $expires, function() use ($host, $baseCode) {
+                return Http::get(sprintf(
+                    self::API_URL,
+                    $host->access_key,
+                    $baseCode
+                ));
+            });
+        }
+        catch (Exception $ex) { }
+
+        return $response;
     }
 }

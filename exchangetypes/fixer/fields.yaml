@@ -1,0 +1,10 @@
+# ===================================
+#  Exchange Field Definitions
+# ===================================
+
+fields:
+    access_key:
+        label: API Access Key
+        comment: Specify the unique key assigned to your Fixer account.
+        span: auto
+        tab: Configuration

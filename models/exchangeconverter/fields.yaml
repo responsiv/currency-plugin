@@ -6,17 +6,19 @@ fields:
     name:
         label: Name
         commentAbove: Assign a name to this currency converter.
+        span: auto
+
+    fallback_converter:
+        label: Fallback Converter
+        commentAbove: Select a converter to use as a fallback if this one fails.
+        type: relation
+        emptyOption: "-- none --"
+        span: auto
 
     refresh_interval:
         label: Update Interval
         type: radio
         inlineOptions: true
-
-    fallback_converter:
-        label: Fallback Converter
-        comment: Select a converter to use as a fallback if this one fails.
-        type: relation
-        emptyOption: "-- none --"
 
     is_enabled:
         label: Enabled

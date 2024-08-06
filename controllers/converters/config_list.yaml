@@ -11,11 +11,6 @@ modelClass: Responsiv\Currency\Models\ExchangeConverter
 # List Title
 title: Manage Currency Converters
 
-# Show structure
-structure:
-    showReorder: true
-    showTree: false
-
 # Link URL for each record
 recordUrl: responsiv/currency/converters/update/:id
 

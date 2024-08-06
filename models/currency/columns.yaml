@@ -29,5 +29,4 @@ columns:
     is_enabled:
         label: Enabled
         type: switch
-        invisible: true
         width: 150px

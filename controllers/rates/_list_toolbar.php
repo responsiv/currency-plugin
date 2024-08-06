@@ -9,7 +9,6 @@
         ->icon('icon-refresh')
         ->secondary() ?>
 
-    <?php /*
     <div class="toolbar-divider"></div>
 
     <?= Ui::button("Manage Converters", 'responsiv/currency/converters')
@@ -21,7 +20,6 @@
         ->confirmMessage("This request the latest exchange rates from the currency converters. Continue?")
         ->icon('icon-download')
         ->secondary() ?>
-    */ ?>
 
     <div class="toolbar-divider"></div>
 

@@ -8,10 +8,4 @@
         ->listCheckedTrigger()
         ->listCheckedRequest()
         ->secondary() ?>
-
-    <?php /*
-    <?= Ui::button("Currency Converters", 'shop/currencyconverters')
-        ->icon('icon-calculator')
-        ->secondary() ?>
-    */ ?>
 </div>
