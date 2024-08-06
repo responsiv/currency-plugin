@@ -3,6 +3,10 @@
 # ===================================
 
 columns:
+    id:
+        label: ID
+        invisible: true
+
     name:
         label: Name
         searchable: true
@@ -15,7 +19,7 @@ columns:
         relation: fallback_converter
         select: name
         searchable: false
-        invisible: false
+        invisible: true
 
     is_enabled:
         label: Enabled

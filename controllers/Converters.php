@@ -102,16 +102,6 @@ class Converters extends SettingsController
             $model->defineDriverFormFields($widget);
         });
 
-        // Add the set up help partial
-        $setupPartial = $model->getPartialPath().'/_setup_help.php';
-        if (File::exists($setupPartial)) {
-            $widget->addTabField('setup_help', [
-                'type' => 'partial',
-                'tab' => "Help",
-                'path' => $setupPartial
-            ]);
-        }
-
         if ($model->is_default) {
             $widget->getField('is_default')?->disabled();
         }

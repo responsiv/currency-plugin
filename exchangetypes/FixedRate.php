@@ -16,7 +16,7 @@ class FixedRate extends ExchangeBase
     {
         return [
             'name' => 'Fixed Rate',
-            'description' => 'This converter can be used for manually managed exchange rates.',
+            'description' => 'This converter will not import any rates and should be used when manually specifying exchange rates.',
             'isFixed' => true
         ];
     }

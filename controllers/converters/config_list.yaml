@@ -9,7 +9,7 @@ list: $/responsiv/currency/models/exchangeconverter/columns.yaml
 modelClass: Responsiv\Currency\Models\ExchangeConverter
 
 # List Title
-title: Manage Currency Converters
+title: Currency Converters
 
 # Link URL for each record
 recordUrl: responsiv/currency/converters/update/:id
