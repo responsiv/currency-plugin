@@ -29,6 +29,11 @@ class ExtendSystemModule
     {
         ExtensionContainer::extendClass(\System\Models\SiteDefinition::class, static function($model) {
             $model->implementClassWith(\Responsiv\Currency\Behaviors\CurrencyModel::class);
+            $model->implementClassWith(\Responsiv\Currency\Behaviors\BaseCurrencyModel::class);
+        });
+
+        ExtensionContainer::extendClass(\System\Classes\SiteManager::class, static function($model) {
+            // @todo
         });
     }
 
@@ -41,12 +46,20 @@ class ExtendSystemModule
             return;
         }
 
-        $widget->addTabField('currency', 'Currency')
+        $widget->addTabField('base_currency', 'Base Currency')
             ->tab("Site Definition")
             ->displayAs('dropdown')
+            ->span('auto')
             ->comment(sprintf(__('Current default value: :value', ['value' => '<strong>%s</strong>']), \Responsiv\Currency\Models\Currency::getPrimaryCode()))
             ->commentHtml()
-            ->emptyOption('- '.__('Use Default').' -');
+            ->emptyOption('- '.__("Use Default").' -');
+
+        $widget->addTabField('currency', 'Display Currency')
+            ->tab("Site Definition")
+            ->displayAs('dropdown')
+            ->span('auto')
+            ->comment("Currency used for display purposes.")
+            ->emptyOption('- '.__("Use Base Currency").' -');
     }
 
     /**
@@ -58,7 +71,8 @@ class ExtendSystemModule
             return;
         }
 
-        $widget->defineColumn('currency', "Currency")->after('email')->invisible()->relation('currency')->select('name');
+        $widget->defineColumn('base_currency', "Base Currency")->invisible()->relation('base_currency')->select('name');
+        $widget->defineColumn('currency', "Currency")->invisible()->relation('currency')->select('name');
     }
 
     /**
