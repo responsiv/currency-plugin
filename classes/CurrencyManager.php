@@ -49,6 +49,22 @@ class CurrencyManager
     }
 
     /**
+     * getPrimary returns the default currency for source values, regardless of the site context.
+     */
+    public function getDefault()
+    {
+        return CurrencyModel::getDefault();
+    }
+
+    /**
+     * getDefaultCode returns the primary currency code for source values.
+     */
+    public function getDefaultCode()
+    {
+        return $this->getDefault()->currency_code;
+    }
+
+    /**
      * getPrimary returns the primary currency for source values.
      */
     public function getPrimary()

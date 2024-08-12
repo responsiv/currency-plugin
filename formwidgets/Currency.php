@@ -1,9 +1,9 @@
 <?php namespace Responsiv\Currency\FormWidgets;
 
+use Currency as CurrencyService;
 use Backend\Classes\FormField;
 use Backend\Classes\FormWidgetBase;
 use Responsiv\Currency\Classes\CurrencyManager;
-use Responsiv\Currency\Models\Currency as CurrencyModel;
 
 /**
  * Currency input
@@ -53,7 +53,7 @@ class Currency extends FormWidgetBase
      */
     public function prepareVars()
     {
-        $currencyObj = CurrencyModel::getPrimary();
+        $currencyObj = $this->getLoadCurrency();
         $this->vars['name'] = $this->formField->getName();
         $this->vars['value'] = $this->getLoadValue();
         $this->vars['field'] = $this->formField;
@@ -90,6 +90,24 @@ class Currency extends FormWidgetBase
         }
 
         return CurrencyManager::instance()->toBaseValue($value);
+    }
+
+    /**
+     * getLoadCurrency returns the currency object to used. If the model uses multisite,
+     * then extract the primary currency from the site definition, otherwise use the
+     * primary currency definition.
+     */
+    public function getLoadCurrency()
+    {
+        if (
+            $this->model &&
+            $this->model->isClassInstanceOf(\October\Contracts\Database\MultisiteInterface::class) &&
+            $this->model->isMultisiteEnabled()
+        ) {
+            return CurrencyService::getPrimary();
+        }
+
+        return CurrencyService::getDefault();
     }
 
     /**
