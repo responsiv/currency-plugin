@@ -263,4 +263,12 @@ class Currency extends Model
         static::$enabledCodeList = null;
         static::$availableCodeList = null;
     }
+
+    /**
+     * @deprecated use `Currency::getPrimary()`
+     */
+    public static function getPrimary()
+    {
+        return \Currency::getPrimary();
+    }
 }
