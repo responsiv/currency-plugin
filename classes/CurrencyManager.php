@@ -1,6 +1,7 @@
 <?php namespace Responsiv\Currency\Classes;
 
 use App;
+use Site;
 use Responsiv\Currency\Models\Currency as CurrencyModel;
 use System\Classes\PluginManager;
 
@@ -52,6 +53,12 @@ class CurrencyManager
      */
     public function getPrimary()
     {
+        $site = Site::getSiteFromContext();
+
+        if ($site->base_currency_id) {
+            return $site->base_currency;
+        }
+
         return CurrencyModel::getDefault();
     }
 
@@ -68,6 +75,12 @@ class CurrencyManager
      */
     public function getActive()
     {
+        $site = Site::getSiteFromContext();
+
+        if ($site->currency_id) {
+            return $site->currency;
+        }
+
         return CurrencyModel::getDefault();
     }
 
