@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('thousand_separator')->nullable();
             $table->boolean('place_symbol_before')->default(true);
             $table->boolean('is_enabled')->default(false);
-            $table->boolean('is_primary')->default(false);
+            $table->boolean('is_default')->default(false);
             $table->timestamps();
         });
     }

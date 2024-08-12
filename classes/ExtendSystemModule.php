@@ -50,7 +50,7 @@ class ExtendSystemModule
             ->tab("Site Definition")
             ->displayAs('dropdown')
             ->span('auto')
-            ->comment(sprintf(__('Current default value: :value', ['value' => '<strong>%s</strong>']), \Responsiv\Currency\Models\Currency::getPrimaryCode()))
+            ->comment(sprintf(__('Current default value: :value', ['value' => '<strong>%s</strong>']), \Responsiv\Currency\Models\Currency::getDefaultCode()))
             ->commentHtml()
             ->emptyOption('- '.__("Use Default").' -');
 
@@ -59,7 +59,7 @@ class ExtendSystemModule
             ->displayAs('dropdown')
             ->span('auto')
             ->comment("Currency used for display purposes.")
-            ->emptyOption('- '.__("Use Base Currency").' -');
+            ->emptyOption('- '.__("Use Default").' -');
     }
 
     /**

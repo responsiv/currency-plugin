@@ -21,7 +21,7 @@ columns:
         type: partial
         label: Example
 
-    is_primary:
+    is_default:
         label: Default
         type: switch
         width: 150px

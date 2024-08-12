@@ -17,7 +17,7 @@ class SeedAllTables extends Seeder
             'thousand_separator' => ',',
             'place_symbol_before' => true,
             'is_enabled' => true,
-            'is_primary' => true,
+            'is_default' => true,
         ]);
 
         Currency::create([
@@ -29,7 +29,7 @@ class SeedAllTables extends Seeder
             'thousand_separator' => ',',
             'place_symbol_before' => true,
             'is_enabled' => true,
-            'is_primary' => false
+            'is_default' => false
         ]);
 
         Currency::create([
@@ -41,7 +41,7 @@ class SeedAllTables extends Seeder
             'thousand_separator' => ',',
             'place_symbol_before' => true,
             'is_enabled' => true,
-            'is_primary' => false
+            'is_default' => false
         ]);
 
         Currency::create([
@@ -53,7 +53,7 @@ class SeedAllTables extends Seeder
             'thousand_separator' => ',',
             'place_symbol_before' => true,
             'is_enabled' => true,
-            'is_primary' => false
+            'is_default' => false
         ]);
     }
 

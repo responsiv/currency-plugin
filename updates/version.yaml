@@ -5,6 +5,7 @@ v1.0.2:
     - 000002_create_exchange_converters.php
     - 000003_create_exchange_rates.php
     - 000004_create_exchange_rate_data.php
+    - extend_site_definitions_table.php
 v1.0.3:
     - Seed all database tables
     - seed_tables.php
@@ -20,4 +21,4 @@ v2.0.1: Fixes bug in migration path
 v2.0.2: Adds currency selection to site definitions
 v2.0.3:
     - Adds base currency selection to site definitions
-    - extend_site_definitions_table.php
+    - migrate_v2_0_3.php

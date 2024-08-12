@@ -22,7 +22,7 @@ tabs:
             span: auto
             default: true
 
-        is_primary:
+        is_default:
             label: Default
             comment: Use this as the default currency.
             type: checkbox

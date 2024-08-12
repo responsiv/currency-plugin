@@ -42,7 +42,7 @@ trait HasCurrencyFormat
 
         $currencyObj = $currencyCode
             ? CurrencyModel::findByCode($currencyCode)
-            : CurrencyModel::getPrimary();
+            : $this->getPrimary();
 
         if (!$currencyObj) {
             throw new SystemException("Unable to load a currency definition.");

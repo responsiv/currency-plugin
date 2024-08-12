@@ -17,7 +17,7 @@ use SystemException;
  * @property string $thousand_separator
  * @property bool $place_symbol_before
  * @property bool $is_enabled
- * @property bool $is_primary
+ * @property bool $is_default
  * @property \Illuminate\Support\Carbon $updated_at
  * @property \Illuminate\Support\Carbon $created_at
  *
@@ -27,6 +27,7 @@ use SystemException;
 class Currency extends Model
 {
     use \October\Rain\Database\Traits\Validation;
+    use \October\Rain\Database\Traits\Defaultable;
 
     /**
      * @var string table associated with the model
@@ -66,14 +67,9 @@ class Currency extends Model
     protected static $availableCodeList;
 
     /**
-     * @var static primaryCurrency is default currency cache.
+     * syncDefaultCurrency
      */
-    protected static $primaryCurrency;
-
-    /**
-     * syncPrimaryCurrency
-     */
-    public static function syncPrimaryCurrency()
+    public static function syncDefaultCurrency()
     {
         if (static::count() > 0) {
             return;
@@ -87,7 +83,7 @@ class Currency extends Model
         $currency->decimal_scale = 2;
         $currency->thousand_separator = ',';
         $currency->place_symbol_before = true;
-        $currency->is_primary = true;
+        $currency->is_default = true;
         $currency->is_enabled = true;
         $currency->save();
     }
@@ -133,65 +129,21 @@ class Currency extends Model
     }
 
     /**
-     * afterCreate
-     */
-    public function afterCreate()
-    {
-        if ($this->is_primary) {
-            $this->makePrimary();
-        }
-    }
-
-    /**
      * beforeUpdate
      */
     public function beforeUpdate()
     {
-        if ($this->isDirty('is_primary')) {
-            $this->makePrimary();
-
-            if (!$this->is_primary) {
-                throw new ValidationException(['is_primary' => __("':currency' is already default and cannot be unset as default.", ['currency'=>$this->name])]);
-            }
+        if ($this->isDirty('is_default') && !$this->is_default) {
+            throw new ValidationException(['is_default' => __("':currency' is already default and cannot be unset as default.", ['currency'=>$this->name])]);
         }
     }
 
     /**
-     * makePrimary makes this model the default
+     * getDefaultCode
      */
-    public function makePrimary()
+    public static function getDefaultCode(): ?string
     {
-        if (!$this->is_enabled) {
-            throw new ValidationException(['is_enabled' => __("':currency' is disabled and cannot be set as default.", ['currency'=>$this->name])]);
-        }
-
-        $this->newQuery()->where('id', $this->id)->update(['is_primary' => true]);
-        $this->newQuery()->where('id', '<>', $this->id)->update(['is_primary' => false]);
-    }
-
-    /**
-     * getPrimary returns the default currency defined.
-     */
-    public static function getPrimary(): ?static
-    {
-        if (self::$primaryCurrency !== null) {
-            return self::$primaryCurrency;
-        }
-
-        $currency = self::where('is_primary', true)
-            ->remember(1440, 'responsiv.currency.primaryCurrency')
-            ->first()
-        ;
-
-        return self::$primaryCurrency = $currency;
-    }
-
-    /**
-     * getPrimaryCode
-     */
-    public static function getPrimaryCode(): ?string
-    {
-        return static::getPrimary()?->currency_code;
+        return static::getDefault()?->currency_code;
     }
 
     /**
@@ -305,12 +257,10 @@ class Currency extends Model
     public static function clearCache()
     {
         Cache::forget('responsiv.currency.currencies');
-        Cache::forget('responsiv.currency.primaryCurrency');
 
         static::$cacheByCode = [];
         static::$nameList = null;
         static::$enabledCodeList = null;
         static::$availableCodeList = null;
-        static::$primaryCurrency = null;
     }
 }

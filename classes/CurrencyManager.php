@@ -41,18 +41,42 @@ class CurrencyManager
     public function convert($value, $toCurrency, $fromCurrency = null)
     {
         if (!$fromCurrency) {
-            $fromCurrency = $this->primaryCode();
+            $fromCurrency = $this->getPrimaryCode();
         }
 
         return ExchangeManager::instance()->convert($value, $toCurrency, $fromCurrency, null);
     }
 
     /**
-     * primaryCode
+     * getPrimary returns the primary currency for source values.
      */
-    public function primaryCode()
+    public function getPrimary()
     {
-        return CurrencyModel::getPrimary()->currency_code;
+        return CurrencyModel::getDefault();
+    }
+
+    /**
+     * getPrimaryCode returns the primary currency code for source values.
+     */
+    public function getPrimaryCode()
+    {
+        return $this->getPrimary()->currency_code;
+    }
+
+    /**
+     * getActive returns the active currency for display purposes.
+     */
+    public function getActive()
+    {
+        return CurrencyModel::getDefault();
+    }
+
+    /**
+     * getActiveCode returns the active currency code for display purposes.
+     */
+    public function getActiveCode()
+    {
+        return $this->getActive()->currency_code;
     }
 
     /**
@@ -60,7 +84,7 @@ class CurrencyManager
      */
     public function fromBaseValue($value)
     {
-        $currencyObj = CurrencyModel::getPrimary();
+        $currencyObj = $this->getPrimary();
 
         $value = $currencyObj->fromBaseValue($value);
 
@@ -77,7 +101,7 @@ class CurrencyManager
      */
     public function toBaseValue($value)
     {
-        $currencyObj = CurrencyModel::getPrimary();
+        $currencyObj = $this->getPrimary();
 
         $value = floatval(str_replace($currencyObj->decimal_point, '.', $value));
 

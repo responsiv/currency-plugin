@@ -52,7 +52,7 @@ class Currencies extends SettingsController
      */
     public function index()
     {
-        CurrencyModel::syncPrimaryCurrency();
+        CurrencyModel::syncDefaultCurrency();
 
         $this->asExtension('ListController')->index();
     }
