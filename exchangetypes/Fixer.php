@@ -21,7 +21,7 @@ class Fixer extends ExchangeBase
     {
         return [
             'name' => 'Fixer',
-            'description' => 'Currency exchange rate service provided by Fixer.io (Paid Accounts Only)'
+            'description' => 'Currency exchange rate service provided by Fixer.io'
         ];
     }
 
@@ -34,6 +34,7 @@ class Fixer extends ExchangeBase
 
         if (!$host->exists) {
             $host->name = 'Fixer';
+            $host->use_secure_endpoint = false;
         }
     }
 
