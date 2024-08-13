@@ -14,3 +14,14 @@ navigation:
         title: "Building Payment Types"
         description: "how to implement exchange integration for automated currency conversion"
         link: "./building-exchange-types.md"
+    -
+        title: "Services"
+        children:
+        -
+            title: "Currency Manager"
+            link: "./currency-manager.md"
+            description: "services used to format currencies and request the active, default and primary currencies"
+        -
+            title: "Exchange Manager"
+            link: "./exchange-manager.md"
+            description: "manages currency conversion and drivers for exchange types"

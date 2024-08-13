@@ -1,6 +1,5 @@
 <?php namespace Responsiv\Currency\Classes\ExchangeManager;
 
-use Carbon\Carbon;
 use Responsiv\Currency\Models\ExchangeRate;
 use Responsiv\Currency\Models\ExchangeRateData;
 use Responsiv\Currency\Models\ExchangeConverter;
@@ -79,7 +78,7 @@ trait HasCurrencyExchange
                 continue;
             }
 
-            $rateValue = $this->requestRate($rate, $converter);
+            $rateValue = $this->requestRateInternal($rate, $converter);
             if ($rateValue === ExchangeConverter::NO_RATE_DATA) {
                 continue;
             }
@@ -100,7 +99,7 @@ trait HasCurrencyExchange
     /**
      * requestRate loads the latest rate from a currency converter
      */
-    public function requestRate($rate, $converter)
+    protected function requestRateInternal($rate, $converter)
     {
         $fromCurrency = trim(strtoupper($rate->from_currency_code));
         $toCurrency = trim(strtoupper($rate->to_currency_code));

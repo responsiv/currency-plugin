@@ -42,7 +42,7 @@ class CurrencyManager
     public function convert($value, $toCurrency, $fromCurrency = null)
     {
         if (!$fromCurrency) {
-            $fromCurrency = $this->getPrimaryCode();
+            $fromCurrency = $this->getDefaultCode();
         }
 
         return ExchangeManager::instance()->convert($value, $toCurrency, $fromCurrency, null);
