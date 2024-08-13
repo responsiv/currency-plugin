@@ -36,7 +36,7 @@ The primary currency is available in Twig as `this.site.base_currency` and `this
 {{ this.site.base_currency_code }}
 ```
 
-> **Note**: The primary currency is a base currency set by opening the **Settings → Site Definitions** page and selecting a currency in the **Base Currency** dropdown.
+> **Note**: The primary currency is set by opening the **Settings → Site Definitions** page and selecting a currency in the **Base Currency** dropdown.
 
 ```twig
 {{ product.price|currency({ from: this.site.base_currency_code })}}
@@ -59,6 +59,12 @@ For example, if a value is stored in the primary currency as USD and the site de
     from: this.site.base_currency_code,
     to: this.site.currency_code
 })}}
+```
+
+This can be shortened by setting the `site` option to `true`.
+
+```twig
+{{ product.price|currency({ site: true })}}
 ```
 
 > **Note**: The primary currency is set by opening the **Settings → Site Definitions** page and selecting a currency in the **Display Currency** dropdown.

@@ -1,5 +1,6 @@
 <?php namespace Responsiv\Currency\Classes\CurrencyManager;
 
+use Currency;
 use Responsiv\Currency\Classes\ExchangeManager;
 use Responsiv\Currency\Models\Currency as CurrencyModel;
 use SystemException;
@@ -20,6 +21,7 @@ trait HasCurrencyFormat
         $result = (float) $number;
 
         extract(array_merge([
+            'site' => null,      // Set to true to apply site currency context (from, to)
             'in' => null,        // Currency code to display in (default fallback)
             'to' => null,        // Convert to currency
             'from' => null,      // Convert from currency (default fallback)
@@ -29,29 +31,38 @@ trait HasCurrencyFormat
         ], (array) $options));
 
         if ($decimals === null) {
-            $decimals = $format == 'short' ? 0 : null;
+            $decimals = $format === 'short' ? 0 : null;
         }
 
-        $toCurrency = strtoupper($to);
-        $fromCurrency = strtoupper($from);
+        // Sanitize input
+        $inCurrency = $in ? strtoupper($in) : null;
+        $toCurrency = $to ? strtoupper($to) : null;
+        $fromCurrency = $from ? strtoupper($from) : null;
 
-        if ($toCurrency) {
+        // Apply site context
+        if ($site === true) {
+            $toCurrency = $this->getActiveCode();
+            $fromCurrency = $this->getPrimaryCode();
+        }
+
+        // Convert currency
+        if ($toCurrency !== $fromCurrency) {
             $result = $this->convert($result, $toCurrency, $fromCurrency);
         }
 
-        $currencyCode = $toCurrency ?: $in;
-
+        // Lookup display currency object
+        $currencyCode = $toCurrency ?: $inCurrency;
         $currencyObj = $currencyCode
             ? CurrencyModel::findByCode($currencyCode)
-            : $this->getPrimary();
+            : $this->getDefault();
 
         if (!$currencyObj) {
             throw new SystemException("Unable to load a currency definition.");
         }
 
+        // Format currency from object
         $result = $currencyObj->formatCurrency($result, $decimals, $baseValue);
-
-        if ($format == 'long') {
+        if ($format === 'long') {
             $result .= ' ' . $currencyObj->currency_code;
         }
 
