@@ -22,21 +22,21 @@ There are multiple currency definition types that are important to operation the
 
 ### Default Currency
 
-The default currency is set by opening the **Settings → Currencies** page and checking the **Default** checkbox on a currency listed on this page.
-
 The default currency is used when there is no multisite context or when there is no currency set in one of the other definitions. In the currency form widget, if the model does not implement the multisite feature, then the value is stored in the default currency.
+
+> **Note**: The default currency is set by opening the **Settings → Currencies** page and checking the **Default** checkbox on a currency listed on this page.
 
 ### Primary / Base Currency
 
-The primary currency is a base currency set by opening the **Settings → Site Definitions** page and selecting a currency in the **Base Currency** dropdown.
+The primary currency is a base currency that sets the currency for use when writing values in a multisite context. For example, if the model implements the multisite feature, then the value is stored in the primary currency set by the active site.
 
-The display currency is available in Twig as `this.site.base_currency` and `this.site.base_currency_code`.
+The primary currency is available in Twig as `this.site.base_currency` and `this.site.base_currency_code`.
 
 ```twig
 {{ this.site.base_currency_code }}
 ```
 
-The primary currency sets the currency to use for writing values in a multisite context. For example, if the model implements the multisite feature, then the value is stored in the primary currency set by the active site.
+> **Note**: The primary currency is a base currency set by opening the **Settings → Site Definitions** page and selecting a currency in the **Base Currency** dropdown.
 
 ```twig
 {{ product.price|currency({ from: this.site.base_currency_code })}}
@@ -44,7 +44,7 @@ The primary currency sets the currency to use for writing values in a multisite 
 
 ### Display Currency
 
-The primary currency is set by opening the **Settings → Site Definitions** page and selecting a currency in the **Display Currency** dropdown.
+The display currency has a specific purpose of converting a currency from its stored value before displaying it.
 
 The display currency is available in Twig as `this.site.currency` and `this.site.currency_code`.
 
@@ -52,11 +52,16 @@ The display currency is available in Twig as `this.site.currency` and `this.site
 {{ this.site.currency_code }}
 ```
 
-The display currency has a specific purpose of converting a currency from its stored value before displaying it. For example, if a value is stored in the default currency as USD and the site definition has a display currency of AUD.
+For example, if a value is stored in the primary currency as USD and the site definition has a display currency of AUD.
 
 ```twig
-{{ product.price|currency({ to: this.site.currency_code })}}
+{{ product.price|currency({
+    from: this.site.base_currency_code,
+    to: this.site.currency_code
+})}}
 ```
+
+> **Note**: The primary currency is set by opening the **Settings → Site Definitions** page and selecting a currency in the **Display Currency** dropdown.
 
 ### License
 
