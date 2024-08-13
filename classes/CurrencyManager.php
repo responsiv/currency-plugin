@@ -37,18 +37,6 @@ class CurrencyManager
     }
 
     /**
-     * convert
-     */
-    public function convert($value, $toCurrency, $fromCurrency = null)
-    {
-        if (!$fromCurrency) {
-            $fromCurrency = $this->getDefaultCode();
-        }
-
-        return ExchangeManager::instance()->convert($value, $toCurrency, $fromCurrency, null);
-    }
-
-    /**
      * getPrimary returns the default currency for source values, regardless of the site context.
      */
     public function getDefault()

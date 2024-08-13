@@ -1,5 +1,6 @@
 <?php namespace Responsiv\Currency\Classes\CurrencyManager;
 
+use Responsiv\Currency\Classes\ExchangeManager;
 use Responsiv\Currency\Models\Currency as CurrencyModel;
 use SystemException;
 
@@ -55,5 +56,19 @@ trait HasCurrencyFormat
         }
 
         return $result;
+    }
+
+    /**
+     * convert a currency value from one currency to another
+     */
+    public function convert($value, $toCurrency, $fromCurrency = null)
+    {
+        if (!$fromCurrency) {
+            $fromCurrency = $this->getDefaultCode();
+        }
+
+        $rate = ExchangeManager::instance()->getRate($fromCurrency, $toCurrency);
+
+        return $value * $rate;
     }
 }
