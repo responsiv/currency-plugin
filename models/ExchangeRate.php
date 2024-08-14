@@ -53,7 +53,7 @@ class ExchangeRate extends Model
      */
     public function getFromCurrencyCodeOptions()
     {
-        return Currency::listAvailable();
+        return Currency::getAllCodeList();
     }
 
     /**
@@ -61,7 +61,7 @@ class ExchangeRate extends Model
      */
     public function getToCurrencyCodeOptions()
     {
-        return Currency::listAvailable();
+        return Currency::getAllCodeList();
     }
 
     /**
@@ -113,7 +113,7 @@ class ExchangeRate extends Model
             return;
         }
 
-        $currencies = Currency::listEnabled();
+        $currencies = Currency::applyEnabled()->get();
         $existing = static::where('from_currency_code', $fromCurrency->code)->pluck('to_currency_code')->all();
 
         foreach ($currencies as $toCurrency) {

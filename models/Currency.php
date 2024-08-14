@@ -28,6 +28,7 @@ class Currency extends Model
     use \System\Traits\KeyCodeModel;
     use \October\Rain\Database\Traits\Validation;
     use \October\Rain\Database\Traits\Defaultable;
+    use \Responsiv\Currency\Models\Currency\HasPluckHelpers;
 
     /**
      * @var string table associated with the model
@@ -45,21 +46,6 @@ class Currency extends Model
     public $rules = [
         'code' => 'required',
     ];
-
-    /**
-     * @var array nameList cache for nameList() method
-     */
-    protected static $nameList = null;
-
-    /**
-     * @var array enabledCodeList is a cache of enabled currencies.
-     */
-    protected static $enabledCodeList;
-
-    /**
-     * @var array availableCodeList is a cache of available currencies.
-     */
-    protected static $availableCodeList;
 
     /**
      * syncDefaultCurrency
@@ -159,47 +145,7 @@ class Currency extends Model
      */
     public static function isAvailable(): bool
     {
-        return count(self::listAvailable()) > 1;
-    }
-
-    /**
-     * getNameList
-     */
-    public static function getNameList()
-    {
-        if (self::$nameList) {
-            return self::$nameList;
-        }
-
-        return self::$nameList = self::applyEnabled()->lists('name', 'id');
-    }
-
-    /**
-     * listAvailable currencies, used on the back-end.
-     */
-    public static function listAvailable(): array
-    {
-        if (self::$availableCodeList) {
-            return self::$availableCodeList;
-        }
-
-        return self::$availableCodeList = self::lists('name', 'code');
-    }
-
-    /**
-     * listEnabled currencies, used on the front-end.
-     */
-    public static function listEnabled(): array
-    {
-        if (self::$enabledCodeList) {
-            return self::$enabledCodeList;
-        }
-
-        $isEnabled = Cache::remember('responsiv.currency.currencies', 1440, function() {
-            return self::applyEnabled()->lists('name', 'code');
-        });
-
-        return self::$enabledCodeList = $isEnabled;
+        return count(self::getCodeList()) > 1;
     }
 
     /**
@@ -207,7 +153,7 @@ class Currency extends Model
      */
     public static function isValid($currency): bool
     {
-        $currencies = array_keys(Currency::listEnabled());
+        $currencies = array_keys(Currency::getCodeList());
 
         return in_array($currency, $currencies);
     }
@@ -240,8 +186,8 @@ class Currency extends Model
         static::$cacheByKey = [];
         static::$cacheByCode = [];
         static::$nameList = null;
-        static::$enabledCodeList = null;
-        static::$availableCodeList = null;
+        static::$codeList = null;
+        static::$codeListAll = null;
     }
 
     /**
@@ -258,5 +204,21 @@ class Currency extends Model
     public function getCurrencyCodeAttribute()
     {
         return $this->code;
+    }
+
+    /**
+     * @deprecated use `getAllCodeList`
+     */
+    public static function listAvailable(): array
+    {
+        return static::getAllCodeList();
+    }
+
+    /**
+     * @deprecated use `getCodeList`
+     */
+    public static function listEnabled(): array
+    {
+        return static::getCodeList();
     }
 }
