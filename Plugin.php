@@ -89,8 +89,8 @@ class Plugin extends PluginBase
                 'permissions' => ['responsiv.currency.access_settings']
             ],
             'rates' => [
-                'label' => "Currency Rates",
-                'description' => "Select and manage the currency converter to use.",
+                'label' => "Exchange Rates",
+                'description' => "Manage currency pairs and automated currency conversion.",
                 'icon' => 'icon-calculator',
                 'url' => Backend::url('responsiv/currency/rates'),
                 'category' => "Currency",

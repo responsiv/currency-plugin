@@ -71,8 +71,8 @@ class ExtendSystemModule
             return;
         }
 
-        $widget->defineColumn('base_currency', "Base Currency")->invisible()->relation('base_currency')->select('name');
-        $widget->defineColumn('currency', "Currency")->invisible()->relation('currency')->select('name');
+        $widget->defineColumn('base_currency', "Base Currency")->invisible()->relation('base_currency')->sqlSelect('name')->defaults('- '.__("Default").' -');
+        $widget->defineColumn('currency', "Currency")->after('timezone')->relation('currency')->sqlSelect('name')->defaults('- '.__("Default").' -');
     }
 
     /**

@@ -85,6 +85,10 @@ class CurrencyManager
             return $site->currency;
         }
 
+        if ($site->base_currency_id) {
+            return $site->base_currency;
+        }
+
         return CurrencyModel::getDefault();
     }
 
