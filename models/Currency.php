@@ -25,6 +25,7 @@ use ValidationException;
  */
 class Currency extends Model
 {
+    use \System\Traits\KeyCodeModel;
     use \October\Rain\Database\Traits\Validation;
     use \October\Rain\Database\Traits\Defaultable;
 
@@ -44,11 +45,6 @@ class Currency extends Model
     public $rules = [
         'code' => 'required',
     ];
-
-    /**
-     * @var array cacheByCode cache of self, by code.
-     */
-    protected static $cacheByCode = [];
 
     /**
      * @var array nameList cache for nameList() method
@@ -143,22 +139,6 @@ class Currency extends Model
     public static function getDefaultCode(): ?string
     {
         return static::getDefault()?->code;
-    }
-
-    /**
-     * findByCode locates a currency table by its code, cached.
-     */
-    public static function findByCode(string $code = null): ?static
-    {
-        if (!$code) {
-            return null;
-        }
-
-        if (isset(self::$cacheByCode[$code])) {
-            return self::$cacheByCode[$code];
-        }
-
-        return self::$cacheByCode[$code] = self::where('code', $code)->first();
     }
 
     /**
@@ -257,6 +237,7 @@ class Currency extends Model
     {
         Cache::forget('responsiv.currency.currencies');
 
+        static::$cacheByKey = [];
         static::$cacheByCode = [];
         static::$nameList = null;
         static::$enabledCodeList = null;
