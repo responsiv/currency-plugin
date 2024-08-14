@@ -10,7 +10,7 @@ return new class extends Migration
         Schema::create('responsiv_currency_currencies', function($table) {
             $table->increments('id');
             $table->string('name')->nullable();
-            $table->string('currency_code')->index()->nullable();
+            $table->string('code')->nullable()->index();
             $table->string('currency_symbol')->nullable();
             $table->string('decimal_point')->nullable();
             $table->integer('decimal_scale')->default(2);

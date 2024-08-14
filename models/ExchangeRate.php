@@ -2,6 +2,7 @@
 
 use Date;
 use Model;
+use Currency as CurrencyService;
 
 /**
  * ExchangeRate Model
@@ -107,26 +108,26 @@ class ExchangeRate extends Model
     public static function generatePairs()
     {
         $count = 0;
-        $fromCurrency = Currency::getPrimary();
+        $fromCurrency = CurrencyService::getPrimary();
         if (!$fromCurrency) {
             return;
         }
 
-        $currencies = Currency::all();
-        $existing = static::where('from_currency_code', $fromCurrency->currency_code)->pluck('to_currency_code')->all();
+        $currencies = Currency::listEnabled();
+        $existing = static::where('from_currency_code', $fromCurrency->code)->pluck('to_currency_code')->all();
 
         foreach ($currencies as $toCurrency) {
-            if ($fromCurrency->currency_code == $toCurrency->currency_code) {
+            if ($fromCurrency->code == $toCurrency->code) {
                 continue;
             }
 
-            if (in_array($toCurrency->currency_code, $existing)) {
+            if (in_array($toCurrency->code, $existing)) {
                 continue;
             }
 
             $missing = new static;
-            $missing->from_currency_code = $fromCurrency->currency_code;
-            $missing->to_currency_code = $toCurrency->currency_code;
+            $missing->from_currency_code = $fromCurrency->code;
+            $missing->to_currency_code = $toCurrency->code;
             $missing->save();
             $count++;
         }

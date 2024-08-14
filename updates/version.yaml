@@ -19,6 +19,7 @@ v2.0.0:
     - migrate_v2_0_0.php
 v2.0.1: Fixes bug in migration path
 v2.0.2: Adds currency selection to site definitions
-v2.0.3:
-    - Adds base currency selection to site definitions
-    - migrate_v2_0_3.php
+v2.0.3: Adds base currency selection to site definitions
+v2.0.4:
+    - Fixes the stutter in currency model accessing the code
+    - migrate_v2_0_4.php

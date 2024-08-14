@@ -3,14 +3,13 @@
 use Model;
 use Cache;
 use ValidationException;
-use SystemException;
 
 /**
  * Currency Model
  *
  * @property int $id
  * @property string $name
- * @property string $currency_code
+ * @property string $code
  * @property string $currency_symbol
  * @property string $decimal_point
  * @property int $decimal_scale
@@ -43,7 +42,7 @@ class Currency extends Model
      * @var array rules for validation
      */
     public $rules = [
-        'currency_code' => 'required',
+        'code' => 'required',
     ];
 
     /**
@@ -77,7 +76,7 @@ class Currency extends Model
 
         $currency = new static;
         $currency->name = 'US Dollar';
-        $currency->currency_code = 'USD';
+        $currency->code = 'USD';
         $currency->currency_symbol = '$';
         $currency->decimal_point = '.';
         $currency->decimal_scale = 2;
@@ -143,7 +142,7 @@ class Currency extends Model
      */
     public static function getDefaultCode(): ?string
     {
-        return static::getDefault()?->currency_code;
+        return static::getDefault()?->code;
     }
 
     /**
@@ -159,7 +158,7 @@ class Currency extends Model
             return self::$cacheByCode[$code];
         }
 
-        return self::$cacheByCode[$code] = self::where('currency_code', $code)->first();
+        return self::$cacheByCode[$code] = self::where('code', $code)->first();
     }
 
     /**
@@ -204,7 +203,7 @@ class Currency extends Model
             return self::$availableCodeList;
         }
 
-        return self::$availableCodeList = self::lists('name', 'currency_code');
+        return self::$availableCodeList = self::lists('name', 'code');
     }
 
     /**
@@ -217,7 +216,7 @@ class Currency extends Model
         }
 
         $isEnabled = Cache::remember('responsiv.currency.currencies', 1440, function() {
-            return self::applyEnabled()->lists('name', 'currency_code');
+            return self::applyEnabled()->lists('name', 'code');
         });
 
         return self::$enabledCodeList = $isEnabled;
@@ -270,5 +269,13 @@ class Currency extends Model
     public static function getPrimary()
     {
         return \Currency::getPrimary();
+    }
+
+    /**
+     * @deprecated use `$this->code`
+     */
+    public function getCurrencyCodeAttribute()
+    {
+        return $this->code;
     }
 }

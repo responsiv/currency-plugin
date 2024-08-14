@@ -10,7 +10,7 @@ class SeedAllTables extends Seeder
     {
         Currency::create([
             'name' => 'U.S. Dollar',
-            'currency_code' => 'USD',
+            'code' => 'USD',
             'currency_symbol' => '$',
             'decimal_point' => '.',
             'decimal_scale' => 2,
@@ -22,7 +22,7 @@ class SeedAllTables extends Seeder
 
         Currency::create([
             'name' => 'Euro',
-            'currency_code' => 'EUR',
+            'code' => 'EUR',
             'currency_symbol' => '€',
             'decimal_point' => '.',
             'decimal_scale' => 2,
@@ -34,7 +34,7 @@ class SeedAllTables extends Seeder
 
         Currency::create([
             'name' => 'Pound Sterling',
-            'currency_code' => 'GBP',
+            'code' => 'GBP',
             'currency_symbol' => '£',
             'decimal_point' => '.',
             'decimal_scale' => 2,
@@ -46,7 +46,7 @@ class SeedAllTables extends Seeder
 
         Currency::create([
             'name' => 'Australian Dollar',
-            'currency_code' => 'AUD',
+            'code' => 'AUD',
             'currency_symbol' => '$',
             'decimal_point' => '.',
             'decimal_scale' => 2,

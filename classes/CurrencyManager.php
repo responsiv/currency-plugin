@@ -49,7 +49,7 @@ class CurrencyManager
      */
     public function getDefaultCode()
     {
-        return $this->getDefault()->currency_code;
+        return $this->getDefault()->code;
     }
 
     /**
@@ -71,7 +71,7 @@ class CurrencyManager
      */
     public function getPrimaryCode()
     {
-        return $this->getPrimary()->currency_code;
+        return $this->getPrimary()->code;
     }
 
     /**
@@ -97,7 +97,7 @@ class CurrencyManager
      */
     public function getActiveCode()
     {
-        return $this->getActive()->currency_code;
+        return $this->getActive()->code;
     }
 
     /**

@@ -63,7 +63,7 @@ trait HasCurrencyFormat
         // Format currency from object
         $result = $currencyObj->formatCurrency($result, $decimals, $baseValue);
         if ($format === 'long') {
-            $result .= ' ' . $currencyObj->currency_code;
+            $result .= ' ' . $currencyObj->code;
         }
 
         return $result;

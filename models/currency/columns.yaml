@@ -7,7 +7,7 @@ columns:
         label: ID
         invisible: true
 
-    currency_code:
+    code:
         label: Code
         searchable: true
         width: 150px

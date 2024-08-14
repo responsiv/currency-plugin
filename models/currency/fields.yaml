@@ -5,7 +5,7 @@
 tabs:
     defaultTab: Currency
     fields:
-        currency_code:
+        code:
             label: Currency Code
             comment: International currency code, e.g. USD
             span: left

@@ -58,7 +58,7 @@ class Currency extends FormWidgetBase
         $this->vars['value'] = $this->getLoadValue();
         $this->vars['field'] = $this->formField;
         $this->vars['format'] = $this->format;
-        $this->vars['currencyCode'] = $currencyObj ? $currencyObj->currency_code : '';
+        $this->vars['currencyCode'] = $currencyObj ? $currencyObj->code : '';
         $this->vars['symbol'] = $currencyObj ? $currencyObj->currency_symbol : '$';
         $this->vars['symbolBefore'] = $currencyObj ? $currencyObj->place_symbol_before : true;
     }
