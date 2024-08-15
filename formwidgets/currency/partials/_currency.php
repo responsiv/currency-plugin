@@ -13,6 +13,7 @@
             ><?= e($symbol) ?></span>
         <?php endif ?>
         <input
+            inputmode="numeric"
             name="<?= $name ?>"
             id="<?= $this->getId('textarea') ?>"
             value="<?= e($value) ?>"
