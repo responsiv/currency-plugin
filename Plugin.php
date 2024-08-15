@@ -131,7 +131,13 @@ class Plugin extends PluginBase
     {
         return [
             'currency' => function($value, $column) {
-                return Currency::format($value, ['format' => $column->format]);
+                return Currency::format($value, [
+                    'format' => $column->format,
+                    'from' => $column->fromCode,
+                    'to' => $column->toCode,
+                    'in' => $column->inCode,
+                    'site' => $column->site ?? false
+                ]);
             }
         ];
     }
