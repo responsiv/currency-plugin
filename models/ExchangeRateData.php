@@ -34,9 +34,9 @@ class ExchangeRateData extends Model
     ];
 
     /**
-     * afterUpdate
+     * afterSave
      */
-    public function afterUpdate()
+    public function afterSave()
     {
         if ($rate = $this->rate) {
             $rate->updateRateValue();

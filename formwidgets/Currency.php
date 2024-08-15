@@ -1,5 +1,6 @@
 <?php namespace Responsiv\Currency\FormWidgets;
 
+use Site;
 use Currency as CurrencyService;
 use Backend\Classes\FormField;
 use Backend\Classes\FormWidgetBase;
@@ -73,7 +74,7 @@ class Currency extends FormWidgetBase
             return null;
         }
 
-        return CurrencyManager::instance()->fromBaseValue($value);
+        return $this->getLoadCurrency()->fromBaseValue($value);
     }
 
     /**
@@ -89,7 +90,7 @@ class Currency extends FormWidgetBase
             return null;
         }
 
-        return CurrencyManager::instance()->toBaseValue($value);
+        return $this->getLoadCurrency()->toBaseValue($value);
     }
 
     /**
@@ -99,11 +100,19 @@ class Currency extends FormWidgetBase
      */
     public function getLoadCurrency()
     {
+        // @deprecated this code is waiting for the latest core version (v3.6.30)
         if (
             $this->model &&
             $this->model->isClassInstanceOf(\October\Contracts\Database\MultisiteInterface::class) &&
             $this->model->isMultisiteEnabled()
         ) {
+            return CurrencyService::getPrimary();
+        }
+
+        return CurrencyService::getDefault();
+
+        // @todo swap to code below after removing code above -sg
+        if (Site::isModelMultisite($this->model, $this->valueFrom)) {
             return CurrencyService::getPrimary();
         }
 
