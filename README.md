@@ -6,6 +6,13 @@ Tools for dealing with currency display and conversions. You can configure curre
 - Settings → Exchange Rates
 - Settings → Site Definitions
 
+## Get Started
+
+A quick start guide for this plugin can be found at the following link:
+
+- [Announcing the Release of the Currency Plugin v2.0
+](https://octobercms.com/blog/post/announcing-release-currency-plugin-v2)
+
 ## Official Documentation
 
 This plugin is partially documented in the official October CMS documentation.
