@@ -3,7 +3,7 @@
 Tools for dealing with currency display and conversions. You can configure currencies and converters via the Settings page.
 
 - Settings → Currencies
-- Settings → Currency Rates
+- Settings → Exchange Rates
 - Settings → Site Definitions
 
 ## Official Documentation
@@ -12,9 +12,9 @@ This plugin is partially documented in the official October CMS documentation.
 
 Article | Purpose
 ------- | --------
-[Currency Twig Filter](https://docs.octobercms.com/3.x/markup/filter/currency.md) | Formatting Currency in Twig markup
-[Currency Form Widget](https://docs.octobercms.com/3.x/element/form/widget-currency.md) | Displaying currency as an input field
-[Currency List Column](https://docs.octobercms.com/3.x/element/lists/column-currency.md) | Displaying currency in a list column
+[Currency Twig Filter](https://docs.octobercms.com/3.x/markup/filter/currency.html) | Formatting Currency in Twig markup
+[Currency Form Widget](https://docs.octobercms.com/3.x/element/form/widget-currency.html) | Displaying currency as an input field
+[Currency List Column](https://docs.octobercms.com/3.x/element/lists/column-currency.html) | Displaying currency in a list column
 
 ## Understanding Currency Definitions
 

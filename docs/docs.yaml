@@ -11,7 +11,7 @@ navigation:
         link: "./introduction.md"
         description: "explains how to get started using the Currency plugin"
     -
-        title: "Building Payment Types"
+        title: "Building Exchange Types"
         description: "how to implement exchange integration for automated currency conversion"
         link: "./building-exchange-types.md"
     -
