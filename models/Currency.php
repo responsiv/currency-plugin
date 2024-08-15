@@ -160,20 +160,29 @@ class Currency extends Model
 
     /**
      * toBaseValue converts a float to a base value stored in the database,
-     * a base value has no decimal point.
+     * a base value has no decimal point. E.g. converts 1.00 to 100
      */
-    public function toBaseValue(float $value): int
+    public function toBaseValue($value): int
     {
-        return $value * pow(10, (int) $this->decimal_scale);
+        $result = floatval(str_replace($this->decimal_point, '.', (string) $value));
+
+        return $result * pow(10, (int) $this->decimal_scale);
     }
 
     /**
      * fromBaseValue converts from a base value to a float value from the database,
-     * the returning value introduces a decimal point.
+     * the returning value introduces a decimal point. E.g. converts 100 to 1.00
      */
-    public function fromBaseValue(int $value): float
+    public function fromBaseValue($value): float
     {
-        return $value / pow(10, (int) $this->decimal_scale);
+        $result = $value / pow(10, (int) $this->decimal_scale);
+
+        return number_format(
+            $result,
+            $this->decimal_scale,
+            $this->decimal_point,
+            ""
+        );
     }
 
     /**

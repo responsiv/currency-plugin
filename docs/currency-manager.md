@@ -36,16 +36,20 @@ $active = Currency::getActive();
 $activeCode = Currency::getActiveCode();
 ```
 
+## Currency Model
+
+A currency object represents a `Responsiv\Currency\Models\Currency` model object.
+
 The `fromBaseValue` converts a currency, for example, converts 100 to 1.00.
 
 ```php
 // Returns 1.00
-Currency::fromBaseValue(100);
+$currency->fromBaseValue(100);
 ```
 
 The `toBaseValue` converts a currency to a base value, for example, converts 1.00 to 100.
 
 ```php
 // Returns 100
-Currency::toBaseValue(1.00);
+$currency->toBaseValue(1.00);
 ```

@@ -101,31 +101,18 @@ class CurrencyManager
     }
 
     /**
-     * fromBaseValue converts 100 to 1.00
+     * @deprecated use Currency model fromBaseValue method
      */
     public function fromBaseValue($value)
     {
-        $currencyObj = $this->getPrimary();
-
-        $value = $currencyObj->fromBaseValue($value);
-
-        return number_format(
-            $value,
-            $currencyObj->decimal_scale,
-            $currencyObj->decimal_point,
-            ""
-        );
+        return $this->getDefault()->fromBaseValue($value);
     }
 
     /**
-     * toBaseValue converts 1.00 to 100
+     * @deprecated use Currency model toBaseValue method
      */
     public function toBaseValue($value)
     {
-        $currencyObj = $this->getPrimary();
-
-        $value = floatval(str_replace($currencyObj->decimal_point, '.', $value));
-
-        return $currencyObj->toBaseValue($value);
+        return $this->getDefault()->toBaseValue($value);
     }
 }
