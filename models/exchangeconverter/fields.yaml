@@ -12,7 +12,7 @@ fields:
         label: Fallback Converter
         commentAbove: Select a converter to use as a fallback if this one fails.
         type: relation
-        emptyOption: "-- none --"
+        emptyOption: "- none -"
         span: auto
 
     refresh_interval:

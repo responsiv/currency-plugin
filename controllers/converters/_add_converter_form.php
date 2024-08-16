@@ -12,8 +12,8 @@
                     <?php foreach ($converters as $converter): ?>
                         <li>
                             <a href="<?= Backend::url('responsiv/currency/converters/create/' . $converter->alias) ?>">
-                                <h5 class="heading"><?= $converter->name ?></h5>
-                                <p class="description"><?= $converter->description ?></p>
+                                <h5 class="heading"><?= e(__($converter->name)) ?></h5>
+                                <p class="description"><?= e(__($converter->description)) ?></p>
                             </a>
                         </li>
                     <?php endforeach ?>
