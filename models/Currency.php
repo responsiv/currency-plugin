@@ -28,6 +28,7 @@ class Currency extends Model
     use \System\Traits\KeyCodeModel;
     use \October\Rain\Database\Traits\Validation;
     use \October\Rain\Database\Traits\Defaultable;
+    use \Responsiv\Currency\Models\Currency\HasBaseValues;
     use \Responsiv\Currency\Models\Currency\HasPluckHelpers;
 
     /**
@@ -91,7 +92,7 @@ class Currency extends Model
         }
 
         if ($baseValue) {
-            $number = $this->fromBaseValue((int) $number);
+            $number = $this->fromBaseValueRaw((int) $number);
         }
 
         $number = number_format(
@@ -156,33 +157,6 @@ class Currency extends Model
         $currencies = array_keys(Currency::getCodeList());
 
         return in_array($currency, $currencies);
-    }
-
-    /**
-     * toBaseValue converts a float to a base value stored in the database,
-     * a base value has no decimal point. E.g. converts 1.00 to 100
-     */
-    public function toBaseValue($value): int
-    {
-        $result = floatval(str_replace($this->decimal_point, '.', (string) $value));
-
-        return $result * pow(10, (int) $this->decimal_scale);
-    }
-
-    /**
-     * fromBaseValue converts from a base value to a float value from the database,
-     * the returning value introduces a decimal point. E.g. converts 100 to 1.00
-     */
-    public function fromBaseValue($value): float
-    {
-        $result = $value / pow(10, (int) $this->decimal_scale);
-
-        return number_format(
-            $result,
-            $this->decimal_scale,
-            $this->decimal_point,
-            ""
-        );
     }
 
     /**

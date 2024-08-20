@@ -24,9 +24,9 @@ class SeedAllTables extends Seeder
             'name' => 'Euro',
             'code' => 'EUR',
             'currency_symbol' => '€',
-            'decimal_point' => '.',
+            'decimal_point' => ',',
             'decimal_scale' => 2,
-            'thousand_separator' => ',',
+            'thousand_separator' => '.',
             'place_symbol_before' => true,
             'is_enabled' => true,
             'is_default' => false
