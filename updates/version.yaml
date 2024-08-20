@@ -23,3 +23,4 @@ v2.0.3: Adds base currency selection to site definitions
 v2.0.4:
     - Fixes the stutter in currency model accessing the code
     - migrate_v2_0_4.php
+v2.0.5: Fixes base values for Euro formatting
