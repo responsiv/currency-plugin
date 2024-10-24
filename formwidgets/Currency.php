@@ -100,18 +100,6 @@ class Currency extends FormWidgetBase
      */
     public function getLoadCurrency()
     {
-        // @deprecated this code is waiting for the latest core version (v3.6.30)
-        if (
-            $this->model &&
-            $this->model->isClassInstanceOf(\October\Contracts\Database\MultisiteInterface::class) &&
-            $this->model->isMultisiteEnabled()
-        ) {
-            return CurrencyService::getPrimary();
-        }
-
-        return CurrencyService::getDefault();
-
-        // @todo swap to code below after removing code above -sg
         if (Site::isModelMultisite($this->model, $this->valueFrom)) {
             return CurrencyService::getPrimary();
         }
