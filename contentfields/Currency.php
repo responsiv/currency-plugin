@@ -49,18 +49,6 @@ class Currency extends ContentFieldBase
             return null;
         }
 
-        // @deprecated this code is waiting for the latest core version (v3.6.30)
-        if (
-            $model &&
-            $model->isClassInstanceOf(\October\Contracts\Database\MultisiteInterface::class) &&
-            $model->isMultisiteEnabled()
-        ) {
-            return true;
-        }
-
-        return false;
-
-        // @todo swap to code below after removing code above -sg
         if (Site::isModelMultisite($model, $this->fieldName)) {
             return true;
         }
