@@ -92,7 +92,7 @@ class Currency extends Model
         }
 
         if ($baseValue) {
-            $number = $this->fromBaseValueRaw((int) $number);
+            $number = $this->fromFloatValue((int) $number);
         }
 
         $number = number_format(

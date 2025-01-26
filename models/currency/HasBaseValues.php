@@ -23,7 +23,7 @@ trait HasBaseValues
             $value
         );
 
-        return $this->toBaseValueRaw(floatval($result));
+        return $this->toFloatValue(floatval($result));
     }
 
     /**
@@ -32,7 +32,7 @@ trait HasBaseValues
      */
     public function fromBaseValue($value)
     {
-        $result = $this->fromBaseValueRaw(intval($value));
+        $result = $this->fromFloatValue(intval($value));
 
         return number_format(
             $result,
@@ -43,18 +43,34 @@ trait HasBaseValues
     }
 
     /**
-     * toBaseValueRaw will return an integer representation without formatting
+     * toFloatValue will return an integer representation without formatting
      */
-    public function toBaseValueRaw(float $value): int
+    public function toFloatValue(float $value): int
     {
         return $value * pow(10, (int) $this->decimal_scale);
     }
 
     /**
-     * fromBaseValueRaw will return a float representation without formatting
+     * fromFloatValue will return a float representation without formatting
+     */
+    public function fromFloatValue(int $value): float
+    {
+        return $value / pow(10, (int) $this->decimal_scale);
+    }
+
+    /**
+     * @deprecated
+     */
+    public function toBaseValueRaw(float $value): int
+    {
+        return $this->toFloatValue($value);
+    }
+
+    /**
+     * @deprecated
      */
     public function fromBaseValueRaw(int $value): float
     {
-        return $value / pow(10, (int) $this->decimal_scale);
+        return $this->fromFloatValue($value);
     }
 }
