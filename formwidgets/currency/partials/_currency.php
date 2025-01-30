@@ -13,12 +13,12 @@
             ><?= e($symbol) ?></span>
         <?php endif ?>
         <input
-            inputmode="numeric"
+            type="number"
             name="<?= $name ?>"
             id="<?= $this->getId('textarea') ?>"
             value="<?= e($value) ?>"
             placeholder="<?= e(trans($field->placeholder)) ?>"
-            class="form-control"
+            class="form-control input-no-spinner"
             autocomplete="off"
             <?= $field->getAttributes() ?>
             />
