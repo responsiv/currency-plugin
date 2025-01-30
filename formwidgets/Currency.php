@@ -100,11 +100,7 @@ class Currency extends FormWidgetBase
      */
     public function getLoadCurrency()
     {
-        if (Site::isModelMultisite($this->model, $this->valueFrom)) {
-            return CurrencyService::getPrimary();
-        }
-
-        return CurrencyService::getDefault();
+        return CurrencyService::getForModel($this->model, $this->valueFrom);
     }
 
     /**

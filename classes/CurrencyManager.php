@@ -101,6 +101,26 @@ class CurrencyManager
     }
 
     /**
+     * getForModel returns the current to use for a specific model or model attribute
+     */
+    public function getForModel($model, $attr = null)
+    {
+        if (Site::isModelMultisite($model, $attr)) {
+            return $this->getPrimary();
+        }
+
+        return $this->getDefault();
+    }
+
+    /**
+     * getForModelCode returns the code for a specific model or model attribute
+     */
+    public function getForModelCode($model, $attr = null)
+    {
+        return $this->getForModel($model, $attr)->code;
+    }
+
+    /**
      * @deprecated use Currency model fromBaseValue method
      */
     public function fromBaseValue($value)

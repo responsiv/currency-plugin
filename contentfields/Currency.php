@@ -1,6 +1,7 @@
 <?php namespace Responsiv\Currency\ContentFields;
 
 use Site;
+use Currency as CurrencyService;
 use Tailor\Classes\ContentFieldBase;
 use October\Contracts\Element\FormElement;
 use October\Contracts\Element\ListElement;
@@ -26,6 +27,26 @@ class Currency extends ContentFieldBase
         $useSite = $this->getDefaultColumnSite($list);
 
         $list->defineColumn($this->fieldName, $this->label)->displayAs('currency')->site($useSite);
+    }
+
+    /**
+     * extendModel
+     */
+    public function extendModel($model)
+    {
+        // @todo unfinished
+        return;
+
+        if ($model instanceof \Tailor\Models\RecordExport) {
+            $model->bindEvent('model.beforeExportAttribute', function ($attr, &$value) {
+                if ($attr === $this->fieldName) {
+                    $value = CurrencyService::getForModel($this->model, $attr)->toFloatValue($value);
+                }
+            });
+        }
+
+        if ($model instanceof \Tailor\Models\RecordImport) {
+        }
     }
 
     /**
