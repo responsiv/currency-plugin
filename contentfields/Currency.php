@@ -30,13 +30,18 @@ class Currency extends ContentFieldBase
     }
 
     /**
-     * extendModel
+     * defineBatchListColumn
      */
-    public function extendModel($model)
+    public function defineBatchListColumn(ListElement $list, $context = null)
     {
-        // @todo unfinished
-        return;
+        $list->defineColumn($this->fieldName, $this->label);
+    }
 
+    /**
+     * extendBatchModelObject
+     */
+    public function extendBatchModelObject($model)
+    {
         if ($model instanceof \Tailor\Models\RecordExport) {
             $model->bindEvent('model.beforeExportAttribute', function ($attr, &$value) {
                 if ($attr === $this->fieldName) {
@@ -46,6 +51,11 @@ class Currency extends ContentFieldBase
         }
 
         if ($model instanceof \Tailor\Models\RecordImport) {
+            $model->bindEvent('model.beforeImportAttribute', function ($attr, &$value) {
+                if ($attr === $this->fieldName) {
+                    $value = CurrencyService::getForModel($this->model, $attr)->fromFloatValue($value);
+                }
+            });
         }
     }
 
