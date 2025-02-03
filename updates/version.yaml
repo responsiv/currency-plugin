@@ -24,3 +24,4 @@ v2.0.4:
     - Fixes the stutter in currency model accessing the code
     - migrate_v2_0_4.php
 v2.0.5: Fixes base values for Euro formatting
+v2.1.0: Implement float values in input, import and export
