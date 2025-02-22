@@ -26,7 +26,10 @@ class Currency extends ContentFieldBase
     {
         $useSite = $this->getDefaultColumnSite($list);
 
-        $list->defineColumn($this->fieldName, $this->label)->displayAs('currency')->site($useSite);
+        $column = $list->defineColumn($this->fieldName, $this->label)->displayAs('currency')->site($useSite);
+        if ($this->column) {
+            $column->useConfig($this->column);
+        }
     }
 
     /**
