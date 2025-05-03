@@ -74,7 +74,7 @@ class Currency extends FormWidgetBase
             return null;
         }
 
-        return $this->getLoadCurrency()->fromBaseValue($value);
+        return $this->getLoadCurrency()->toFloatValue($value);
     }
 
     /**
@@ -90,7 +90,7 @@ class Currency extends FormWidgetBase
             return null;
         }
 
-        return $this->getLoadCurrency()->toBaseValue($value);
+        return $this->getLoadCurrency()->fromFloatValue($value);
     }
 
     /**
