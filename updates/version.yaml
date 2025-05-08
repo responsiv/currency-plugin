@@ -25,3 +25,4 @@ v2.0.4:
     - migrate_v2_0_4.php
 v2.0.5: Fixes base values for Euro formatting
 v2.1.0: Implement float values in input, import and export
+v2.1.1: Fix for currency input using chars in amounts
