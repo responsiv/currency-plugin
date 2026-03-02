@@ -119,6 +119,9 @@ class Plugin extends PluginBase
         return [
             'filters' => [
                 'currency' => [Currency::class, 'format']
+            ],
+            'functions' => [
+                'currency' => [Currency::class, 'getDefault']
             ]
         ];
     }
