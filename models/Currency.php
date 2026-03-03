@@ -103,10 +103,10 @@ class Currency extends Model
         );
 
         if ($this->place_symbol_before) {
-            return $negativeSymbol.$this->currency_symbol.$number;
+            return $negativeSymbol . $this->currency_symbol . $number;
         }
         else {
-            return $negativeSymbol.$number.$this->currency_symbol;
+            return $negativeSymbol . $number .' '. $this->currency_symbol;
         }
     }
 

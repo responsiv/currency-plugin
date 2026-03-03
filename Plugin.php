@@ -134,6 +134,10 @@ class Plugin extends PluginBase
     {
         return [
             'currency' => function($value, $column) {
+                if ($value === null) {
+                    return null;
+                }
+
                 return Currency::format($value, [
                     'format' => $column->format,
                     'from' => $column->fromCode,
