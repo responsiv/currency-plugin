@@ -54,7 +54,7 @@ trait HasCurrencyFormat
         $currencyCode = $toCurrency ?: $inCurrency;
         $currencyObj = $currencyCode
             ? CurrencyModel::findByCode($currencyCode)
-            : $this->getDefault();
+            : $this->getActive();
 
         if (!$currencyObj) {
             throw new SystemException("Unable to load a currency definition.");
@@ -75,7 +75,7 @@ trait HasCurrencyFormat
     public function convert($value, $toCurrency, $fromCurrency = null)
     {
         if (!$fromCurrency) {
-            $fromCurrency = $this->getDefaultCode();
+            $fromCurrency = $this->getPrimaryCode();
         }
 
         $rate = ExchangeManager::instance()->getRate($fromCurrency, $toCurrency);

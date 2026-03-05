@@ -96,7 +96,7 @@ class Plugin extends PluginBase
                 'category' => "Currency",
                 'order' => 510,
                 'permissions' => ['responsiv.currency.access_settings']
-            ]
+            ],
         ];
     }
 
@@ -133,18 +133,28 @@ class Plugin extends PluginBase
     public function registerListColumnTypes()
     {
         return [
-            'currency' => function($value, $column) {
-                if ($value === null) {
-                    return null;
-                }
-
-                return Currency::format($value, [
+            'currency' => function($value, $column, $record = null) {
+                $options = [
                     'format' => $column->format,
                     'from' => $column->fromCode,
                     'to' => $column->toCode,
                     'in' => $column->inCode,
                     'site' => $column->site ?? false
-                ]);
+                ];
+
+                // Non-currencyable models: value is raw from DB in primary currency,
+                // so force primary to prevent format() using edit site currency
+                if (!$options['in'] && !$options['to'] && !$options['site']) {
+                    if (!$record || !method_exists($record, 'getCurrencyableBaseValue')) {
+                        $options['in'] = Currency::getPrimaryCode();
+                    }
+                }
+
+                if ($value === null) {
+                    return null;
+                }
+
+                return Currency::format($value, $options);
             }
         ];
     }
