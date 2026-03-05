@@ -50,7 +50,7 @@ class Currency extends FormWidgetBase
     }
 
     /**
-     * Prepares the list data
+     * prepareVars for the widget partial
      */
     public function prepareVars()
     {
@@ -62,19 +62,40 @@ class Currency extends FormWidgetBase
         $this->vars['currencyCode'] = $currencyObj ? $currencyObj->code : '';
         $this->vars['symbol'] = $currencyObj ? $currencyObj->currency_symbol : '$';
         $this->vars['symbolBefore'] = $currencyObj ? $currencyObj->place_symbol_before : true;
+
+        // Override state for non-default currency sites
+        $this->vars['isCurrencyOverridable'] = $this->isCurrencyOverridable();
+        $this->vars['hasCurrencyOverride'] = $this->hasCurrencyOverride();
+        $this->vars['isCurrencyReadOnly'] = $this->isCurrencyReadOnly();
+        $this->vars['convertedValue'] = $this->getConvertedValue();
     }
 
     /**
-     * getLoadValue
+     * getLoadValue returns the value for display. Shows the active site's
+     * currency value — base price on the default site, or the override /
+     * auto-converted value on non-default sites.
      */
     public function getLoadValue()
     {
-        $value = parent::getLoadValue();
-        if ($value === null) {
-            return null;
+        // Non-currencyable model: raw value in primary currency
+        if (!$this->model->methodExists('getCurrencyableBaseValue')) {
+            $value = parent::getLoadValue();
+            return $value === null ? null : $this->getLoadCurrency()->toFloatValue($value);
         }
 
-        return $this->getLoadCurrency()->toFloatValue($value);
+        // Currencyable model on default site: show base value
+        if (!$this->model->shouldConvertCurrency()) {
+            $value = $this->model->getCurrencyableBaseValue($this->valueFrom);
+            return $value === null ? null : $this->getLoadCurrency()->toFloatValue($value);
+        }
+
+        // Currencyable model on non-default site: show override or converted value
+        $value = $this->model->getCurrencyOverride(
+            $this->valueFrom,
+            $this->model->getCurrencyableContext()
+        );
+
+        return $value === null ? null : $this->getLoadCurrency()->toFloatValue($value);
     }
 
     /**
@@ -94,13 +115,80 @@ class Currency extends FormWidgetBase
     }
 
     /**
-     * getLoadCurrency returns the currency object to used. If the model uses multisite,
-     * then extract the primary currency from the site definition, otherwise use the
-     * primary currency definition.
+     * getLoadCurrency returns the currency object to use. For currencyable
+     * attributes, always returns the active site currency. For non-currencyable
+     * models, returns the primary currency.
      */
     public function getLoadCurrency()
     {
+        if (
+            $this->model->methodExists('isCurrencyableAttribute') &&
+            $this->model->isCurrencyableAttribute($this->valueFrom)
+        ) {
+            return CurrencyService::getActive();
+        }
+
         return CurrencyService::getForModel($this->model, $this->valueFrom);
+    }
+
+    //
+    // Currency override
+    //
+
+    /**
+     * isCurrencyOverridable returns true when the field supports override
+     * (currencyable model on a non-default currency site)
+     */
+    protected function isCurrencyOverridable(): bool
+    {
+        return $this->model->methodExists('shouldConvertCurrency')
+            && $this->model->shouldConvertCurrency()
+            && $this->model->isCurrencyableAttribute($this->valueFrom);
+    }
+
+    /**
+     * hasCurrencyOverride returns true when an explicit override exists
+     */
+    protected function hasCurrencyOverride(): bool
+    {
+        if (!$this->isCurrencyOverridable()) {
+            return false;
+        }
+
+        return $this->model->hasCurrencyOverride($this->valueFrom);
+    }
+
+    /**
+     * isCurrencyReadOnly returns true when the field should be read-only
+     * (non-default site, no override set — showing auto-converted value)
+     */
+    protected function isCurrencyReadOnly(): bool
+    {
+        return $this->isCurrencyOverridable() && !$this->hasCurrencyOverride();
+    }
+
+    /**
+     * getConvertedValue returns the exchange-rate converted value (ignoring
+     * any override) so the JS control can restore it when clearing
+     */
+    protected function getConvertedValue()
+    {
+        if (!$this->isCurrencyOverridable()) {
+            return null;
+        }
+
+        $baseValue = $this->model->getCurrencyableBaseValue($this->valueFrom);
+        if ($baseValue === null) {
+            return null;
+        }
+
+        $converted = CurrencyService::convert(
+            $baseValue,
+            $this->model->getCurrencyableContext(),
+            $this->model->getCurrencyableDefault()
+        );
+
+        return $this->getLoadCurrency()->toFloatValue((int) $converted);
     }
 
     /**
@@ -108,5 +196,6 @@ class Currency extends FormWidgetBase
      */
     public function loadAssets()
     {
+        $this->addJs('js/currencyfield.js');
     }
 }
