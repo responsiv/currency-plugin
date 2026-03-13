@@ -1,6 +1,6 @@
 <?php if ($this->previewMode): ?>
     <div class="form-control">
-        <?= e(Currency::format($value, ['baseValue' => false, 'format' => $format])) ?>
+        <?= e(Currency::format($value, ['baseValue' => false, 'format' => $format, 'in' => $currencyCode ?: null])) ?>
     </div>
 <?php else: ?>
     <div

@@ -142,6 +142,11 @@ class Plugin extends PluginBase
                     'site' => $column->site ?? false
                 ];
 
+                // Per-record currency: read currency code from another attribute
+                if ($column->currencyFrom && $record) {
+                    $options['in'] = data_get($record, $column->currencyFrom);
+                }
+
                 // Non-currencyable models: value is raw from DB in primary currency,
                 // so force primary to prevent format() using edit site currency
                 if (!$options['in'] && !$options['to'] && !$options['site']) {

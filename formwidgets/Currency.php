@@ -5,6 +5,7 @@ use Currency as CurrencyService;
 use Backend\Classes\FormField;
 use Backend\Classes\FormWidgetBase;
 use Responsiv\Currency\Classes\CurrencyManager;
+use Responsiv\Currency\Models\Currency as CurrencyModel;
 
 /**
  * Currency input
@@ -19,6 +20,11 @@ class Currency extends FormWidgetBase
      * @var string Currency format to display (long|short)
      */
     public $format = null;
+
+    /**
+     * @var string currencyFrom reads the currency code from this model attribute
+     */
+    public $currencyFrom = null;
 
     //
     // Object properties
@@ -36,6 +42,7 @@ class Currency extends FormWidgetBase
     {
         $this->fillFromConfig([
             'format',
+            'currencyFrom',
         ]);
     }
 
@@ -121,6 +128,14 @@ class Currency extends FormWidgetBase
      */
     public function getLoadCurrency()
     {
+        // Per-record currency override
+        if ($this->currencyFrom) {
+            $code = data_get($this->model, $this->currencyFrom);
+            if ($code) {
+                return CurrencyModel::findByCode($code) ?: CurrencyService::getPrimary();
+            }
+        }
+
         if (
             $this->model->methodExists('isCurrencyableAttribute') &&
             $this->model->isCurrencyableAttribute($this->valueFrom)
