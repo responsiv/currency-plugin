@@ -5,6 +5,7 @@ use Responsiv\Currency\Models\ExchangeRateData;
 use Responsiv\Currency\Models\ExchangeConverter;
 use ApplicationException;
 use Exception;
+use Log;
 
 /**
  * HasCurrencyExchange
@@ -57,10 +58,9 @@ trait HasCurrencyExchange
             return $this->rateCache[$key] = (1 / $record->rate_value);
         }
 
-        throw new ApplicationException(__("There is no currency pair configured for :from/:to", [
-            'from' => $fromCurrency,
-            'to' => $toCurrency
-        ]));
+        Log::warning("There is no currency pair configured for {$fromCurrency}/{$toCurrency}, using 1:1 rate as fallback.");
+
+        return $this->rateCache[$key] = 1;
     }
 
     /**
