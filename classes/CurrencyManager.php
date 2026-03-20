@@ -37,7 +37,7 @@ class CurrencyManager
     }
 
     /**
-     * getPrimary returns the default currency for source values, regardless of the site context.
+     * getDefault returns the global default currency, ignoring site context.
      */
     public function getDefault()
     {
@@ -45,7 +45,7 @@ class CurrencyManager
     }
 
     /**
-     * getDefaultCode returns the primary currency code for source values.
+     * getDefaultCode returns the global default currency code.
      */
     public function getDefaultCode()
     {
@@ -53,21 +53,23 @@ class CurrencyManager
     }
 
     /**
-     * getPrimary returns the primary currency for source values.
+     * getPrimary returns the base currency for the current site group.
+     * Falls back to the global default when no group override is set.
+     * This is the currency that prices are stored in.
      */
     public function getPrimary()
     {
         $site = Site::getSiteFromContext();
 
-        if ($site->base_currency_id) {
-            return $site->base_currency;
+        if ($site && $site->group && $site->group->base_currency_id) {
+            return $site->group->base_currency;
         }
 
         return CurrencyModel::getDefault();
     }
 
     /**
-     * getPrimaryCode returns the primary currency code for source values.
+     * getPrimaryCode returns the base currency code for the current site group.
      */
     public function getPrimaryCode()
     {
@@ -75,25 +77,22 @@ class CurrencyManager
     }
 
     /**
-     * getActive returns the active currency for display purposes.
+     * getActive returns the active currency for the current site context.
+     * Falls back to the global default when no site currency is set.
      */
     public function getActive()
     {
         $site = Site::getSiteFromContext();
 
-        if ($site->currency_id) {
+        if ($site && $site->currency_id) {
             return $site->currency;
-        }
-
-        if ($site->base_currency_id) {
-            return $site->base_currency;
         }
 
         return CurrencyModel::getDefault();
     }
 
     /**
-     * getActiveCode returns the active currency code for display purposes.
+     * getActiveCode returns the active currency code for the current site context.
      */
     public function getActiveCode()
     {
@@ -101,15 +100,13 @@ class CurrencyManager
     }
 
     /**
-     * getForModel returns the current to use for a specific model or model attribute
+     * getForModel returns the currency to use for a specific model or model attribute.
+     * Always returns the primary currency since prices are stored in primary currency
+     * and the Currencyable trait handles conversion via promotion.
      */
     public function getForModel($model, $attr = null)
     {
-        if (Site::isModelMultisite($model, $attr)) {
-            return $this->getPrimary();
-        }
-
-        return $this->getDefault();
+        return $this->getPrimary();
     }
 
     /**

@@ -26,3 +26,7 @@ v2.0.4:
 v2.0.5: Fixes base values for Euro formatting
 v2.1.0: Implement float values in input, import and export
 v2.1.1: Fix for currency input using chars in amounts
+v2.2.0:
+    - Adds currency overrides feature and base currency for site groups
+    - 000005_create_currency_attributes.php
+    - extend_site_groups_table.php

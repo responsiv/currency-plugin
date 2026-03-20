@@ -13,74 +13,80 @@ class ExtendSystemModule
      */
     public function subscribe($events)
     {
-        $this->extendSiteDefinitionModel();
+        $this->extendModels();
 
-        // Site Definition
-
-        $events->listen('backend.form.extendFields', [static::class, 'extendUserFormFields']);
-
-        $events->listen('backend.list.extendColumns', [static::class, 'extendUserListColumns']);
+        $events->listen('backend.form.extendFields', [static::class, 'extendFormFields']);
+        $events->listen('backend.list.extendColumns', [static::class, 'extendListColumns']);
     }
 
     /**
-     * extendSiteDefinitionModel
+     * extendModels
      */
-    public function extendSiteDefinitionModel()
+    public function extendModels()
     {
+        // Site Definition: display currency
         ExtensionContainer::extendClass(\System\Models\SiteDefinition::class, static function($model) {
             $model->implementClassWith(\Responsiv\Currency\Behaviors\CurrencyModel::class);
+        });
+
+        // Site Group: base/stored currency
+        ExtensionContainer::extendClass(\System\Models\SiteGroup::class, static function($model) {
             $model->implementClassWith(\Responsiv\Currency\Behaviors\BaseCurrencyModel::class);
         });
-
-        ExtensionContainer::extendClass(\System\Classes\SiteManager::class, static function($model) {
-            // @todo
-        });
     }
 
     /**
-     * extendUserFormFields
+     * extendFormFields
      */
-    public function extendUserFormFields(\Backend\Widgets\Form $widget)
+    public function extendFormFields(\Backend\Widgets\Form $widget)
     {
-        if ($widget->isNested || !$this->checkControllerMatchesSiteDefinition($widget)) {
+        if ($widget->isNested) {
             return;
         }
 
-        $widget->addTabField('base_currency', 'Base Currency')
-            ->tab("Site Definition")
-            ->displayAs('dropdown')
-            ->span('auto')
-            ->comment(sprintf(__('Current default value: :value', ['value' => '<strong>%s</strong>']), \Responsiv\Currency\Models\Currency::getDefaultCode()))
-            ->commentHtml()
-            ->emptyOption('- '.__("Use Default").' -');
-
-        $widget->addTabField('currency', 'Display Currency')
-            ->tab("Site Definition")
-            ->displayAs('dropdown')
-            ->span('auto')
-            ->comment("Currency used for display purposes.")
-            ->emptyOption('- '.__("Use Default").' -');
-    }
-
-    /**
-     * extendUserListColumns
-     */
-    public function extendUserListColumns(\Backend\Widgets\Lists $widget)
-    {
-        if (!$this->checkControllerMatchesSiteDefinition($widget)) {
-            return;
+        // Site Definition: currency field
+        if ($this->checkControllerModel($widget, \System\Controllers\Sites::class, \System\Models\SiteDefinition::class)) {
+            $widget->addTabField('currency', 'Currency')
+                ->tab("Site Definition")
+                ->displayAs('dropdown')
+                ->span('auto')
+                ->comment(sprintf(__('Current default value: :value', ['value' => '<strong>%s</strong>']), \Responsiv\Currency\Models\Currency::getDefaultCode()))
+                ->commentHtml()
+                ->emptyOption('- '.__("Use Default").' -');
         }
 
-        $widget->defineColumn('base_currency', "Base Currency")->invisible()->relation('base_currency')->sqlSelect('name')->defaults('- '.__("Default").' -');
-        $widget->defineColumn('currency', "Currency")->after('timezone')->relation('currency')->sqlSelect('name')->defaults('- '.__("Default").' -');
+        // Site Group: base currency field
+        if ($this->checkControllerModel($widget, \System\Controllers\SiteGroups::class, \System\Models\SiteGroup::class)) {
+            $widget->addTabField('base_currency', 'Base Currency')
+                ->displayAs('dropdown')
+                ->span('auto')
+                ->comment(sprintf(__('Currency used to store prices. Default: :value', ['value' => '<strong>%s</strong>']), \Responsiv\Currency\Models\Currency::getDefaultCode()))
+                ->commentHtml()
+                ->emptyOption('- '.__("Use Default").' -');
+        }
     }
 
     /**
-     * checkControllerMatchesSiteDefinition
+     * extendListColumns
      */
-    protected function checkControllerMatchesSiteDefinition($widget): bool
+    public function extendListColumns(\Backend\Widgets\Lists $widget)
     {
-        return $widget->getController() instanceof \System\Controllers\Sites &&
-            $widget->getModel() instanceof \System\Models\SiteDefinition;
+        // Site Definition list
+        if ($this->checkControllerModel($widget, \System\Controllers\Sites::class, \System\Models\SiteDefinition::class)) {
+            $widget->defineColumn('currency', "Currency")
+                ->after('timezone')
+                ->relation('currency')
+                ->sqlSelect('name')
+                ->defaults('- '.__("Default").' -');
+        }
+    }
+
+    /**
+     * checkControllerModel
+     */
+    protected function checkControllerModel($widget, string $controller, string $model): bool
+    {
+        return $widget->getController() instanceof $controller &&
+            $widget->getModel() instanceof $model;
     }
 }

@@ -11,6 +11,10 @@ navigation:
         link: "./introduction.md"
         description: "explains how to get started using the Currency plugin"
     -
+        title: "Multisite Currencies"
+        description: "how to configure multisite currency support across multiple sites"
+        link: "./multisite-currencies.md"
+    -
         title: "Building Exchange Types"
         description: "how to implement exchange integration for automated currency conversion"
         link: "./building-exchange-types.md"
