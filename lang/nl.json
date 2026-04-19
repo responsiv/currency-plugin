@@ -12,7 +12,7 @@
   "Successfully enabled those currencies.": "Deze valuta's zijn ingeschakeld.",
   "Successfully disabled those currencies.": "Deze valuta's zijn succesvol uitgeschakeld.",
   "Enable or Disable Currencies": "Valuta's in- of uitschakelen",
-  "Currencies selected: :amount": "Geselecteerde valuta: :bedrag",
+  "Currencies selected: :amount": "Geselecteerde valuta: :amount",
   "Enabled": "Ingeschakeld",
   "Example": "Voorbeeld",
   "Formatting": "Opmaak",
