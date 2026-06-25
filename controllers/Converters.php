@@ -45,6 +45,11 @@ class Converters extends SettingsController
     public $driverAlias;
 
     /**
+     * @var string|null gatewayClass
+     */
+    protected $gatewayClass;
+
+    /**
      * index_onLoadAddPopup
      */
     protected function index_onLoadAddPopup()
