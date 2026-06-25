@@ -30,3 +30,4 @@ v2.2.0:
     - Adds currency overrides feature and base currency for site groups
     - 000005_create_currency_attributes.php
     - extend_site_groups_table.php
+v2.2.1: Fixes creating currency converters
