@@ -8,13 +8,13 @@ The Currency plugin uses a three-tier currency system. Each tier serves a differ
 
 ### Default Currency
 
-The default currency is the global anchor — all exchange rates are defined relative to this currency. It is used when no site context is available or when no other currency is configured.
+The default currency is the global anchor - all exchange rates are defined relative to this currency. It is used when no site context is available or when no other currency is configured.
 
 To set the default currency, navigate to **Settings → Currencies** and check the **Default** checkbox on the desired currency.
 
 ### Base Currency (Site Group)
 
-The base currency can be set on a **Site Group** to define the stored currency for all sites in that group. This is useful when different groups of sites use different currencies — for example, a US group uses USD while a UK group uses GBP.
+The base currency can be set on a **Site Group** to define the stored currency for all sites in that group. This is useful when different groups of sites use different currencies - for example, a US group uses USD while a UK group uses GBP.
 
 When no base currency is set on the site group, the global default currency is used.
 
@@ -32,7 +32,7 @@ Follow these steps to configure multisite currencies for your application.
 
 ### 1. Create Currencies
 
-Navigate to **Settings → Currencies** and create the currencies your application will use. Mark one currency as the **Default** — this will be the global anchor for all exchange rate conversions.
+Navigate to **Settings → Currencies** and create the currencies your application will use. Mark one currency as the **Default** - this will be the global anchor for all exchange rate conversions.
 
 ### 2. Configure Exchange Rates
 
@@ -45,7 +45,7 @@ Exchange rates are used as the automatic fallback when no explicit override is s
 
 ### 3. Set Base Currency on Site Groups
 
-If your site groups use different currencies, navigate to **Settings → Site Groups** and select a **Base Currency** for each group. This step is optional — when left unset, the global default currency is used.
+If your site groups use different currencies, navigate to **Settings → Site Groups** and select a **Base Currency** for each group. This step is optional - when left unset, the global default currency is used.
 
 ### 4. Set Currency on Site Definitions
 
@@ -80,7 +80,7 @@ When a currencyable attribute is read, the following logic applies:
 2. If an explicit override exists for the active currency, the override value is returned
 3. If no override exists, the base value is automatically converted using exchange rates
 
-This means currencyable attributes always have a value — either an explicit override or an automatic conversion.
+This means currencyable attributes always have a value - either an explicit override or an automatic conversion.
 
 ### Admin Form Behavior
 
@@ -89,7 +89,7 @@ The `currency` form widget automatically detects currencyable attributes and adj
 - **On the primary currency site** (e.g. English/AUD): A normal editable input field in the base currency
 - **On a non-primary currency site** (e.g. French/EUR): A disabled input showing the auto-converted value. An **Override** link enables manual entry for a fixed value. A **Clear** link removes the override and reverts to exchange-rate conversion
 
-This design prevents accidental data corruption — admins cannot accidentally save a base-currency value with a non-base currency symbol.
+This design prevents accidental data corruption - admins cannot accidentally save a base-currency value with a non-base currency symbol.
 
 ### Frontend Display
 

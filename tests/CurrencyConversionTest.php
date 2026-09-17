@@ -51,7 +51,7 @@ class CurrencyConversionTest extends PluginTestCase
     //
 
     /**
-     * testSameCurrencyReturnsOne — converting USD to USD should
+     * testSameCurrencyReturnsOne - converting USD to USD should
      * always return a rate of 1.0 without needing a pair record
      */
     public function testSameCurrencyReturnsOne()
@@ -61,7 +61,7 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testDirectPairLookup — when a USD→EUR pair exists, the rate
+     * testDirectPairLookup - when a USD→EUR pair exists, the rate
      * should be returned directly
      */
     public function testDirectPairLookup()
@@ -73,7 +73,7 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testInversePairFallback — when only USD→EUR exists, looking up
+     * testInversePairFallback - when only USD→EUR exists, looking up
      * EUR→USD should return the reciprocal (1 / 0.92)
      */
     public function testInversePairFallback()
@@ -85,7 +85,7 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testCaseInsensitiveLookup — currency codes should be normalized
+     * testCaseInsensitiveLookup - currency codes should be normalized
      * to uppercase before lookup
      */
     public function testCaseInsensitiveLookup()
@@ -97,7 +97,7 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testRateCaching — the same pair lookup should hit cache on
+     * testRateCaching - the same pair lookup should hit cache on
      * subsequent calls without additional DB queries
      */
     public function testRateCaching()
@@ -114,7 +114,7 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testMissingPairReturnsFallbackRate — when no pair exists and no
+     * testMissingPairReturnsFallbackRate - when no pair exists and no
      * inverse is found, getRate should return 1.0 and log a warning
      * instead of throwing an exception
      */
@@ -131,7 +131,7 @@ class CurrencyConversionTest extends PluginTestCase
     //
 
     /**
-     * testConvertUsdToEur — basic conversion: $100 USD at 0.92 = €92
+     * testConvertUsdToEur - basic conversion: $100 USD at 0.92 = €92
      */
     public function testConvertUsdToEur()
     {
@@ -142,7 +142,7 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testConvertWithInverseRate — converting EUR to USD using only
+     * testConvertWithInverseRate - converting EUR to USD using only
      * the USD→EUR pair should use the reciprocal rate
      */
     public function testConvertWithInverseRate()
@@ -155,7 +155,7 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testConvertSameCurrencyIsNoop — converting USD to USD should
+     * testConvertSameCurrencyIsNoop - converting USD to USD should
      * return the original value unchanged
      */
     public function testConvertSameCurrencyIsNoop()
@@ -165,7 +165,7 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testConvertWithFractionalRate — real-world rates produce
+     * testConvertWithFractionalRate - real-world rates produce
      * fractional cent results: 10000 * 0.79 = 7900
      */
     public function testConvertWithFractionalRate()
@@ -177,7 +177,7 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testConvertWithSubCentPrecision — when the conversion produces
+     * testConvertWithSubCentPrecision - when the conversion produces
      * a non-integer result, the raw float should be returned (rounding
      * is the caller's responsibility)
      */
@@ -195,7 +195,7 @@ class CurrencyConversionTest extends PluginTestCase
     //
 
     /**
-     * testToBaseValueConvertsFloatToCents — $1.50 should become 150
+     * testToBaseValueConvertsFloatToCents - $1.50 should become 150
      */
     public function testToBaseValueConvertsFloatToCents()
     {
@@ -204,7 +204,7 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testFromBaseValueConvertsCentsToFloat — 150 cents should become 1.50
+     * testFromBaseValueConvertsCentsToFloat - 150 cents should become 1.50
      */
     public function testFromBaseValueConvertsCentsToFloat()
     {
@@ -213,7 +213,7 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testBaseValueRoundtrip — converting to base and back should
+     * testBaseValueRoundtrip - converting to base and back should
      * produce the original value
      */
     public function testBaseValueRoundtrip()
@@ -229,7 +229,21 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testBaseValueWithZeroDecimals — a currency with 0 decimal scale
+     * testFromFloatValueRoundsFloatingPointError - values whose float
+     * representation falls just below the exact base unit must round up,
+     * not truncate. E.g. 17.08 * 100 is 1707.9999... and must become 1708.
+     */
+    public function testFromFloatValueRoundsFloatingPointError()
+    {
+        $usd = Currency::findByCode('USD');
+
+        $this->assertEquals(1708, $usd->fromFloatValue(17.08));
+        $this->assertEquals(29, $usd->fromFloatValue(0.29));
+        $this->assertEquals(1999, $usd->fromFloatValue(19.99));
+    }
+
+    /**
+     * testBaseValueWithZeroDecimals - a currency with 0 decimal scale
      * (like JPY) should treat the value as-is
      */
     public function testBaseValueWithZeroDecimals()
@@ -258,7 +272,7 @@ class CurrencyConversionTest extends PluginTestCase
     //
 
     /**
-     * testFormatUsd — $1,234.56 formatted in USD
+     * testFormatUsd - $1,234.56 formatted in USD
      */
     public function testFormatUsd()
     {
@@ -268,7 +282,7 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testFormatEur — €1.234,56 formatted in EUR (comma decimal, dot thousands)
+     * testFormatEur - €1.234,56 formatted in EUR (comma decimal, dot thousands)
      */
     public function testFormatEur()
     {
@@ -278,7 +292,7 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testFormatNegativeValue — negative values should include a minus sign
+     * testFormatNegativeValue - negative values should include a minus sign
      */
     public function testFormatNegativeValue()
     {
@@ -288,7 +302,7 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testFormatWithCustomDecimals — override decimal places
+     * testFormatWithCustomDecimals - override decimal places
      */
     public function testFormatWithCustomDecimals()
     {
@@ -298,7 +312,7 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testFormatWithoutBaseConversion — when baseValue is false,
+     * testFormatWithoutBaseConversion - when baseValue is false,
      * the number is treated as a float, not cents
      */
     public function testFormatWithoutBaseConversion()
@@ -313,7 +327,7 @@ class CurrencyConversionTest extends PluginTestCase
     //
 
     /**
-     * testGeneratePairsCreatesFromPrimaryToAll — generatePairs should
+     * testGeneratePairsCreatesFromPrimaryToAll - generatePairs should
      * create pairs from the primary currency to all other enabled currencies
      */
     public function testGeneratePairsCreatesFromPrimaryToAll()
@@ -341,7 +355,7 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testGeneratePairsSkipsExisting — running generatePairs twice
+     * testGeneratePairsSkipsExisting - running generatePairs twice
      * should not create duplicate pairs
      */
     public function testGeneratePairsSkipsExisting()
@@ -354,7 +368,7 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testGeneratedPairsDefaultToOneToOne — newly generated pairs
+     * testGeneratedPairsDefaultToOneToOne - newly generated pairs
      * should have rate_value = 1 (set by beforeSave)
      */
     public function testGeneratedPairsDefaultToOneToOne()
@@ -369,7 +383,7 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
-     * testPairCodeAttribute — pair_code should return "FROM:TO" format
+     * testPairCodeAttribute - pair_code should return "FROM:TO" format
      */
     public function testPairCodeAttribute()
     {

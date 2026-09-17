@@ -79,7 +79,7 @@ class Currency extends FormWidgetBase
 
     /**
      * getLoadValue returns the value for display. Shows the active site's
-     * currency value — base price on the default site, or the override /
+     * currency value - base price on the default site, or the override /
      * auto-converted value on non-default sites.
      */
     public function getLoadValue()
@@ -175,7 +175,7 @@ class Currency extends FormWidgetBase
 
     /**
      * isCurrencyReadOnly returns true when the field should be read-only
-     * (non-default site, no override set — showing auto-converted value)
+     * (non-default site, no override set - showing auto-converted value)
      */
     protected function isCurrencyReadOnly(): bool
     {

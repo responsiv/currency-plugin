@@ -47,7 +47,7 @@ trait HasBaseValues
      */
     public function fromFloatValue(float $value): int
     {
-        return $value * pow(10, (int) $this->decimal_scale);
+        return (int) round($value * pow(10, (int) $this->decimal_scale));
     }
 
     /**

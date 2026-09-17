@@ -28,7 +28,7 @@ There are multiple currency definition types that are important to operating the
 
 ### Default Currency
 
-The default currency is the global anchor — all prices are stored in this currency. It is used when there is no site context or when no other currency is configured. In the currency form widget, if the model does not implement the multisite feature, the value is stored in the default currency.
+The default currency is the global anchor - all prices are stored in this currency. It is used when there is no site context or when no other currency is configured. In the currency form widget, if the model does not implement the multisite feature, the value is stored in the default currency.
 
 > **Note**: The default currency is set by opening the **Settings → Currencies** page and checking the **Default** checkbox on a currency listed on this page.
 

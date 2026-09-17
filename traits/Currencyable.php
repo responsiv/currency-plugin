@@ -104,7 +104,7 @@ trait Currencyable
 
     /**
      * resolveCurrencyableDefaultCode reads the primary (base) currency code from
-     * CurrencyManager. This is the currency prices are stored in — respects the
+     * CurrencyManager. This is the currency prices are stored in - respects the
      * site group's base currency override if set, otherwise the global default.
      */
     protected function resolveCurrencyableDefaultCode()
