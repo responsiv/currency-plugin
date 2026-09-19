@@ -31,3 +31,4 @@ v2.2.0:
     - 000005_create_currency_attributes.php
     - extend_site_groups_table.php
 v2.2.1: Fixes creating currency converters
+v2.2.2: Fixes float value helper truncating cents
