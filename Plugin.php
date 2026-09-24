@@ -141,9 +141,6 @@ class Plugin extends PluginBase
                     'in' => $column->inCode,
                     'site' => $column->site ?? false
                 ];
-                if (!$column->align) {
-                    $column->align = 'right';
-                }
 
                 // Per-record currency: read currency code from another attribute
                 if ($column->currencyFrom && $record) {
