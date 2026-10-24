@@ -213,6 +213,19 @@ class CurrencyConversionTest extends PluginTestCase
     }
 
     /**
+     * testToBaseValueParsesFormattedAmounts - thousand separators are removed and the
+     * currency decimal point is read, so 1,500.50 USD and 1.500,50 EUR become 150050
+     */
+    public function testToBaseValueParsesFormattedAmounts()
+    {
+        $usd = Currency::findByCode('USD');
+        $this->assertEquals(150050, $usd->toBaseValue('1,500.50'));
+
+        $eur = Currency::findByCode('EUR');
+        $this->assertEquals(150050, $eur->toBaseValue('1.500,50'));
+    }
+
+    /**
      * testBaseValueRoundtrip - converting to base and back should
      * produce the original value
      */

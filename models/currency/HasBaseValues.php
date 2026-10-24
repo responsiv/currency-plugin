@@ -20,7 +20,7 @@ trait HasBaseValues
         $result = str_replace(
             $this->decimal_point,
             '.',
-            $value
+            $result
         );
 
         return $this->fromFloatValue(floatval($result));
