@@ -38,7 +38,7 @@ class ExtendSystemModule
     /**
      * extendFormFields
      */
-    public function extendFormFields(\Backend\Widgets\Form $widget)
+    public function extendFormFields($widget)
     {
         if ($widget->isNested) {
             return;
@@ -69,7 +69,7 @@ class ExtendSystemModule
     /**
      * extendListColumns
      */
-    public function extendListColumns(\Backend\Widgets\Lists $widget)
+    public function extendListColumns($widget)
     {
         // Site Definition list
         if ($this->checkControllerModel($widget, \System\Controllers\Sites::class, \System\Models\SiteDefinition::class)) {
