@@ -32,3 +32,4 @@ v2.2.0:
     - extend_site_groups_table.php
 v2.2.1: Fixes creating currency converters
 v2.2.2: Fixes float value helper truncating cents
+v2.3.0: Sites without a currency now display their base currency, adds hard_currency site attribute
