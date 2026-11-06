@@ -44,10 +44,10 @@ When no base currency is set on the site group, the global default currency is u
 
 The site currency defines what currency is displayed to users visiting that site. When set, the currency filter automatically converts from the base currency to the site currency using exchange rates.
 
-The site currency is available in Twig as `this.site.currency` and `this.site.currency_code`.
+The site currency is available in Twig as `this.site.currency` and `this.site.currency_code`, which are empty when the site has no currency set. Use `this.site.hard_currency` and `this.site.hard_currency_code` to always get the currency displayed to visitors, falling back to the base currency.
 
 ```twig
-{{ this.site.currency_code }}
+{{ this.site.hard_currency_code }}
 ```
 
 For example, if a value is stored in the default currency as USD and the site has a currency of AUD, the `site` option handles conversion automatically.

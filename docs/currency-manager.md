@@ -20,7 +20,7 @@ $default = Currency::getDefault();
 $defaultCode = Currency::getDefaultCode();
 ```
 
-The `getPrimary` returns the default currency model, and `getPrimaryCode` returns the default currency code.
+The `getPrimary` returns the base currency model that values are stored in, and `getPrimaryCode` returns its code. This is the site group's base currency, falling back to the default currency.
 
 ```php
 $primary = Currency::getPrimary();
@@ -28,7 +28,7 @@ $primary = Currency::getPrimary();
 $primaryCode = Currency::getPrimaryCode();
 ```
 
-The `getActive` returns the default currency model, and `getActiveCode` returns the default currency code.
+The `getActive` returns the currency model displayed to the visitor, and `getActiveCode` returns its code. This is the site's currency, falling back to the base currency.
 
 ```php
 $active = Currency::getActive();

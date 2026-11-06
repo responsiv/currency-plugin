@@ -53,19 +53,11 @@ class CurrencyManager
     }
 
     /**
-     * getPrimary returns the base currency for the current site group.
-     * Falls back to the global default when no group override is set.
-     * This is the currency that prices are stored in.
+     * getPrimary returns the base currency that prices are stored in for the current site.
      */
     public function getPrimary()
     {
-        $site = Site::getSiteFromContext();
-
-        if ($site && $site->group && $site->group->base_currency_id) {
-            return $site->group->base_currency;
-        }
-
-        return CurrencyModel::getDefault();
+        return Site::getSiteFromContext()?->base_currency ?: CurrencyModel::getDefault();
     }
 
     /**
@@ -77,18 +69,11 @@ class CurrencyManager
     }
 
     /**
-     * getActive returns the active currency for the current site context.
-     * Falls back to the global default when no site currency is set.
+     * getActive returns the currency displayed for the current site, falling back to the base currency.
      */
     public function getActive()
     {
-        $site = Site::getSiteFromContext();
-
-        if ($site && $site->currency_id) {
-            return $site->currency;
-        }
-
-        return CurrencyModel::getDefault();
+        return Site::getSiteFromContext()?->hard_currency ?: CurrencyModel::getDefault();
     }
 
     /**

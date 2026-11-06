@@ -63,31 +63,41 @@ class CurrencyModel extends ModelBehavior
     }
 
     /**
-     * getBaseCurrencyCodeAttribute resolves the base currency code by walking
-     * up to the site group, falling back to the global default. This allows
-     * Twig templates to use `this.site.base_currency_code` transparently.
-     * @return string
+     * getBaseCurrencyAttribute resolves the currency prices are stored in, from the site group or the global default.
      */
-    public function getBaseCurrencyCodeAttribute()
+    public function getBaseCurrencyAttribute()
     {
-        $model = $this->model;
+        $group = $this->model->group;
 
-        if ($model->group && $model->group->base_currency_id) {
-            return $model->group->base_currency->code;
+        if ($group && $group->base_currency_id) {
+            return $group->base_currency;
         }
 
-        return Currency::getDefaultCode();
+        return Currency::getDefault();
     }
 
     /**
-     * getHardCurrencyCodeAttribute will always return a currency code no matter
-     * what, falling back to the base currency. Mirrors the hard_locale pattern.
+     * getBaseCurrencyCodeAttribute returns the code of the currency prices are stored in.
+     */
+    public function getBaseCurrencyCodeAttribute()
+    {
+        return $this->getBaseCurrencyAttribute()?->code;
+    }
+
+    /**
+     * getHardCurrencyAttribute always returns a currency, falling back to the base currency like the hard_locale pattern.
+     */
+    public function getHardCurrencyAttribute()
+    {
+        return $this->model->currency ?: $this->getBaseCurrencyAttribute();
+    }
+
+    /**
+     * getHardCurrencyCodeAttribute always returns a currency code, falling back to the base currency.
      */
     public function getHardCurrencyCodeAttribute()
     {
-        return $this->model->currency
-            ? $this->model->currency->code
-            : $this->getBaseCurrencyCodeAttribute();
+        return $this->getHardCurrencyAttribute()?->code;
     }
 
     /**

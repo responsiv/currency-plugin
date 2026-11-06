@@ -99,11 +99,13 @@ Use the `currency` Twig filter with the `site` option to convert and format valu
 {{ model.price|currency({ site: true }) }}
 ```
 
-The site currency is also available in Twig templates:
+The site currency is also available in Twig templates. The `hard_currency_code` attribute always returns a code, falling back to the base currency when the site has no currency set, while `currency_code` is empty in that case.
 
 ```twig
-{{ this.site.currency_code }}
+{{ this.site.hard_currency_code }}
 ```
+
+Use `this.site.hard_currency` to access the currency model itself, such as its `decimal_scale`.
 
 ## Working with Overrides
 
